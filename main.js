@@ -38,14 +38,14 @@ const resourceBarClick = (resource) => {
 	colorReset();
 	setActiveColor(resource);
 	setCollectingResource(resource);
-	updateTotalProduction();
+	updateTotalProductionAll();
 };
 
 //Resource bar click functions end//
 
 //Resource idle production update functions start//
 
-const updateTotalProduction = () => {
+const updateTotalProductionAll = () => {
 	resources.map((resource) => {
 		const updating = game.current.resources[resource];
 		if (resource === game.current.collecting) {
@@ -55,6 +55,16 @@ const updateTotalProduction = () => {
 		}
 		document.querySelector(`#${resource}-sec`).innerText = updating.totalPerSec;
 	});
+};
+
+const updateTotalProductionIndividual = (resource) => {
+	const updating = game.current.resources[resource];
+	if (resource === game.current.collecting) {
+		updating.totalPerSec = updating.golemPerSec + updating.activePerSec;
+	} else {
+		updating.totalPerSec = updating.golemPerSec;
+	}
+	document.querySelector(`#${resource}-sec`).innerText = updating.totalPerSec;
 };
 
 //Resource idle production update functions end//
