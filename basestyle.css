@@ -12,7 +12,7 @@ body {
     grid-template-columns: 4fr 3fr;
     grid-template-rows: minmax(0, 4fr) minmax(0, 4fr) minmax(0, 9fr) 50px;
     gap: 2px;
-    background-color: grey;
+    background-color: rgb(77, 77, 77);
     padding: 2px;
 }
 
@@ -21,8 +21,8 @@ body {
 .resource-wrapper {
     grid-column: 1 / 3;
     grid-row: 1;
-    background-color: white;
-    border: 1px solid grey;
+    background-color: rgb(163, 151, 168);
+    border: 1px solid rgb(77, 77, 77);
     display: flex;
 }
 
@@ -39,17 +39,34 @@ body {
     padding-right: 10px;
 }
 
+.resource-collection-wrapper::-webkit-scrollbar {
+    height: 10px;
+    background: rgb(194, 189, 189);
+}
+
+.resource-collection-wrapper::-webkit-scrollbar-track {
+    background: rgb(158, 157, 157);
+    border-radius: 10px;
+}
+
+.resource-collection-wrapper::-webkit-scrollbar-thumb {
+    background: rgb(102, 99, 99);
+    border-radius: 10px;
+}
+
+/*individual boxes styling start*/
 
 .resource-box {
     height: 80%;
     min-width: 150px;
     width: 20%;
-    background-color: aqua;
+    background-color: rgb(135, 189, 189);
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 3px solid grey;
+    border: 3px solid rgb(77, 77, 77);
     padding: 5px;
+    gap: 10%;
 }
 
 .resource-name {
@@ -60,9 +77,28 @@ body {
 }
 
 .resource-collection-button {
-    height: 30%;
+    height: 35%;
     width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.5vh;
 }
+
+.color-inactive {
+    background-color: white;
+}
+
+.color-active {
+    background-color: rgb(245, 235, 189);
+}
+
+.resource-storage {
+    font-size: 2.5vh;
+}
+
+/*individual boxes styling end*/
 
 /*collection wrapper end*/
 
@@ -78,13 +114,24 @@ body {
 
 /*resources box styling end*/
 
+/*text box styling start*/
+
+.text-log-wrapper {
+    grid-column: 2;
+    grid-row: 2 /3;
+    background-color: rgb(163, 151, 168);
+    border: 1px solid rgb(77, 77, 77)
+}
+
+/*text box styling end*/
+
 /*Upgrades box styling start*/
 
 .upgrades-wrapper {
     grid-column: 2;
-    grid-row: 2 /3;
-    background-color: aqua;
-    border: 1px solid grey
+    grid-row: 3 /4;
+    background-color: rgb(163, 151, 168);
+    border: 1px solid rgb(77, 77, 77)
 }
 
 /*Upgrades box styling end*/
@@ -94,22 +141,12 @@ body {
 .combat-wrapper {
     grid-column: 1;
     grid-row: 2 /4;
-    background-color: black;
-    border: 1px solid grey
+    background-color: rgb(163, 151, 168);
+    border: 1px solid rgb(77, 77, 77)
 }
 
 /*Combat box styling end*/
 
-/*text box styling start*/
-
-.text-log-wrapper {
-    grid-column: 2;
-    grid-row: 3 /4;
-    background-color: yellow;
-    border: 1px solid grey
-}
-
-/*text box styling end*/
 
 /*settings box styling start*/
 
@@ -117,7 +154,7 @@ body {
     grid-column: 1/ 3;
     grid-row: 4;
     background-color: blue;
-    border: 1px solid grey;
+    border: 1px solid rgb(77, 77, 77);
     display: flex;
 }
 
@@ -126,8 +163,8 @@ body {
     width: 20%;
     border-radius: 0;
     border: none;
-    border-left: 3px solid grey;
-    border-right: 3px solid grey;
+    border-left: 3px solid rgb(77, 77, 77);
+    border-right: 3px solid rgb(77, 77, 77);
 }
 
 /*settings box styling end*/
@@ -140,8 +177,16 @@ body {
     display: none;
 }
 
-.no-select {
-
+.unselectable {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    /*
+     Introduced in IE 10.
+     See http://ie.microsoft.com/testdrive/HTML5/msUserSelect/
+   */
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /*special classes for styling end*/
