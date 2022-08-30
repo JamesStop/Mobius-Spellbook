@@ -48,6 +48,7 @@ const updateTotalProduction = () => {
 		} else {
 			updating.totalpersec = updating.golempersec;
 		}
+		document.querySelector(`#${resource}-sec`).innerText = updating.totalpersec;
 	});
 };
 
