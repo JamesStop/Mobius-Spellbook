@@ -63,14 +63,16 @@ const updateTotalProduction = () => {
 
 const updateResourceAmountGain = (resource, value) => {
 	const updating = game.current.resources[resource];
-	if (updating.current + value > updating.storageMax) {
-		updating.current += updating.storageMax - updating.current;
-		updating.total += updating.storageMax - updating.current;
-	} else {
-		updating.current += value;
-		updating.total += value;
+	if (updating.current != updating.storageMax) {
+		if (updating.current + value > updating.storageMax) {
+			updating.current += updating.storageMax - updating.current;
+			updating.total += updating.storageMax - updating.current;
+		} else {
+			updating.current += value;
+			updating.total += value;
+		}
+		document.querySelector(`#${resource}-current`).innerText = updating.current;
 	}
-	document.querySelector(`#${resource}-current`).innerText = updating.current;
 };
 
 const updateResourceAmountLoss = (resource, value) => {
@@ -98,7 +100,7 @@ const collectResources = () => {
 };
 
 window.setInterval(() => {
-    collectResources()
+	collectResources();
 }, 100);
 
 //Idle resource collection functions end//
