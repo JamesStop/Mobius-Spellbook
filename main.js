@@ -24,9 +24,14 @@ const setActiveColor = (id) => {
 	button.add('color-active');
 };
 
+const setCollectingResource = (resource) => {
+    game.current.collecting = resource;
+}
+
 const resourceBarClick = (resource) => {
 	colorReset();
 	setActiveColor(resource);
+    setCollectingResource(resource);
 };
 
 //Resource bar click functions end//
