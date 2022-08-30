@@ -1,10 +1,70 @@
 // This is the main game variable. Stores a majority of one's individual game information and settings//
 
 const game = {
-    current: {
-
-    },
-    best: {
-        
-    }
-}
+	general: {
+		version: 0.0,
+	},
+	current: {
+        collecting: null,
+		resources: {
+			herb: {
+				current: 0,
+				total: 0,
+				storagemax: 250,
+				stoageupgrades: 0,
+				activepersec: 1,
+				activeupgrades: 0,
+				golempersec: 0,
+				totalpersec: 0,
+			},
+			mythril: {
+				current: 0,
+				total: 0,
+				storagemax: 250,
+				stoageupgrades: 0,
+				activepersec: 1,
+				activeupgrades: 0,
+				golempersec: 0,
+				totalpersec: 0,
+			},
+			yew: {
+				current: 0,
+				total: 0,
+				storagemax: 250,
+				stoageupgrades: 0,
+				activepersec: 1,
+				activeupgrades: 0,
+				golempersec: 0,
+				totalpersec: 0,
+			},
+			crystal: {
+				current: 0,
+				total: 0,
+				storagemax: 250,
+				stoageupgrades: 0,
+				activepersec: 1,
+				activeupgrades: 0,
+				golempersec: 0,
+				totalpersec: 0,
+			},
+			arcana: {
+				current: 0,
+				total: 0,
+				storagemax: 250,
+				stoageupgrades: 0,
+				activepersec: 1,
+				activeupgrades: 0,
+				golempersec: 0,
+				totalpersec: 0,
+			},
+		},
+		golems: {
+			inactive: 0,
+            active: 0,
+			total: 0,
+			storagemax: 10,
+            storageupgrades: 0,
+		},
+	},
+	best: {},
+};

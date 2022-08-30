@@ -12,43 +12,43 @@
 			<section class="resource-collection-wrapper">
 				<div class="resource-box">
 					<span class="resource-name">Herbs</span>
-					<button class="resource-collection-button color-inactive">
+					<button class="resource-collection-button color-inactive" id="herb-button"  onclick="resourceBarClick('herb')">
 						<p>Collect Herb</p>
-						<p><span id="Herb-sec">0</span>/sec</p>
+						<p><span id="herb-sec">0</span>/sec</p>
 					</button>
-					<p class="resource-storage"><span id="Herb-current">0</span> / <span id="Herb-storage-max">250</span></p>
+					<p class="resource-storage"><span id="herb-current">0</span> / <span id="herb-storage-max">250</span></p>
 				</div>
 				<div class="resource-box">
 					<span class="resource-name">Mythril</span>
-					<button class="resource-collection-button color-inactive">
+					<button class="resource-collection-button color-inactive" id="mythril-button"  onclick="resourceBarClick('mythril')">
 						<p>Collect Mythril</p>
-						<p><span id="Mythril-sec">0</span>/sec</p>
+						<p><span id="mythril-sec">0</span>/sec</p>
 					</button>
-					<p class="resource-storage"><span id="Mythril-current">0</span> / <span id="Mythril-storage-max">250</span></p>
+					<p class="resource-storage"><span id="mythril-current">0</span> / <span id="mythril-storage-max">250</span></p>
 				</div>
 				<div class="resource-box">
 					<span class="resource-name">Yew</span>
-					<button class="resource-collection-button color-inactive">
+					<button class="resource-collection-button color-inactive" id="yew-button"  onclick="resourceBarClick('yew')">
 						<p>Collect Yew</p>
-						<p><span id="Yew-sec">0</span>/sec</p>
+						<p><span id="yew-sec">0</span>/sec</p>
 					</button>
-					<p class="resource-storage"><span id="Yew-current">0</span> / <span id="Yew-storage-max">250</span></p>
+					<p class="resource-storage"><span id="yew-current">0</span> / <span id="yew-storage-max">250</span></p>
 				</div>
 				<div class="resource-box">
 					<span class="resource-name">Crystal</span>
-					<button class="resource-collection-button color-inactive">
+					<button class="resource-collection-button color-inactive" id="crystal-button" onclick="resourceBarClick('crystal')">
 						<p>Collect Crystal</p>
-						<p><span id="Crystal-sec">0</span>/sec</p>
+						<p><span id="crystal-sec">0</span>/sec</p>
 					</button>
-					<p class="resource-storage"><span id="Crystal-current">0</span> / <span id="Crystal-storage-max">250</span></p>
+					<p class="resource-storage"><span id="crystal-current">0</span> / <span id="crystal-storage-max">250</span></p>
 				</div>
 				<div class="resource-box">
 					<span class="resource-name">Arcana</span>
-					<button class="resource-collection-button color-inactive">
+					<button class="resource-collection-button color-inactive" id="arcana-button" onclick="resourceBarClick('arcana')">
 						<p>Collect Arcana</p>
-						<p><span id="Arcana-sec">0</span>/sec</p>
+						<p><span id="arcana-sec">0</span>/sec</p>
 					</button>
-					<p class="resource-storage"><span id="Arcana-current">0</span> / <span id="Arcana-storage-max">250</span></p>
+					<p class="resource-storage"><span id="arcana-current">0</span> / <span id="arcana-storage-max">250</span></p>
 				</div>
 			</section>
 			<section class="special-resources-wrapper"></section>
@@ -63,5 +63,7 @@
 			<button class="settings-buttons">Achievements</button>
 			<button class="settings-buttons">Settings</button>
 		</section>
+		<script src="game.js"></script>
+		<script src="main.js"></script>
 	</body>
 </html>
