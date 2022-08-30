@@ -25,13 +25,36 @@ const setActiveColor = (id) => {
 };
 
 const setCollectingResource = (resource) => {
-    game.current.collecting = resource;
-}
+	game.current.collecting = resource;
+};
 
 const resourceBarClick = (resource) => {
 	colorReset();
 	setActiveColor(resource);
-    setCollectingResource(resource);
+	setCollectingResource(resource);
+	updateTotalProduction();
 };
 
 //Resource bar click functions end//
+
+//Resource idle production update functions start//
+
+const updateTotalProduction = () => {
+	const resources = ['herb', 'mythril', 'yew', 'crystal', 'arcana'];
+	resources.map((resource) => {
+		const updating = game.current.resources[resource];
+		if (resource === game.current.collecting) {
+			updating.totalpersec = updating.golempersec + updating.activepersec;
+		} else {
+			updating.totalpersec = updating.golempersec;
+		}
+	});
+};
+
+//Resource idle production update functions end//
+
+//Idle resource collection functions start//
+
+window.setInterval(() => {});
+
+//Idle resource collection functions end//
