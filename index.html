@@ -12,50 +12,92 @@
 			<section class="resource-collection-wrapper">
 				<div class="resource-box">
 					<span class="resource-name">Herbs</span>
-					<button class="resource-collection-button color-inactive" id="herb-button"  onclick="resourceBarClick('herb')">
+					<button
+						class="resource-collection-button color-inactive"
+						id="herb-button"
+						onclick="resourceBarClick('herb')"
+					>
 						<p>Collect Herb</p>
 						<p><span id="herb-sec">0</span>/sec</p>
 					</button>
-					<p class="resource-storage"><span id="herb-current">0</span> / <span id="herb-storage-max">250</span></p>
+					<p class="resource-storage">
+						<span id="herb-current">0</span> /
+						<span id="herb-storage-max">250</span>
+					</p>
 				</div>
 				<div class="resource-box">
 					<span class="resource-name">Mythril</span>
-					<button class="resource-collection-button color-inactive" id="mythril-button"  onclick="resourceBarClick('mythril')">
+					<button
+						class="resource-collection-button color-inactive"
+						id="mythril-button"
+						onclick="resourceBarClick('mythril')"
+					>
 						<p>Collect Mythril</p>
 						<p><span id="mythril-sec">0</span>/sec</p>
 					</button>
-					<p class="resource-storage"><span id="mythril-current">0</span> / <span id="mythril-storage-max">250</span></p>
+					<p class="resource-storage">
+						<span id="mythril-current">0</span> /
+						<span id="mythril-storage-max">250</span>
+					</p>
 				</div>
 				<div class="resource-box">
 					<span class="resource-name">Yew</span>
-					<button class="resource-collection-button color-inactive" id="yew-button"  onclick="resourceBarClick('yew')">
+					<button
+						class="resource-collection-button color-inactive"
+						id="yew-button"
+						onclick="resourceBarClick('yew')"
+					>
 						<p>Collect Yew</p>
 						<p><span id="yew-sec">0</span>/sec</p>
 					</button>
-					<p class="resource-storage"><span id="yew-current">0</span> / <span id="yew-storage-max">250</span></p>
+					<p class="resource-storage">
+						<span id="yew-current">0</span> /
+						<span id="yew-storage-max">250</span>
+					</p>
 				</div>
 				<div class="resource-box">
 					<span class="resource-name">Crystal</span>
-					<button class="resource-collection-button color-inactive" id="crystal-button" onclick="resourceBarClick('crystal')">
+					<button
+						class="resource-collection-button color-inactive"
+						id="crystal-button"
+						onclick="resourceBarClick('crystal')"
+					>
 						<p>Collect Crystal</p>
 						<p><span id="crystal-sec">0</span>/sec</p>
 					</button>
-					<p class="resource-storage"><span id="crystal-current">0</span> / <span id="crystal-storage-max">250</span></p>
+					<p class="resource-storage">
+						<span id="crystal-current">0</span> /
+						<span id="crystal-storage-max">250</span>
+					</p>
 				</div>
 				<div class="resource-box">
 					<span class="resource-name">Arcana</span>
-					<button class="resource-collection-button color-inactive" id="arcana-button" onclick="resourceBarClick('arcana')">
+					<button
+						class="resource-collection-button color-inactive"
+						id="arcana-button"
+						onclick="resourceBarClick('arcana')"
+					>
 						<p>Collect Arcana</p>
 						<p><span id="arcana-sec">0</span>/sec</p>
 					</button>
-					<p class="resource-storage"><span id="arcana-current">0</span> / <span id="arcana-storage-max">250</span></p>
+					<p class="resource-storage">
+						<span id="arcana-current">0</span> /
+						<span id="arcana-storage-max">250</span>
+					</p>
 				</div>
 			</section>
 			<section class="special-resources-wrapper"></section>
 		</section>
 		<section class="combat-wrapper"></section>
 		<section class="text-log-wrapper"></section>
-		<section class="upgrades-wrapper"></section>
+		<section class="upgrades-wrapper">
+			<nav class="upgrades-nav">
+				<div class="upgrades-nav-selector" id="upgrades-selector">Upgrades</div>
+				<div class="upgrades-nav-selector" id="golems-selector">Golems</div>
+				<div class="upgrades-nav-selector" id="spellbook-selector">Spell Book</div>
+				<div class="upgrades-nav-selector" id="something-selector">????</div>
+			</nav>
+		</section>
 		<section class="settings-wrapper">
 			<button class="settings-buttons">Save</button>
 			<button class="settings-buttons">Export</button>

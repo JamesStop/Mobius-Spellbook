@@ -132,8 +132,26 @@ body {
     grid-column: 2;
     grid-row: 3 /4;
     background-color: rgb(163, 151, 168);
-    border: 1px solid rgb(77, 77, 77)
+    border: 1px solid rgb(77, 77, 77);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
 }
+
+.upgrades-nav {
+    height: 10%;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.upgrades-nav-selector {
+    height: 100%;
+    width: 25%;
+}
+
 
 /*Upgrades box styling end*/
 
