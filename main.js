@@ -4,9 +4,43 @@ const resources = ['herb', 'mythril', 'yew', 'crystal', 'arcana'];
 
 //General Purpose End//
 
+//Upgrades nav bar click functions start//
+
+
+
+//Upgrades nav bar click functions end//
+
+const upgradesColorReset = () => {
+	const resourceBarIds = [
+		'upgrades-selector',
+		'golems-selector',
+		'spellbook-selector',
+		'something-selector'
+	];
+	resourceBarIds.map((id) => {
+		const button = document.querySelector(`#${id}`).classList;
+		button.remove('nav-selected');
+		button.remove('nav-unselected');
+		button.add('nav-unselected');
+	});
+};
+
+const setUpgradesActiveColor = (id) => {
+	const changeId = `#${id}-button`;
+	const button = document.querySelector(`#${id}`).classList;
+	button.remove('nav-selected');
+	button.remove('nav-unselected');
+	button.add('nav-selected');
+};
+
+const upgradesNavBarClick = (id) => {
+    upgradesColorReset();
+    setUpgradesActiveColor(id);
+};
+
 //Resource bar click functions start//
 
-const colorReset = () => {
+const resourceColorReset = () => {
 	const resourceBarIds = [
 		'herb-button',
 		'mythril-button',
@@ -22,7 +56,7 @@ const colorReset = () => {
 	});
 };
 
-const setActiveColor = (id) => {
+const setResourcesActiveColor = (id) => {
 	const changeId = `#${id}-button`;
 	const button = document.querySelector(`#${id}-button`).classList;
 	button.remove('color-inactive');
@@ -35,8 +69,8 @@ const setCollectingResource = (resource) => {
 };
 
 const resourceBarClick = (resource) => {
-	colorReset();
-	setActiveColor(resource);
+	resourceColorReset();
+	setResourcesActiveColor(resource);
 	setCollectingResource(resource);
 	updateTotalProductionAll();
 };
