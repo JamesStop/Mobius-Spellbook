@@ -180,7 +180,18 @@ window.setInterval(() => {
 
 
 
+const mousein = (event) => {
+	let tooltip = document.querySelector('#purchaseTooltips')
+	let button = event.target
+	tooltip.style.top = `${event.y - 200}px`;
+	tooltip.style.left = `${event.x - 200}px`
+	tooltip.classList.remove('hidden')
+}
 
+const mouseout = (event) => {
+	let tooltip = document.querySelector('#purchaseTooltips').classList;
+	tooltip.add('hidden');
+}
 
 
 
