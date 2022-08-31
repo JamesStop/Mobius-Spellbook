@@ -1,6 +1,6 @@
 // This is the main game variable. Stores a majority of one's individual game information and settings//
 
-const game = {
+let game = {
 	general: {
 		version: 0.0,
 	},

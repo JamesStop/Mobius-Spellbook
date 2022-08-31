@@ -103,13 +103,15 @@
 			<div class="upgrades-display-wrapper hidden" id="something-display">???</div>
 		</section>
 		<section class="settings-wrapper">
-			<button class="settings-buttons">Save</button>
-			<button class="settings-buttons">Export</button>
+			<button class="settings-buttons" onclick="save()">Save</button>
+			<button class="settings-buttons" onclick="load()">Export</button>
 			<button class="settings-buttons">Import</button>
 			<button class="settings-buttons">Achievements</button>
 			<button class="settings-buttons">Settings</button>
 		</section>
 		<script src="game.js"></script>
+		<script src="lz-string.js"></script>
+		<script src="saveexportload.js"></script>
 		<script src="main.js"></script>
 	</body>
 </html>

@@ -125,6 +125,13 @@ const updateTotalProductionIndividual = (resource) => {
 
 //Resource update value functions start//
 
+const updateResourceAmount = () => {
+	resources.map((resource) => {
+		const updating = game.current.resources[resource];
+		document.querySelector(`#${resource}-current`).innerText = updating.current;
+	})
+}
+
 const updateResourceAmountGain = (resource, value) => {
 	const updating = game.current.resources[resource];
 	if (updating.current != updating.storageMax) {
@@ -168,3 +175,15 @@ window.setInterval(() => {
 }, 100);
 
 //Idle resource collection functions end//
+
+
+
+
+
+
+
+
+
+load();
+
+autoSave()
