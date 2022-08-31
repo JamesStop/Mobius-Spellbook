@@ -10,14 +10,14 @@ const resources = ['herb', 'mythril', 'yew', 'crystal', 'arcana'];
 
 //Upgrades nav bar click functions end//
 
-const upgradesColorReset = () => {
-	const resourceBarIds = [
+const upgradesNavColorReset = () => {
+	const upgradesNavIds = [
 		'upgrades-selector',
 		'golems-selector',
 		'spellbook-selector',
-		'something-selector'
+		'something-selector',
 	];
-	resourceBarIds.map((id) => {
+	upgradesNavIds.map((id) => {
 		const button = document.querySelector(`#${id}`).classList;
 		button.remove('nav-selected');
 		button.remove('nav-unselected');
@@ -25,17 +25,38 @@ const upgradesColorReset = () => {
 	});
 };
 
-const setUpgradesActiveColor = (id) => {
-	const changeId = `#${id}-button`;
+const setUpgradesNavActiveColor = (id) => {
 	const button = document.querySelector(`#${id}`).classList;
 	button.remove('nav-selected');
 	button.remove('nav-unselected');
 	button.add('nav-selected');
 };
 
+const upgradesDisplayHide = () => {
+	const UpgradesDisplaysIds = [
+		'upgrades-display',
+		'golems-display',
+		'spellbook-display',
+		'something-display',
+	];
+	UpgradesDisplaysIds.map((id) => {
+		const display = document.querySelector(`#${id}`).classList;
+		display.remove('hidden');
+		display.add('hidden');
+	});
+};
+
+const upgradesDisplayShow = (id) => {
+    const displayId = id.replace('selector', 'display')
+	const display = document.querySelector(`#${displayId}`).classList;
+	display.remove('hidden');
+};
+
 const upgradesNavBarClick = (id) => {
-    upgradesColorReset();
-    setUpgradesActiveColor(id);
+    upgradesNavColorReset();
+    setUpgradesNavActiveColor(id);
+    upgradesDisplayHide();
+    upgradesDisplayShow(id);
 };
 
 //Resource bar click functions start//
@@ -57,7 +78,6 @@ const resourceColorReset = () => {
 };
 
 const setResourcesActiveColor = (id) => {
-	const changeId = `#${id}-button`;
 	const button = document.querySelector(`#${id}-button`).classList;
 	button.remove('color-inactive');
 	button.remove('color-active');
