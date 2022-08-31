@@ -16,7 +16,7 @@ const load = () => {
     if (localStorage.getItem('savestring')) {
         savestring = localStorage.getItem('savestring');
         savegame = JSON.parse(LZString.decompressFromBase64(savestring))
-        game = savegame;
+        game = {...game, ...savegame};
         resourceColorReset();
 		setResourcesActiveColor(game.current.collecting);
         updateResourceAmount();
