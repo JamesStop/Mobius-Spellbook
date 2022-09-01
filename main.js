@@ -132,10 +132,10 @@ const updateResourceAmount = () => {
 
 const updateResourceAmountGain = (resource, value) => {
 	const updating = game.current.resources[resource];
-	if (updating.current != updating.storageMax) {
-		if (updating.current + value > updating.storageMax) {
-			updating.current += updating.storageMax - updating.current;
-			updating.total += updating.storageMax - updating.current;
+	if (updating.current != updating.storage.storageMax) {
+		if (updating.current + value > updating.storage.storageMax) {
+			updating.current += updating.storage.storageMax - updating.current;
+			updating.total += updating.storage.storageMax - updating.current;
 		} else {
 			updating.current += value;
 			updating.total += value;
@@ -174,16 +174,61 @@ window.setInterval(() => {
 
 //Idle resource collection functions end//
 
-const mousein = (event, type, resource) => {
-	tooltips.purchase[type][resource].updateText(resource);
-	let tooltip = document.querySelector('#purchaseTooltips');
+//Update storage max display functions start//
+
+const updateStorages = () => {
+	resources.map((resource) => {
+		document.querySelector(`#${resource}-storage-max`).innerText =
+			game.current.resources[resource].storage.storageMax;
+	});
+};
+
+const updateStorageSingle = (resource) => {
+	document.querySelector(`#${resource}-storage-max`).innerText =
+		game.current.resources[resource].storage.storageMax;
+};
+
+//Update storage max display functions start//
+
+//Purchase upgrades functions start//
+
+const purchaseUpgrade = (type, resource) => {
+	let upgradeResource = game.current.resources[resource];
+	let upgradeType = upgradeResource[type];
+	if (
+		upgradeResource.current >=
+		upgradeType[`${type}BaseCost`] *
+			upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
+	) {
+		upgradeResource.current -=
+			upgradeType[`${type}BaseCost`] *
+			upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`];
+		upgradeType[`${type}Upgrades`] += 1;
+		upgradeType[`${type}Max`] =
+			upgradeType[`${type}Base`] *
+			upgradeType[`${type}BaseBonus`] ** upgradeType[`${type}Upgrades`];
+		updateToolTip('purchase', type, resource);
+		updateStorageSingle(resource)
+	}
+};
+
+//Purchase upgrades functions end//
+
+//functions for tooltips start//
+
+const updateToolTip = (niche, type, resource) => {
+	tooltips[niche][type][resource].updateText(resource);
 	document.querySelector('#purchaseTooltipName').innerText =
-		tooltips.purchase[type][resource].title;
+		tooltips[niche][type][resource].title;
 	document.querySelector('#purchaseTooltipInfo').innerText =
-		tooltips.purchase[type][resource].info;
+		tooltips[niche][type][resource].info;
 	document.querySelector('#purchaseTooltipCost').innerText =
-		tooltips.purchase[type][resource].cost;
-	let button = event.target;
+		tooltips[niche][type][resource].cost;
+};
+
+const mousein = (event, type, resource) => {
+	updateToolTip('purchase', type, resource);
+	let tooltip = document.querySelector('#purchaseTooltips');
 	tooltip.style.top = `${event.y - 200}px`;
 	tooltip.style.left = `${event.x - 200}px`;
 	tooltip.classList.remove('hidden');
@@ -194,6 +239,11 @@ const mouseout = (event) => {
 	tooltip.add('hidden');
 };
 
-load();
+//functions for tooltips end//
 
+//Saving and loading related functions start//
+
+load();
 autoSave();
+
+//Saving and loading related functions end//
