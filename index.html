@@ -101,11 +101,11 @@
 				<section class="storage-upgrades-wrapper">
 					<h3 class="upgrades-titles">Storage</h3>
 					<div class="upgrades-purchase-wrapper">
-						<button class="upgrades-purchase-button" onmouseover="mousein(event)" onmouseout="mouseout(event)"><span>herbs</span><span>0</span></button>
-						<button class="upgrades-purchase-button" onmouseover="mousein(event)" onmouseout="mouseout(event)"><span>Mythril</span><span>0</span></button>
-						<button class="upgrades-purchase-button" onmouseover="mousein(event)" onmouseout="mouseout(event)"><span>Yew</span><span>0</span></button>
-						<button class="upgrades-purchase-button" onmouseover="mousein(event)" onmouseout="mouseout(event)"><span>Crystal</span><span>0</span></button>
-						<button class="upgrades-purchase-button" onmouseover="mousein(event)" onmouseout="mouseout(event)"><span>Arcana</span><span>0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'storage', 'herb')" onmouseout="mouseout()"><span>Herbs</span><span>0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'storage', 'mythril')" onmouseout="mouseout()"><span>Mythril</span><span>0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'storage', 'yew')" onmouseout="mouseout()"><span>Yew</span><span>0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'storage', 'crystal')" onmouseout="mouseout()"><span>Crystal</span><span>0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'storage', 'arcana')" onmouseout="mouseout()"><span>Arcana</span><span>0</span></button>
 					</div>
 				</section>
 				<section class="active-production-upgrades-wrapper">
@@ -123,8 +123,9 @@
 			<button class="settings-buttons">Achievements</button>
 			<button class="settings-buttons">Settings</button>
 		</section>
-		<div class="purchaseTooltips hidden" id="purchaseTooltips"><span id="tooltipName"></span><span id="tooltipInfo"></span><span id="tooltipCost"></span></div>
+		<div class="purchaseTooltips hidden" id="purchaseTooltips"><span class="purchaseTooltipName" id="purchaseTooltipName"></span><span class='purchaseTooltipInfo' id="purchaseTooltipInfo"></span><span class="purchaseTooltipCost" id="purchaseTooltipCost"></span></div>
 		<script src="game.js"></script>
+		<script src="constants.js"></script>
 		<script src="lz-string.js"></script>
 		<script src="saveexportload.js"></script>
 		<script src="main.js"></script>

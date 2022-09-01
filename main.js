@@ -1,12 +1,8 @@
 //General Purpose Start//
 
-const resources = ['herb', 'mythril', 'yew', 'crystal', 'arcana'];
-
 //General Purpose End//
 
 //Upgrades nav bar click functions start//
-
-
 
 //Upgrades nav bar click functions end//
 
@@ -47,16 +43,16 @@ const upgradesDisplayHide = () => {
 };
 
 const upgradesDisplayShow = (id) => {
-    const displayId = id.replace('selector', 'display')
+	const displayId = id.replace('selector', 'display');
 	const display = document.querySelector(`#${displayId}`).classList;
 	display.remove('hidden');
 };
 
 const upgradesNavBarClick = (id) => {
-    upgradesNavColorReset();
-    setUpgradesNavActiveColor(id);
-    upgradesDisplayHide();
-    upgradesDisplayShow(id);
+	upgradesNavColorReset();
+	setUpgradesNavActiveColor(id);
+	upgradesDisplayHide();
+	upgradesDisplayShow(id);
 };
 
 //Resource bar click functions start//
@@ -78,10 +74,12 @@ const resourceColorReset = () => {
 };
 
 const setResourcesActiveColor = (id) => {
-	const button = document.querySelector(`#${id}-button`).classList;
-	button.remove('color-inactive');
-	button.remove('color-active');
-	button.add('color-active');
+	if (id != null) {
+		const button = document.querySelector(`#${id}-button`).classList;
+		button.remove('color-inactive');
+		button.remove('color-active');
+		button.add('color-active');
+	}
 };
 
 const setCollectingResource = (resource) => {
@@ -129,8 +127,8 @@ const updateResourceAmount = () => {
 	resources.map((resource) => {
 		const updating = game.current.resources[resource];
 		document.querySelector(`#${resource}-current`).innerText = updating.current;
-	})
-}
+	});
+};
 
 const updateResourceAmountGain = (resource, value) => {
 	const updating = game.current.resources[resource];
@@ -176,25 +174,26 @@ window.setInterval(() => {
 
 //Idle resource collection functions end//
 
-
-
-
-
-const mousein = (event) => {
-	let tooltip = document.querySelector('#purchaseTooltips')
-	let button = event.target
+const mousein = (event, type, resource) => {
+	tooltips.purchase[type][resource].updateText(resource);
+	let tooltip = document.querySelector('#purchaseTooltips');
+	document.querySelector('#purchaseTooltipName').innerText =
+		tooltips.purchase[type][resource].title;
+	document.querySelector('#purchaseTooltipInfo').innerText =
+		tooltips.purchase[type][resource].info;
+	document.querySelector('#purchaseTooltipCost').innerText =
+		tooltips.purchase[type][resource].cost;
+	let button = event.target;
 	tooltip.style.top = `${event.y - 200}px`;
-	tooltip.style.left = `${event.x - 200}px`
-	tooltip.classList.remove('hidden')
-}
+	tooltip.style.left = `${event.x - 200}px`;
+	tooltip.classList.remove('hidden');
+};
 
 const mouseout = (event) => {
 	let tooltip = document.querySelector('#purchaseTooltips').classList;
 	tooltip.add('hidden');
-}
-
-
+};
 
 load();
 
-autoSave()
+autoSave();

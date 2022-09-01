@@ -10,8 +10,12 @@ let game = {
 			herb: {
 				current: 0,
 				total: 0,
-				storageMax: 250,
-				storageUpgrades: 0,
+				storage: {
+					storageMax: 250,
+					storageUpgrades: 0,
+					storageBaseCost: 50,
+					storageBaseBonus: 2,
+				},
 				activePerSec: 1,
 				activeUpgrades: 0,
 				golemPerSec: 0,
@@ -20,8 +24,12 @@ let game = {
 			mythril: {
 				current: 0,
 				total: 0,
-				storageMax: 250,
-				storageUpgrades: 0,
+				storage: {
+					storageMax: 250,
+					storageUpgrades: 0,
+					storageBaseCost: 50,
+					storageBaseBonus: 2,
+				},
 				activePerSec: 1,
 				activeUpgrades: 0,
 				golemPerSec: 0,
@@ -30,8 +38,12 @@ let game = {
 			yew: {
 				current: 0,
 				total: 0,
-				storageMax: 250,
-				storageUpgrades: 0,
+				storage: {
+					storageMax: 250,
+					storageUpgrades: 0,
+					storageBaseCost: 50,
+					storageBaseBonus: 2,
+				},
 				activePerSec: 1,
 				activeUpgrades: 0,
 				golemPerSec: 0,
@@ -40,8 +52,12 @@ let game = {
 			crystal: {
 				current: 0,
 				total: 0,
-				storageMax: 250,
-				storageUpgrades: 0,
+				storage: {
+					storageMax: 250,
+					storageUpgrades: 0,
+					storageBaseCost: 50,
+					storageBaseBonus: 2,
+				},
 				activePerSec: 1,
 				activeUpgrades: 0,
 				golemPerSec: 0,
@@ -50,8 +66,12 @@ let game = {
 			arcana: {
 				current: 0,
 				total: 0,
-				storageMax: 250,
-				storageUpgrades: 0,
+				storage: {
+					storageMax: 250,
+					storageUpgrades: 0,
+					storageBaseCost: 50,
+					storageBaseBonus: 2,
+				},
 				activePerSec: 1,
 				activeUpgrades: 0,
 				golemPerSec: 0,
