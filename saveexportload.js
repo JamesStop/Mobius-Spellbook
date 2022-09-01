@@ -21,5 +21,7 @@ const load = () => {
 		setResourcesActiveColor(game.current.collecting);
         updateResourceAmount();
         updateTotalProductionAll();
+        updateStorages();
+        updateUpgradesDisplaySingle();
     }
 }

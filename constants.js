@@ -1,4 +1,5 @@
 const resources = ['herb', 'mythril', 'yew', 'crystal', 'arcana'];
+const upgradeTypes = ['storage'];
 
 const tooltips = {
 	purchase: {

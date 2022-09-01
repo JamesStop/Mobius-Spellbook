@@ -190,6 +190,28 @@ const updateStorageSingle = (resource) => {
 
 //Update storage max display functions start//
 
+//Update upgrades level display functions start//
+
+const updateUpgradesDisplayAll = () => {
+
+	document.querySelector(`#${resource}-${type}-level`).innerText =
+		game.current.resources[resource][type][`${type}Upgrades`];
+};
+
+const updateUpgradesDisplaySingle = (type, resource) => {
+	resources.map((resource) => {
+		upgradeTypes.map((type) => {
+			document.querySelector(`#${resource}-${type}-level`).innerText =
+				game.current.resources[resource][type][`${type}Upgrades`];
+		})
+	})	
+}
+
+
+
+
+//Update upgrades level display functions start//
+
 //Purchase upgrades functions start//
 
 const purchaseUpgrade = (type, resource) => {
@@ -204,6 +226,7 @@ const purchaseUpgrade = (type, resource) => {
 			upgradeType[`${type}BaseCost`] *
 			upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`];
 		upgradeType[`${type}Upgrades`] += 1;
+		updateUpgradesDisplaySingle(type, resource);
 		upgradeType[`${type}Max`] =
 			upgradeType[`${type}Base`] *
 			upgradeType[`${type}BaseBonus`] ** upgradeType[`${type}Upgrades`];
