@@ -7,7 +7,7 @@
 		<link rel="stylesheet" href="basestyle.css" />
 		<title>Mobius Spellbook</title>
 	</head>
-	<body>
+	<body class="unselectable">
 		<section class="resource-wrapper">
 			<section class="resource-collection-wrapper">
 				<div class="resource-box">
@@ -97,7 +97,28 @@
 				<button class="upgrades-nav-selector" id="spellbook-selector" onclick="upgradesNavBarClick(id)"><span>Spell Book</span></button>
 				<button class="upgrades-nav-selector" id="something-selector" onclick="upgradesNavBarClick(id)"><span>????</span></div>
 			</nav>
-			<div class="upgrades-display-wrapper" id="upgrades-display">upgrades</div>
+			<div class="upgrades-display-wrapper" id="upgrades-display">
+				<section class="storage-upgrades-wrapper">
+					<h3 class="upgrades-titles">Storage</h3>
+					<div class="upgrades-purchase-wrapper">
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'herb')" onmouseout="mouseout()" onclick="purchaseUpgrade('storage', 'herb')"><span>Herbs</span><span id="herb-storage-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'mythril')" onmouseout="mouseout()" onclick="purchaseUpgrade('storage', 'mythril')"><span>Mythril</span><span id="mythril-storage-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'yew')" onmouseout="mouseout()" onclick="purchaseUpgrade('storage', 'yew')"><span>Yew</span><span id="yew-storage-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'crystal')" onmouseout="mouseout()" onclick="purchaseUpgrade('storage', 'crystal')"><span>Crystal</span><span id="crystal-storage-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'arcana')" onmouseout="mouseout()" onclick="purchaseUpgrade('storage', 'arcana')"><span>Arcana</span><span id="arcana-storage-level">0</span></button>
+					</div>
+				</section>
+				<section class="active-production-upgrades-wrapper">
+					<h3 class="upgrades-titles">Active</h3>
+					<div class="upgrades-purchase-wrapper">
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'active', 'herb')" onmouseout="mouseout()" onclick="purchaseUpgrade('active', 'herb')"><span>Herbs</span><span id="herb-active-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'active', 'mythril')" onmouseout="mouseout()" onclick="purchaseUpgrade('active', 'mythril')"><span>Mythril</span><span id="mythril-active-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'active', 'yew')" onmouseout="mouseout()" onclick="purchaseUpgrade('active', 'yew')"><span>Yew</span><span id="yew-active-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'active', 'crystal')" onmouseout="mouseout()" onclick="purchaseUpgrade('active', 'crystal')"><span>Crystal</span><span id="crystal-active-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'active', 'arcana')" onmouseout="mouseout()" onclick="purchaseUpgrade('active', 'arcana')"><span>Arcana</span><span id="arcana-active-level">0</span></button>
+					</div>
+				</section>
+			</div>
 			<div class="upgrades-display-wrapper hidden" id="golems-display">golems</div>
 			<div class="upgrades-display-wrapper hidden" id="spellbook-display">spellbook</div>
 			<div class="upgrades-display-wrapper hidden" id="something-display">???</div>
@@ -109,7 +130,9 @@
 			<button class="settings-buttons">Achievements</button>
 			<button class="settings-buttons">Settings</button>
 		</section>
+		<div class="purchaseTooltips hidden" id="purchaseTooltips"><span class="purchaseTooltipName" id="purchaseTooltipName"></span><span class='purchaseTooltipInfo' id="purchaseTooltipInfo"></span><span class="purchaseTooltipCost" id="purchaseTooltipCost"></span></div>
 		<script src="game.js"></script>
+		<script src="constants.js"></script>
 		<script src="lz-string.js"></script>
 		<script src="saveexportload.js"></script>
 		<script src="main.js"></script>

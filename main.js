@@ -1,12 +1,8 @@
 //General Purpose Start//
 
-const resources = ['herb', 'mythril', 'yew', 'crystal', 'arcana'];
-
 //General Purpose End//
 
 //Upgrades nav bar click functions start//
-
-
 
 //Upgrades nav bar click functions end//
 
@@ -47,16 +43,16 @@ const upgradesDisplayHide = () => {
 };
 
 const upgradesDisplayShow = (id) => {
-    const displayId = id.replace('selector', 'display')
+	const displayId = id.replace('selector', 'display');
 	const display = document.querySelector(`#${displayId}`).classList;
 	display.remove('hidden');
 };
 
 const upgradesNavBarClick = (id) => {
-    upgradesNavColorReset();
-    setUpgradesNavActiveColor(id);
-    upgradesDisplayHide();
-    upgradesDisplayShow(id);
+	upgradesNavColorReset();
+	setUpgradesNavActiveColor(id);
+	upgradesDisplayHide();
+	upgradesDisplayShow(id);
 };
 
 //Resource bar click functions start//
@@ -78,10 +74,12 @@ const resourceColorReset = () => {
 };
 
 const setResourcesActiveColor = (id) => {
-	const button = document.querySelector(`#${id}-button`).classList;
-	button.remove('color-inactive');
-	button.remove('color-active');
-	button.add('color-active');
+	if (id != null) {
+		const button = document.querySelector(`#${id}-button`).classList;
+		button.remove('color-inactive');
+		button.remove('color-active');
+		button.add('color-active');
+	}
 };
 
 const setCollectingResource = (resource) => {
@@ -103,7 +101,7 @@ const updateTotalProductionAll = () => {
 	resources.map((resource) => {
 		const updating = game.current.resources[resource];
 		if (resource === game.current.collecting) {
-			updating.totalPerSec = updating.golemPerSec + updating.activePerSec;
+			updating.totalPerSec = updating.golemPerSec + updating.active.activeTotal;
 		} else {
 			updating.totalPerSec = updating.golemPerSec;
 		}
@@ -114,7 +112,7 @@ const updateTotalProductionAll = () => {
 const updateTotalProductionIndividual = (resource) => {
 	const updating = game.current.resources[resource];
 	if (resource === game.current.collecting) {
-		updating.totalPerSec = updating.golemPerSec + updating.activePerSec;
+		updating.totalPerSec = updating.golemPerSec + updating.active.activeTotal;
 	} else {
 		updating.totalPerSec = updating.golemPerSec;
 	}
@@ -129,15 +127,15 @@ const updateResourceAmount = () => {
 	resources.map((resource) => {
 		const updating = game.current.resources[resource];
 		document.querySelector(`#${resource}-current`).innerText = updating.current;
-	})
-}
+	});
+};
 
 const updateResourceAmountGain = (resource, value) => {
 	const updating = game.current.resources[resource];
-	if (updating.current != updating.storageMax) {
-		if (updating.current + value > updating.storageMax) {
-			updating.current += updating.storageMax - updating.current;
-			updating.total += updating.storageMax - updating.current;
+	if (updating.current != updating.storage.storageTotal) {
+		if (updating.current + value > updating.storage.storageTotal) {
+			updating.current += updating.storage.storageTotal - updating.current;
+			updating.total += updating.storage.storageTotal - updating.current;
 		} else {
 			updating.current += value;
 			updating.total += value;
@@ -176,14 +174,105 @@ window.setInterval(() => {
 
 //Idle resource collection functions end//
 
+//Update storage max display functions start//
 
+const updateStorages = () => {
+	resources.map((resource) => {
+		document.querySelector(`#${resource}-storage-max`).innerText =
+			game.current.resources[resource].storage.storageTotal;
+	});
+};
 
+const updateStorageSingle = (resource) => {
+	document.querySelector(`#${resource}-storage-max`).innerText =
+		game.current.resources[resource].storage.storageTotal;
+};
 
+//Update storage max display functions start//
 
+//Update upgrades level display functions start//
 
+const updateUpgradesDisplayAll = () => {
+	resources.map((resource) => {
+		upgradeTypes.map((type) => {
+			document.querySelector(`#${resource}-${type}-level`).innerText =
+				game.current.resources[resource][type][`${type}Upgrades`];
+		});
+	});
+};
 
+const updateUpgradesDisplaySingle = (type, resource) => {
+	document.querySelector(`#${resource}-${type}-level`).innerText =
+		game.current.resources[resource][type][`${type}Upgrades`];
+};
 
+//Update upgrades level display functions start//
+
+//Purchase upgrades functions start//
+
+const purchaseUpgrade = (type, resource) => {
+	let upgradeResource = game.current.resources[resource];
+	let upgradeType = upgradeResource[type];
+	if (
+		upgradeResource.current >=
+		Math.ceil(
+			upgradeType[`${type}BaseCost`] *
+				upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
+		)
+	) {
+		upgradeResource.current -= Math.ceil(
+			upgradeType[`${type}BaseCost`] *
+				upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
+		);
+		upgradeType[`${type}Upgrades`] += 1;
+		updateUpgradesDisplaySingle(type, resource);
+		if (type == 'storage') {
+			upgradeType[`${type}Total`] =
+				Math.floor(upgradeType[`${type}Base`] *
+				upgradeType[`${type}BaseBonus`] ** upgradeType[`${type}Upgrades`]);
+			updateStorageSingle(resource);
+		}
+		if (type == 'active') {
+			upgradeType[`${type}Total`] =
+				1 + upgradeType[`${type}BaseBonus`] * upgradeType[`${type}Upgrades`];
+			updateTotalProductionIndividual(resource);
+		}
+		updateToolTip('purchase', type, resource);
+	}
+};
+
+//Purchase upgrades functions end//
+
+//functions for tooltips start//
+
+const updateToolTip = (niche, type, resource) => {
+	tooltips[niche][type][resource].updateText(resource);
+	document.querySelector('#purchaseTooltipName').innerText =
+		tooltips[niche][type][resource].title;
+	document.querySelector('#purchaseTooltipInfo').innerText =
+		tooltips[niche][type][resource].info;
+	document.querySelector('#purchaseTooltipCost').innerText =
+		tooltips[niche][type][resource].cost;
+};
+
+const mousein = (event, niche, type, resource) => {
+	updateToolTip(niche, type, resource);
+	let tooltip = document.querySelector(`#${niche}Tooltips`);
+	tooltip.style.top = `${event.y - 200}px`;
+	tooltip.style.left = `${event.x - 200}px`;
+	tooltip.classList.remove('hidden');
+};
+
+const mouseout = (event) => {
+	let tooltip = document.querySelector('#purchaseTooltips').classList;
+	tooltip.add('hidden');
+};
+
+//functions for tooltips end//
+
+//Saving and loading related functions start//
 
 load();
+autoSave();
 
-autoSave()
+//Saving and loading related functions end//
