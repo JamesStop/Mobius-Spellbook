@@ -120,10 +120,16 @@
 				</section>
 			</div>
 			<div class="upgrades-display-wrapper golems hidden" id="golems-display">
-				<div class="golems-construct" onmouseover="mousein(event, 'purchase', 'golems', 'construct')" onmouseout="mouseout()">
-					<span>Construct Golem</span>
-					<button class="golem-build-button" onclick="buildGolem()">Build</button>
-				</div>
+				<section class="golems-top-wrapper">
+					<div class="golems-construct" onmouseover="mousein(event, 'purchase', 'golems', 'construct')" onmouseout="mouseout()">
+						<span>Golems</span>
+						<span id="golems-inactive-display">0</span>
+					</div>
+					<div class="golems-construct" onmouseover="mousein(event, 'purchase', 'golems', 'construct')" onmouseout="mouseout()">
+						<span>Construct</span>
+						<button class="golem-build-button" onclick="buildGolem()">Build</button>
+					</div>
+				</section>
 				<section class="golem-assignment-type-wrapper">
 					<button class="assignment-type-selector-button golem-assign-active" id="golem-assign" onclick="assignType(id)">Assign</button>
 					<button class="assignment-type-selector-button" id="golem-remove" onclick="assignType(id)">Remove</button>

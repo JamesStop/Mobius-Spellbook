@@ -246,6 +246,14 @@ const purchaseUpgrade = (type, resource) => {
 
 //golems page functions start//
 
+//golems display function start//
+
+const updateGolemsInactive = () => {
+	document.querySelector(`#golems-inactive-display`).innerText = game.current.resources.golems.inactive
+}
+
+//golems display function end//
+
 //golem build functions start//
 
 const buildGolem = () => {
@@ -269,6 +277,7 @@ const buildGolem = () => {
 		game.current.resources.golems.total += 1;
 		game.current.resources.golems.inactive += 1;
 		updateResourceAmount()
+		updateGolemsInactive()
 	}
 };
 

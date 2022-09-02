@@ -242,6 +242,12 @@ body {
     gap: 5px;
 }
 
+.golems-top-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
 .golems-construct {
     height: 75px;
     width: 150px;
