@@ -190,13 +190,13 @@ body {
 .storage-upgrades-wrapper {
     display: flex;
     flex-direction: column;
-    overflow-x: auto;
+
 }
 
 .active-production-upgrades-wrapper {
     display: flex;
     flex-direction: column;
-    overflow-x: auto;
+
 }
 
 .upgrades-titles {
@@ -234,6 +234,84 @@ body {
 
 
 /*Upgrades upgrades tab styling end*/
+
+/*Upgrades golems tab styling start*/
+
+.golems {
+    align-items: center;
+    gap: 5px;
+}
+
+.golems-construct {
+    height: 75px;
+    width: 150px;
+    background-color: wheat;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.golem-build-button {
+    height: 25px;
+    width: 65px;
+}
+
+.golem-assignment-type-wrapper {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.assignment-type-selector-button {
+    height: 30px;
+    width: 55px;
+}
+
+.golem-remove-active {
+    background-color: red;
+}
+
+.golem-assign-active {
+    background-color: green;
+}
+
+
+
+.golem-assignment-wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    grid-template-rows: repeat(1, 60px);
+    width: 100%;
+    justify-items: center;
+    align-items: center;
+}
+
+.golem-assignment {
+    background-color: bisque;
+    height: 90%;
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    font-size: 15px;
+}
+
+
+
+
+.golem-assignment-add-button,
+.golem-assignment-remove-button {
+    height: 20px;
+    width: 20px;
+}
+
+/*Upgrades golems tab styling end*/
 
 /*Upgrades box styling end*/
 

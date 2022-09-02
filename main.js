@@ -227,9 +227,10 @@ const purchaseUpgrade = (type, resource) => {
 		upgradeType[`${type}Upgrades`] += 1;
 		updateUpgradesDisplaySingle(type, resource);
 		if (type == 'storage') {
-			upgradeType[`${type}Total`] =
-				Math.floor(upgradeType[`${type}Base`] *
-				upgradeType[`${type}BaseBonus`] ** upgradeType[`${type}Upgrades`]);
+			upgradeType[`${type}Total`] = Math.floor(
+				upgradeType[`${type}Base`] *
+					upgradeType[`${type}BaseBonus`] ** upgradeType[`${type}Upgrades`]
+			);
 			updateStorageSingle(resource);
 		}
 		if (type == 'active') {
@@ -242,6 +243,58 @@ const purchaseUpgrade = (type, resource) => {
 };
 
 //Purchase upgrades functions end//
+
+//golems page functions start//
+
+//golem build functions start//
+
+const buildGolem = () => {
+	let canBuild = true;
+	for (let i = 0; i < resources.length; i++) {
+		let resource = resources[i];
+		if (
+			game.current.resources[resource].current <
+			game.current.resources.golems.cost.totalCost
+		) {
+			canBuild = false;
+			break;
+		}
+	}
+	if (canBuild) {
+		resources.map((resource) => {
+			game.current.resources[resource].current -=
+				game.current.resources.golems.cost.totalCost;
+		});
+		game.current.resources.golems.current += 1;
+		game.current.resources.golems.total += 1;
+		game.current.resources.golems.inactive += 1;
+		updateResourceAmount()
+	}
+};
+
+//golem build functions end//
+
+//golem assignment type functions start//
+
+const golemAssignColors = (id) => {
+	assignmentButtons.map((button) => {
+		document.querySelector(`#${button}`).classList.remove(`${button}-active`);
+	});
+	document.querySelector(`#golem-${id}`).classList.add(`golem-${id}-active`);
+};
+
+const assignType = (id) => {
+	game.current.resources.golems.assignmentType = id.replace('golem-', '');
+	golemAssignColors(game.current.resources.golems.assignmentType);
+};
+
+//golem assignment type functions end//
+
+//golem assignment functions start//
+
+//golem assignment functions end//
+
+//golems page functions end//
 
 //functions for tooltips start//
 

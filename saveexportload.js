@@ -23,5 +23,6 @@ const load = () => {
         updateTotalProductionAll();
         updateStorages();
         updateUpgradesDisplayAll();
+        golemAssignColors(game.current.resources.golems.assignmentType);
     }
 }

@@ -111,7 +111,7 @@
 				<section class="active-production-upgrades-wrapper">
 					<h3 class="upgrades-titles">Active</h3>
 					<div class="upgrades-purchase-wrapper">
-						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'active', 'herb')" onmouseout="mouseout()" onclick="purchaseUpgrade('active', 'herb')"><span>Herbs</span><span id="herb-active-level">0</span></button>
+						<button class="upgrades-purchase-button" c" onclick="purchaseUpgrade('active', 'herb')"><span>Herbs</span><span id="herb-active-level">0</span></button>
 						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'active', 'mythril')" onmouseout="mouseout()" onclick="purchaseUpgrade('active', 'mythril')"><span>Mythril</span><span id="mythril-active-level">0</span></button>
 						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'active', 'yew')" onmouseout="mouseout()" onclick="purchaseUpgrade('active', 'yew')"><span>Yew</span><span id="yew-active-level">0</span></button>
 						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'active', 'crystal')" onmouseout="mouseout()" onclick="purchaseUpgrade('active', 'crystal')"><span>Crystal</span><span id="crystal-active-level">0</span></button>
@@ -119,8 +119,25 @@
 					</div>
 				</section>
 			</div>
-			<div class="upgrades-display-wrapper hidden" id="golems-display">
-				
+			<div class="upgrades-display-wrapper golems hidden" id="golems-display">
+				<div class="golems-construct" onmouseover="mousein(event, 'purchase', 'golems', 'construct')" onmouseout="mouseout()">
+					<span>Construct Golem</span>
+					<button class="golem-build-button" onclick="buildGolem()">Build</button>
+				</div>
+				<section class="golem-assignment-type-wrapper">
+					<button class="assignment-type-selector-button golem-assign-active" id="golem-assign" onclick="assignType(id)">Assign</button>
+					<button class="assignment-type-selector-button" id="golem-remove" onclick="assignType(id)">Remove</button>
+				</section>
+				<section class="golem-assignment-wrapper">
+					<button class="golem-assignment">
+						<span>herb</span>
+						<span id="golem-herb-count">0</span>
+					</button>
+					<div></div>
+					<div></div>
+					<div></div>
+					<div></div>
+				</section>
 			</div>
 			<div class="upgrades-display-wrapper hidden" id="spellbook-display">spellbook</div>
 			<div class="upgrades-display-wrapper hidden" id="something-display">???</div>
