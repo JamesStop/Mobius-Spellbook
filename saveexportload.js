@@ -22,6 +22,6 @@ const load = () => {
         updateResourceAmount();
         updateTotalProductionAll();
         updateStorages();
-        updateUpgradesDisplaySingle();
+        updateUpgradesDisplayAll();
     }
 }

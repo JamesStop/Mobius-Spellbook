@@ -101,7 +101,7 @@ const updateTotalProductionAll = () => {
 	resources.map((resource) => {
 		const updating = game.current.resources[resource];
 		if (resource === game.current.collecting) {
-			updating.totalPerSec = updating.golemPerSec + updating.activePerSec;
+			updating.totalPerSec = updating.golemPerSec + updating.active.activeTotal;
 		} else {
 			updating.totalPerSec = updating.golemPerSec;
 		}
@@ -112,7 +112,7 @@ const updateTotalProductionAll = () => {
 const updateTotalProductionIndividual = (resource) => {
 	const updating = game.current.resources[resource];
 	if (resource === game.current.collecting) {
-		updating.totalPerSec = updating.golemPerSec + updating.activePerSec;
+		updating.totalPerSec = updating.golemPerSec + updating.active.activeTotal;
 	} else {
 		updating.totalPerSec = updating.golemPerSec;
 	}
@@ -132,10 +132,10 @@ const updateResourceAmount = () => {
 
 const updateResourceAmountGain = (resource, value) => {
 	const updating = game.current.resources[resource];
-	if (updating.current != updating.storage.storageMax) {
-		if (updating.current + value > updating.storage.storageMax) {
-			updating.current += updating.storage.storageMax - updating.current;
-			updating.total += updating.storage.storageMax - updating.current;
+	if (updating.current != updating.storage.storageTotal) {
+		if (updating.current + value > updating.storage.storageTotal) {
+			updating.current += updating.storage.storageTotal - updating.current;
+			updating.total += updating.storage.storageTotal - updating.current;
 		} else {
 			updating.current += value;
 			updating.total += value;
@@ -179,13 +179,13 @@ window.setInterval(() => {
 const updateStorages = () => {
 	resources.map((resource) => {
 		document.querySelector(`#${resource}-storage-max`).innerText =
-			game.current.resources[resource].storage.storageMax;
+			game.current.resources[resource].storage.storageTotal;
 	});
 };
 
 const updateStorageSingle = (resource) => {
 	document.querySelector(`#${resource}-storage-max`).innerText =
-		game.current.resources[resource].storage.storageMax;
+		game.current.resources[resource].storage.storageTotal;
 };
 
 //Update storage max display functions start//
@@ -193,22 +193,18 @@ const updateStorageSingle = (resource) => {
 //Update upgrades level display functions start//
 
 const updateUpgradesDisplayAll = () => {
-
-	document.querySelector(`#${resource}-${type}-level`).innerText =
-		game.current.resources[resource][type][`${type}Upgrades`];
-};
-
-const updateUpgradesDisplaySingle = (type, resource) => {
 	resources.map((resource) => {
 		upgradeTypes.map((type) => {
 			document.querySelector(`#${resource}-${type}-level`).innerText =
 				game.current.resources[resource][type][`${type}Upgrades`];
-		})
-	})	
-}
+		});
+	});
+};
 
-
-
+const updateUpgradesDisplaySingle = (type, resource) => {
+	document.querySelector(`#${resource}-${type}-level`).innerText =
+		game.current.resources[resource][type][`${type}Upgrades`];
+};
 
 //Update upgrades level display functions start//
 
@@ -219,19 +215,29 @@ const purchaseUpgrade = (type, resource) => {
 	let upgradeType = upgradeResource[type];
 	if (
 		upgradeResource.current >=
-		upgradeType[`${type}BaseCost`] *
-			upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
-	) {
-		upgradeResource.current -=
+		Math.ceil(
 			upgradeType[`${type}BaseCost`] *
-			upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`];
+				upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
+		)
+	) {
+		upgradeResource.current -= Math.ceil(
+			upgradeType[`${type}BaseCost`] *
+				upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
+		);
 		upgradeType[`${type}Upgrades`] += 1;
 		updateUpgradesDisplaySingle(type, resource);
-		upgradeType[`${type}Max`] =
-			upgradeType[`${type}Base`] *
-			upgradeType[`${type}BaseBonus`] ** upgradeType[`${type}Upgrades`];
+		if (type == 'storage') {
+			upgradeType[`${type}Total`] =
+				Math.floor(upgradeType[`${type}Base`] *
+				upgradeType[`${type}BaseBonus`] ** upgradeType[`${type}Upgrades`]);
+			updateStorageSingle(resource);
+		}
+		if (type == 'active') {
+			upgradeType[`${type}Total`] =
+				1 + upgradeType[`${type}BaseBonus`] * upgradeType[`${type}Upgrades`];
+			updateTotalProductionIndividual(resource);
+		}
 		updateToolTip('purchase', type, resource);
-		updateStorageSingle(resource)
 	}
 };
 
@@ -249,9 +255,9 @@ const updateToolTip = (niche, type, resource) => {
 		tooltips[niche][type][resource].cost;
 };
 
-const mousein = (event, type, resource) => {
-	updateToolTip('purchase', type, resource);
-	let tooltip = document.querySelector('#purchaseTooltips');
+const mousein = (event, niche, type, resource) => {
+	updateToolTip(niche, type, resource);
+	let tooltip = document.querySelector(`#${niche}Tooltips`);
 	tooltip.style.top = `${event.y - 200}px`;
 	tooltip.style.left = `${event.x - 200}px`;
 	tooltip.classList.remove('hidden');
