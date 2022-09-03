@@ -281,15 +281,17 @@ const buildGolem = () => {
 		}
 	}
 	if (canBuild) {
-		resources.map((resource) => {
-			game.current.resources[resource].current -=
-				game.current.resources.golems.cost.totalCost;
-		});
-		game.current.resources.golems.current += 1;
-		game.current.resources.golems.total += 1;
-		game.current.resources.golems.inactive += 1;
-		updateResourceAmount();
-		updateGolemsInactive();
+		if (game.current.resources.golems.total < game.current.resources.golems.storage.storageTotal) {
+			resources.map((resource) => {
+				game.current.resources[resource].current -=
+					game.current.resources.golems.cost.totalCost;
+			});
+			game.current.resources.golems.total += 1;
+			game.current.resources.golems.inactive += 1;
+			updateResourceAmount();
+			updateGolemsInactive();
+		}
+		
 	}
 };
 
