@@ -133,7 +133,7 @@ const updateResourceAmount = () => {
 const updateResourceAmountSingle = (resource) => {
 	const updating = game.current.resources[resource];
 	document.querySelector(`#${resource}-current`).innerText = updating.current;
-}
+};
 
 const updateResourceAmountGain = (resource, value) => {
 	const updating = game.current.resources[resource];
@@ -145,7 +145,7 @@ const updateResourceAmountGain = (resource, value) => {
 			updating.current += value;
 			updating.total += value;
 		}
-		updateResourceAmountSingle(resource)
+		updateResourceAmountSingle(resource);
 	}
 };
 
@@ -156,7 +156,7 @@ const updateResourceAmountLoss = (resource, value) => {
 	} else {
 		updating.current -= value;
 	}
-	updateResourceAmountSingle(resource)
+	updateResourceAmountSingle(resource);
 };
 
 //Resource update value functions end//
@@ -222,7 +222,7 @@ const purchaseUpgrade = (type, resource) => {
 			upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
 	);
 	if (upgradeResource.current >= cost) {
-		updateResourceAmountLoss(resource, cost)
+		updateResourceAmountLoss(resource, cost);
 		upgradeType[`${type}Upgrades`] += 1;
 		updateUpgradesDisplaySingle(type, resource);
 		if (type == 'storage') {
@@ -248,8 +248,21 @@ const purchaseUpgrade = (type, resource) => {
 //golems display function start//
 
 const updateGolemsInactive = () => {
-	document.querySelector(`#golems-inactive-display`).innerText = game.current.resources.golems.inactive
-}
+	document.querySelector(`#golems-inactive-display`).innerText =
+		game.current.resources.golems.inactive;
+};
+
+const updateGolemsActiveAll = () => {
+	resources.map((resource) => {
+		document.querySelector(`#${resource}-golem-count`).innerText =
+			game.current.resources.golems.types[resource];
+	});
+};
+
+const updateGolemsActiveSingle = (resource) => {
+	document.querySelector(`#${resource}-golem-count`).innerText =
+		game.current.resources.golems.types[resource];
+};
 
 //golems display function end//
 
@@ -275,8 +288,8 @@ const buildGolem = () => {
 		game.current.resources.golems.current += 1;
 		game.current.resources.golems.total += 1;
 		game.current.resources.golems.inactive += 1;
-		updateResourceAmount()
-		updateGolemsInactive()
+		updateResourceAmount();
+		updateGolemsInactive();
 	}
 };
 
@@ -298,7 +311,62 @@ const assignType = (id) => {
 
 //golem assignment type functions end//
 
+//golem production update functions start//
+
+const updateGolemProductionAll = () => {
+	resources.map((resource) => {
+		game.current.resources[resource].golemPerSec =
+			game.current.resources.golems.types[resource] * 1;
+		updateTotalProductionIndividual(resource);
+	});
+};
+
+const updateGolemProductionSingle = (resource) => {
+	game.current.resources[resource].golemPerSec =
+		game.current.resources.golems.types[resource] * 1;
+	updateTotalProductionIndividual(resource);
+};
+
+//golem production update functions end//
+
+//golem assignment amounts functions start//
+
+const golemActiveAssign = (resource, value) => {
+	if (
+		game.current.resources.golems.inactive < value &&
+		game.current.resources.golems.inactive > 0
+	) {
+		game.current.resources.golems.inactive = 0;
+		game.current.resources.golems.active +=
+			game.current.resources.golems.inactive;
+		game.current.resources.golems.types[resource] +=
+			game.current.resources.golems.inactive;
+	} else if (game.current.resources.golems.inactive >= value) {
+		game.current.resources.golems.inactive -= value;
+		game.current.resources.golems.active += value;
+		game.current.resources.golems.types[resource] += value;
+	}
+	updateGolemsInactive();
+	updateGolemsActiveSingle(resource);
+	updateGolemProductionSingle(resource);
+}
+
+const golemActiveRemove = (resource, value) => {
+	
+}
+
+//golem assignment amounts functions start//
+
 //golem assignment functions start//
+
+const golemAssign = (resource) => {
+	let golemsAmountToAssign = 1;
+	let assignType = game.current.resources.golems.assignmentType;
+	if (assignType == 'remove') {
+	} else {
+		golemActiveAssign(resource, golemsAmountToAssign);
+	}
+};
 
 //golem assignment functions end//
 

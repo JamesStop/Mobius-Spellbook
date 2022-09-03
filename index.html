@@ -135,14 +135,26 @@
 					<button class="assignment-type-selector-button" id="golem-remove" onclick="assignType(id)">Remove</button>
 				</section>
 				<section class="golem-assignment-wrapper">
-					<button class="golem-assignment">
+					<button class="golem-assignment" onclick="golemAssign('herb')">
 						<span>herb</span>
-						<span id="golem-herb-count">0</span>
+						<span id="herb-golem-count">0</span>
 					</button>
-					<div></div>
-					<div></div>
-					<div></div>
-					<div></div>
+					<button class="golem-assignment" onclick="golemAssign('mythril')">
+						<span>mythril</span>
+						<span id="mythril-golem-count">0</span>
+					</button>
+					<button class="golem-assignment" onclick="golemAssign('yew')">
+						<span>yew</span>
+						<span id="yew-golem-count">0</span>
+					</button>
+					<button class="golem-assignment" onclick="golemAssign('crystal')">
+						<span>crystal</span>
+						<span id="crystal-golem-count">0</span>
+					</button>
+					<button class="golem-assignment" onclick="golemAssign('arcana')">
+						<span>arcana</span>
+						<span id="arcana-golem-count">0</span>
+					</button>
 				</section>
 			</div>
 			<div class="upgrades-display-wrapper hidden" id="spellbook-display">spellbook</div>
