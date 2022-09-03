@@ -130,6 +130,11 @@ const updateResourceAmount = () => {
 	});
 };
 
+const updateResourceAmountSingle = (resource) => {
+	const updating = game.current.resources[resource];
+	document.querySelector(`#${resource}-current`).innerText = updating.current;
+}
+
 const updateResourceAmountGain = (resource, value) => {
 	const updating = game.current.resources[resource];
 	if (updating.current != updating.storage.storageTotal) {
@@ -140,7 +145,7 @@ const updateResourceAmountGain = (resource, value) => {
 			updating.current += value;
 			updating.total += value;
 		}
-		document.querySelector(`#${resource}-current`).innerText = updating.current;
+		updateResourceAmountSingle(resource)
 	}
 };
 
@@ -149,10 +154,9 @@ const updateResourceAmountLoss = (resource, value) => {
 	if (updating.current - value < 0) {
 		updating.current = 0;
 	} else {
-		updating.current += value;
-		updating.total += value;
+		updating.current -= value;
 	}
-	document.querySelector(`#${resource}-current`).innerText = updating.current;
+	updateResourceAmountSingle(resource)
 };
 
 //Resource update value functions end//
@@ -213,17 +217,12 @@ const updateUpgradesDisplaySingle = (type, resource) => {
 const purchaseUpgrade = (type, resource) => {
 	let upgradeResource = game.current.resources[resource];
 	let upgradeType = upgradeResource[type];
-	if (
-		upgradeResource.current >=
-		Math.ceil(
-			upgradeType[`${type}BaseCost`] *
-				upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
-		)
-	) {
-		upgradeResource.current -= Math.ceil(
-			upgradeType[`${type}BaseCost`] *
-				upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
-		);
+	let cost = Math.ceil(
+		upgradeType[`${type}BaseCost`] *
+			upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
+	);
+	if (upgradeResource.current >= cost) {
+		updateResourceAmountLoss(resource, cost)
 		upgradeType[`${type}Upgrades`] += 1;
 		updateUpgradesDisplaySingle(type, resource);
 		if (type == 'storage') {
