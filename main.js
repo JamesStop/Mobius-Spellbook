@@ -352,7 +352,23 @@ const golemActiveAssign = (resource, value) => {
 }
 
 const golemActiveRemove = (resource, value) => {
-	
+	if (
+		game.current.resources.golems.types[resource] < value &&
+		game.current.resources.golems.types[resource] > 0
+	) {
+		game.current.resources.golems.types[resource] = 0;
+		game.current.resources.golems.active -=
+			game.current.resources.golems.types[resource];
+		game.current.resources.golems.inactive +=
+			game.current.resources.golems.types[resource];
+	} else if (game.current.resources.golems.types[resource] >= value) {
+		game.current.resources.golems.types[resource] -= value;
+		game.current.resources.golems.active -= value;
+		game.current.resources.golems.inactive += value;
+	}
+	updateGolemsInactive();
+	updateGolemsActiveSingle(resource);
+	updateGolemProductionSingle(resource);
 }
 
 //golem assignment amounts functions start//
@@ -363,6 +379,7 @@ const golemAssign = (resource) => {
 	let golemsAmountToAssign = 1;
 	let assignType = game.current.resources.golems.assignmentType;
 	if (assignType == 'remove') {
+		golemActiveRemove(resource, golemsAmountToAssign);
 	} else {
 		golemActiveAssign(resource, golemsAmountToAssign);
 	}
