@@ -188,28 +188,36 @@ body {
 /*Upgrades upgrades tab styling start*/
 
 .storage-upgrades-wrapper {
-    height: 25%;
     display: flex;
     flex-direction: column;
-    min-height: 70px;
+
+}
+
+.active-production-upgrades-wrapper {
+    display: flex;
+    flex-direction: column;
+
 }
 
 .upgrades-titles {
     width: 100%;
     border-bottom: 1px solid black;
     padding-left: 5px;
+    font-size: 20px;
 }
 
 .upgrades-purchase-wrapper {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, minmax(60px, 20%));
+    grid-template-rows: repeat(1, 60px);
     height: 100%;
     padding: 5px;
+    align-items: center;
+    justify-items: center;
 }
 
 .upgrades-purchase-button {
-    height: 100%;
-    min-height: 50px;
+    height: 90%;
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -217,6 +225,7 @@ body {
     gap: 10%;
     align-items: center;
     z-index: 100;
+    min-width: 55px;
 }
 
 .upgrades-purchase-button span {
@@ -226,6 +235,90 @@ body {
 
 /*Upgrades upgrades tab styling end*/
 
+/*Upgrades golems tab styling start*/
+
+.golems {
+    align-items: center;
+    gap: 5px;
+}
+
+.golems-top-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.golems-construct {
+    height: 75px;
+    width: 150px;
+    background-color: wheat;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.golem-build-button {
+    height: 25px;
+    width: 65px;
+}
+
+.golem-assignment-type-wrapper {
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.assignment-type-selector-button {
+    height: 30px;
+    width: 55px;
+}
+
+.golem-remove-active {
+    background-color: red;
+}
+
+.golem-assign-active {
+    background-color: green;
+}
+
+
+
+.golem-assignment-wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 20%);
+    grid-template-rows: repeat(1, 60px);
+    width: 100%;
+    justify-items: center;
+    align-items: center;
+}
+
+.golem-assignment {
+    background-color: bisque;
+    height: 90%;
+    width: 90%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    font-size: 15px;
+}
+
+
+
+
+.golem-assignment-add-button,
+.golem-assignment-remove-button {
+    height: 20px;
+    width: 20px;
+}
+
+/*Upgrades golems tab styling end*/
+
 /*Upgrades box styling end*/
 
 /*Combat box styling start*/
@@ -234,7 +327,7 @@ body {
     grid-column: 1;
     grid-row: 2 /4;
     background-color: rgb(163, 151, 168);
-    border: 1px solid rgb(77, 77, 77)
+    border: 1px solid rgb(77, 77, 77);
 }
 
 /*Combat box styling end*/

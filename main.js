@@ -130,6 +130,11 @@ const updateResourceAmount = () => {
 	});
 };
 
+const updateResourceAmountSingle = (resource) => {
+	const updating = game.current.resources[resource];
+	document.querySelector(`#${resource}-current`).innerText = updating.current;
+};
+
 const updateResourceAmountGain = (resource, value) => {
 	const updating = game.current.resources[resource];
 	if (updating.current != updating.storage.storageTotal) {
@@ -140,7 +145,7 @@ const updateResourceAmountGain = (resource, value) => {
 			updating.current += value;
 			updating.total += value;
 		}
-		document.querySelector(`#${resource}-current`).innerText = updating.current;
+		updateResourceAmountSingle(resource);
 	}
 };
 
@@ -149,10 +154,9 @@ const updateResourceAmountLoss = (resource, value) => {
 	if (updating.current - value < 0) {
 		updating.current = 0;
 	} else {
-		updating.current += value;
-		updating.total += value;
+		updating.current -= value;
 	}
-	document.querySelector(`#${resource}-current`).innerText = updating.current;
+	updateResourceAmountSingle(resource);
 };
 
 //Resource update value functions end//
@@ -213,23 +217,19 @@ const updateUpgradesDisplaySingle = (type, resource) => {
 const purchaseUpgrade = (type, resource) => {
 	let upgradeResource = game.current.resources[resource];
 	let upgradeType = upgradeResource[type];
-	if (
-		upgradeResource.current >=
-		Math.ceil(
-			upgradeType[`${type}BaseCost`] *
-				upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
-		)
-	) {
-		upgradeResource.current -= Math.ceil(
-			upgradeType[`${type}BaseCost`] *
-				upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
-		);
+	let cost = Math.ceil(
+		upgradeType[`${type}BaseCost`] *
+			upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
+	);
+	if (upgradeResource.current >= cost) {
+		updateResourceAmountLoss(resource, cost);
 		upgradeType[`${type}Upgrades`] += 1;
 		updateUpgradesDisplaySingle(type, resource);
 		if (type == 'storage') {
-			upgradeType[`${type}Total`] =
-				Math.floor(upgradeType[`${type}Base`] *
-				upgradeType[`${type}BaseBonus`] ** upgradeType[`${type}Upgrades`]);
+			upgradeType[`${type}Total`] = Math.floor(
+				upgradeType[`${type}Base`] *
+					upgradeType[`${type}BaseBonus`] ** upgradeType[`${type}Upgrades`]
+			);
 			updateStorageSingle(resource);
 		}
 		if (type == 'active') {
@@ -242,6 +242,162 @@ const purchaseUpgrade = (type, resource) => {
 };
 
 //Purchase upgrades functions end//
+
+//golems page functions start//
+
+//golems display function start//
+
+const updateGolemsTotal = () => {
+	document.querySelector(`#golems-total-display`).innerText =
+		game.current.resources.golems.total;
+	document.querySelector(`#golems-total-working-display`).innerText =
+		game.current.resources.golems.total;
+};
+
+const updateGolemsActiveAll = () => {
+	resources.map((resource) => {
+		document.querySelector(`#${resource}-golem-count`).innerText =
+			game.current.resources.golems.types[resource];
+	});
+	document.querySelector('#golems-active-display').innerText =
+		game.current.resources.golems.active;
+};
+
+const updateGolemsActiveSingle = (resource) => {
+	document.querySelector(`#${resource}-golem-count`).innerText =
+		game.current.resources.golems.types[resource];
+	document.querySelector('#golems-active-display').innerText =
+		game.current.resources.golems.active;
+};
+
+//golems display function end//
+
+//golem build functions start//
+
+const buildGolem = () => {
+	let canBuild = true;
+	for (let i = 0; i < resources.length; i++) {
+		let resource = resources[i];
+		if (
+			game.current.resources[resource].current <
+			game.current.resources.golems.cost.totalCost
+		) {
+			canBuild = false;
+			break;
+		}
+	}
+	if (canBuild) {
+		if (
+			game.current.resources.golems.total <
+			game.current.resources.golems.storage.storageTotal
+		) {
+			resources.map((resource) => {
+				game.current.resources[resource].current -=
+					game.current.resources.golems.cost.totalCost;
+			});
+			game.current.resources.golems.total += 1;
+			game.current.resources.golems.inactive += 1;
+			updateResourceAmount();
+			updateGolemsTotal();
+		}
+	}
+};
+
+//golem build functions end//
+
+//golem assignment type functions start//
+
+const golemAssignColors = (id) => {
+	assignmentButtons.map((button) => {
+		document.querySelector(`#${button}`).classList.remove(`${button}-active`);
+	});
+	document.querySelector(`#golem-${id}`).classList.add(`golem-${id}-active`);
+};
+
+const assignType = (id) => {
+	game.current.resources.golems.assignmentType = id.replace('golem-', '');
+	golemAssignColors(game.current.resources.golems.assignmentType);
+};
+
+//golem assignment type functions end//
+
+//golem production update functions start//
+
+const updateGolemProductionAll = () => {
+	resources.map((resource) => {
+		game.current.resources[resource].golemPerSec =
+			game.current.resources.golems.types[resource] * 1;
+		updateTotalProductionIndividual(resource);
+	});
+};
+
+const updateGolemProductionSingle = (resource) => {
+	game.current.resources[resource].golemPerSec =
+		game.current.resources.golems.types[resource] * 1;
+	updateTotalProductionIndividual(resource);
+};
+
+//golem production update functions end//
+
+//golem assignment amounts functions start//
+
+const golemActiveAssign = (resource, value) => {
+	if (
+		game.current.resources.golems.inactive < value &&
+		game.current.resources.golems.inactive > 0
+	) {
+		game.current.resources.golems.inactive = 0;
+		game.current.resources.golems.active +=
+			game.current.resources.golems.inactive;
+		game.current.resources.golems.types[resource] +=
+			game.current.resources.golems.inactive;
+	} else if (game.current.resources.golems.inactive >= value) {
+		game.current.resources.golems.inactive -= value;
+		game.current.resources.golems.active += value;
+		game.current.resources.golems.types[resource] += value;
+	}
+	updateGolemsTotal();
+	updateGolemsActiveSingle(resource);
+	updateGolemProductionSingle(resource);
+};
+
+const golemActiveRemove = (resource, value) => {
+	if (
+		game.current.resources.golems.types[resource] < value &&
+		game.current.resources.golems.types[resource] > 0
+	) {
+		game.current.resources.golems.types[resource] = 0;
+		game.current.resources.golems.active -=
+			game.current.resources.golems.types[resource];
+		game.current.resources.golems.inactive +=
+			game.current.resources.golems.types[resource];
+	} else if (game.current.resources.golems.types[resource] >= value) {
+		game.current.resources.golems.types[resource] -= value;
+		game.current.resources.golems.active -= value;
+		game.current.resources.golems.inactive += value;
+	}
+	updateGolemsTotal();
+	updateGolemsActiveSingle(resource);
+	updateGolemProductionSingle(resource);
+};
+
+//golem assignment amounts functions start//
+
+//golem assignment functions start//
+
+const golemAssign = (resource) => {
+	let golemsAmountToAssign = 1;
+	let assignType = game.current.resources.golems.assignmentType;
+	if (assignType == 'remove') {
+		golemActiveRemove(resource, golemsAmountToAssign);
+	} else {
+		golemActiveAssign(resource, golemsAmountToAssign);
+	}
+};
+
+//golem assignment functions end//
+
+//golems page functions end//
 
 //functions for tooltips start//
 

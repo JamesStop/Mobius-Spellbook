@@ -1,5 +1,6 @@
 const resources = ['herb', 'mythril', 'yew', 'crystal', 'arcana'];
 const upgradeTypes = ['storage', 'active'];
+const assignmentButtons = ['golem-assign', 'golem-remove'];
 
 const tooltips = {
 	purchase: {
@@ -15,10 +16,11 @@ const tooltips = {
 						this.infoBase +
 						game.current.resources.herb.storage.storageBaseBonus.toString() +
 						'x';
-					let costValue =
-						Math.ceil(game.current.resources.herb.storage.storageBaseCost *
-						game.current.resources.herb.storage.storageCostIncrement **
-							game.current.resources.herb.storage.storageUpgrades);
+					let costValue = Math.ceil(
+						game.current.resources.herb.storage.storageBaseCost *
+							game.current.resources.herb.storage.storageCostIncrement **
+								game.current.resources.herb.storage.storageUpgrades
+					);
 					this.cost = costValue.toString() + ' herbs';
 				},
 			},
@@ -33,10 +35,11 @@ const tooltips = {
 						this.infoBase +
 						game.current.resources.mythril.storage.storageBaseBonus.toString() +
 						'x';
-					let costValue =
-						Math.ceil(game.current.resources.mythril.storage.storageBaseCost *
-						game.current.resources.mythril.storage.storageCostIncrement **
-							game.current.resources.mythril.storage.storageUpgrades);
+					let costValue = Math.ceil(
+						game.current.resources.mythril.storage.storageBaseCost *
+							game.current.resources.mythril.storage.storageCostIncrement **
+								game.current.resources.mythril.storage.storageUpgrades
+					);
 					this.cost = costValue.toString() + ' mythril';
 				},
 			},
@@ -51,10 +54,11 @@ const tooltips = {
 						this.infoBase +
 						game.current.resources.yew.storage.storageBaseBonus.toString() +
 						'x';
-					let costValue =
-						Math.ceil(game.current.resources.yew.storage.storageBaseCost *
-						game.current.resources.yew.storage.storageCostIncrement **
-							game.current.resources.yew.storage.storageUpgrades);
+					let costValue = Math.ceil(
+						game.current.resources.yew.storage.storageBaseCost *
+							game.current.resources.yew.storage.storageCostIncrement **
+								game.current.resources.yew.storage.storageUpgrades
+					);
 					this.cost = costValue.toString() + ' yew';
 				},
 			},
@@ -69,10 +73,11 @@ const tooltips = {
 						this.infoBase +
 						game.current.resources.crystal.storage.storageBaseBonus.toString() +
 						'x';
-					let costValue =
-						Math.ceil(game.current.resources.crystal.storage.storageBaseCost *
-						game.current.resources.crystal.storage.storageCostIncrement **
-							game.current.resources.crystal.storage.storageUpgrades);
+					let costValue = Math.ceil(
+						game.current.resources.crystal.storage.storageBaseCost *
+							game.current.resources.crystal.storage.storageCostIncrement **
+								game.current.resources.crystal.storage.storageUpgrades
+					);
 					this.cost = costValue.toString() + ' crystals';
 				},
 			},
@@ -87,10 +92,11 @@ const tooltips = {
 						this.infoBase +
 						game.current.resources.arcana.storage.storageBaseBonus.toString() +
 						'x';
-					let costValue =
-						Math.ceil(game.current.resources.arcana.storage.storageBaseCost *
-						game.current.resources.arcana.storage.storageCostIncrement **
-							game.current.resources.arcana.storage.storageUpgrades);
+					let costValue = Math.ceil(
+						game.current.resources.arcana.storage.storageBaseCost *
+							game.current.resources.arcana.storage.storageCostIncrement **
+								game.current.resources.arcana.storage.storageUpgrades
+					);
 					this.cost = costValue.toString() + ' arcana';
 				},
 			},
@@ -106,10 +112,11 @@ const tooltips = {
 					this.info =
 						this.infoBase +
 						game.current.resources.herb.active.activeBaseBonus.toString();
-					let costValue =
-						Math.ceil(game.current.resources.herb.active.activeBaseCost *
-						game.current.resources.herb.active.activeCostIncrement **
-							game.current.resources.herb.active.activeUpgrades);
+					let costValue = Math.ceil(
+						game.current.resources.herb.active.activeBaseCost *
+							game.current.resources.herb.active.activeCostIncrement **
+								game.current.resources.herb.active.activeUpgrades
+					);
 					this.cost = costValue.toString() + ' herbs';
 				},
 			},
@@ -123,10 +130,11 @@ const tooltips = {
 					this.info =
 						this.infoBase +
 						game.current.resources.mythril.active.activeBaseBonus.toString();
-					let costValue =
-						Math.ceil(game.current.resources.mythril.active.activeBaseCost *
-						game.current.resources.mythril.active.activeCostIncrement **
-							game.current.resources.mythril.active.activeUpgrades);
+					let costValue = Math.ceil(
+						game.current.resources.mythril.active.activeBaseCost *
+							game.current.resources.mythril.active.activeCostIncrement **
+								game.current.resources.mythril.active.activeUpgrades
+					);
 					this.cost = costValue.toString() + ' mythril';
 				},
 			},
@@ -140,10 +148,11 @@ const tooltips = {
 					this.info =
 						this.infoBase +
 						game.current.resources.yew.active.activeBaseBonus.toString();
-					let costValue =
-						Math.ceil(game.current.resources.yew.active.activeBaseCost *
-						game.current.resources.yew.active.activeCostIncrement **
-							game.current.resources.yew.active.activeUpgrades);
+					let costValue = Math.ceil(
+						game.current.resources.yew.active.activeBaseCost *
+							game.current.resources.yew.active.activeCostIncrement **
+								game.current.resources.yew.active.activeUpgrades
+					);
 					this.cost = costValue.toString() + ' yew';
 				},
 			},
@@ -157,10 +166,11 @@ const tooltips = {
 					this.info =
 						this.infoBase +
 						game.current.resources.crystal.active.activeBaseBonus.toString();
-					let costValue =
-						Math.ceil(game.current.resources.crystal.active.activeBaseCost *
-						game.current.resources.crystal.active.activeCostIncrement **
-							game.current.resources.crystal.active.activeUpgrades);
+					let costValue = Math.ceil(
+						game.current.resources.crystal.active.activeBaseCost *
+							game.current.resources.crystal.active.activeCostIncrement **
+								game.current.resources.crystal.active.activeUpgrades
+					);
 					this.cost = costValue.toString() + ' crystals';
 				},
 			},
@@ -174,11 +184,24 @@ const tooltips = {
 					this.info =
 						this.infoBase +
 						game.current.resources.arcana.active.activeBaseBonus.toString();
-					let costValue =
-						Math.ceil(game.current.resources.arcana.active.activeBaseCost *
-						game.current.resources.arcana.active.activeCostIncrement **
-							game.current.resources.arcana.active.activeUpgrades);
+					let costValue = Math.ceil(
+						game.current.resources.arcana.active.activeBaseCost *
+							game.current.resources.arcana.active.activeCostIncrement **
+								game.current.resources.arcana.active.activeUpgrades
+					);
 					this.cost = costValue.toString() + ' arcana';
+				},
+			},
+		},
+		golems: {
+			construct: {
+				title: 'Construct Magical Golem',
+				info:
+					'Construct a magical construct that you can assign to collect resources.',
+				cost: '',
+				updateText() {
+					let costValue = game.current.resources.golems.cost.totalCost;
+					this.cost = costValue.toString() + ' of each resource';
 				},
 			},
 		},
