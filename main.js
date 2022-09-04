@@ -247,9 +247,11 @@ const purchaseUpgrade = (type, resource) => {
 
 //golems display function start//
 
-const updateGolemsInactive = () => {
-	document.querySelector(`#golems-inactive-display`).innerText =
-		game.current.resources.golems.inactive;
+const updateGolemsTotal = () => {
+	document.querySelector(`#golems-total-display`).innerText =
+		game.current.resources.golems.total;
+	document.querySelector(`#golems-total-working-display`).innerText =
+		game.current.resources.golems.total;
 };
 
 const updateGolemsActiveAll = () => {
@@ -257,11 +259,15 @@ const updateGolemsActiveAll = () => {
 		document.querySelector(`#${resource}-golem-count`).innerText =
 			game.current.resources.golems.types[resource];
 	});
+	document.querySelector('#golems-active-display').innerText =
+		game.current.resources.golems.active;
 };
 
 const updateGolemsActiveSingle = (resource) => {
 	document.querySelector(`#${resource}-golem-count`).innerText =
 		game.current.resources.golems.types[resource];
+	document.querySelector('#golems-active-display').innerText =
+		game.current.resources.golems.active;
 };
 
 //golems display function end//
@@ -281,7 +287,10 @@ const buildGolem = () => {
 		}
 	}
 	if (canBuild) {
-		if (game.current.resources.golems.total < game.current.resources.golems.storage.storageTotal) {
+		if (
+			game.current.resources.golems.total <
+			game.current.resources.golems.storage.storageTotal
+		) {
 			resources.map((resource) => {
 				game.current.resources[resource].current -=
 					game.current.resources.golems.cost.totalCost;
@@ -289,9 +298,8 @@ const buildGolem = () => {
 			game.current.resources.golems.total += 1;
 			game.current.resources.golems.inactive += 1;
 			updateResourceAmount();
-			updateGolemsInactive();
+			updateGolemsTotal();
 		}
-		
 	}
 };
 
@@ -348,10 +356,10 @@ const golemActiveAssign = (resource, value) => {
 		game.current.resources.golems.active += value;
 		game.current.resources.golems.types[resource] += value;
 	}
-	updateGolemsInactive();
+	updateGolemsTotal();
 	updateGolemsActiveSingle(resource);
 	updateGolemProductionSingle(resource);
-}
+};
 
 const golemActiveRemove = (resource, value) => {
 	if (
@@ -368,10 +376,10 @@ const golemActiveRemove = (resource, value) => {
 		game.current.resources.golems.active -= value;
 		game.current.resources.golems.inactive += value;
 	}
-	updateGolemsInactive();
+	updateGolemsTotal();
 	updateGolemsActiveSingle(resource);
 	updateGolemProductionSingle(resource);
-}
+};
 
 //golem assignment amounts functions start//
 
