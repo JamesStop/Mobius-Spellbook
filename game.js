@@ -144,7 +144,24 @@ let game = {
 				cost: {
 					baseCost: 100,
 					totalCost: 100,
-				}
+				},
+			},
+		},
+		combat: {
+			world: 0,
+			floor: 0,
+			room: 0,
+			player: {
+				healthMax: 100,
+				healthCurrent: 100,
+				attack: 1,
+				defense: 0,
+			},
+			enemy: {
+				healthMax: 100,
+				healthCurrent: 100,
+				attack: 1,
+				defense: 0,
 			},
 		},
 	},
