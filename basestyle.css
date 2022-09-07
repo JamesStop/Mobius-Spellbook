@@ -351,18 +351,15 @@ body {
 
 .circle-outer {
     border: 1px solid black;
-    margin: 0 auto;
-    height: calc(60vmin - 50px);
-    width: calc(60vmin - 50px);
+    height: calc(59vmin - 50px);
+    width: calc(59vmin - 50px);
     border-radius: 50%;
     list-style: none;
     overflow: hidden;
 }
 
 .circle-inner {
-    position: relative;
     border: 1px solid black;
-    padding: 0;
     top: 17.5%;
     left: 17.5%;
     width: 65%;
@@ -370,6 +367,19 @@ body {
     border-radius: 50%;
     list-style: none;
     overflow: hidden;
+}
+
+.circle-center {
+    border: 1px solid black;
+    top: 27.5%;
+    left: 27.5%;
+    width: 45%;
+    height: 45%;
+    border-radius: 50%;
+    list-style: none;
+    overflow: hidden;
+    background: white;
+    text-align: center;
 }
 
 .breakup-outer {
@@ -381,7 +391,7 @@ body {
     height: 50%;
     transform-origin: 0% 100%;
     border: 1px solid black;
-    background-color: white;
+    background-color: aqua;
 }
 
 .outer {
@@ -515,18 +525,7 @@ body {
 }
 
 
-.circle-center {
-    border: 1px solid black;
-    top: 27.5%;
-    left: 27.5%;
-    width: 45%;
-    height: 45%;
-    border-radius: 50%;
-    list-style: none;
-    overflow: hidden;
-    background: white;
-    text-align: center;
-}
+
 
 /*Combat tower styling end*/
 
