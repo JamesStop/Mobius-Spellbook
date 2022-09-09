@@ -415,6 +415,37 @@ const roomChange = (value) => {
 
 //Enemy Creation Functions start//
 
+const chooseEnemyType = () => {
+	return enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
+}
+
+const createEnemy = () => {
+	let typeOfEnemy = chooseEnemyType();
+	let enemyMultis = enemies[typeOfEnemy];
+	let currentFloor = game.current.combat.floor;
+	let currentRoom = game.current.combat.room;
+	game.current.combat.enemy.type = typeOfEnemy;
+	game.current.combat.enemy.healthMax = Math.ceil(
+		10 *
+			1.15 ** (currentFloor - 1) *
+			1.01 ** (currentRoom - 1) *
+			enemyMultis.healthMulti
+	);
+	game.current.combat.enemy.healthCurrent = game.current.combat.enemy.healthMax;
+	game.current.combat.enemy.attack = Math.ceil(
+		1 *
+			1.15 ** (currentFloor - 1) *
+			1.01 ** (currentRoom - 1) *
+			enemyMultis.attackMulti
+	);
+	game.current.combat.enemy.defense = Math.ceil(
+		(currentFloor - 1) *
+			1.15 ** (currentFloor - 1) *
+			1.01 ** (currentRoom - 1) *
+			enemyMultis.attackMulti
+	);
+	game.current.combat.enemy.speed = 1 * enemyMultis.speedMulti;
+}
 
 
 //Enemy Creation Functions end//

@@ -149,18 +149,21 @@ let game = {
 		},
 		combat: {
 			world: 0,
-			floor: 0,
-			room: 0,
+			floor: 1,
+			room: 1,
 			player: {
 				healthMax: 100,
 				healthCurrent: 100,
 				attack: 1,
+				speed: 1,
 				defense: 0,
 			},
 			enemy: {
+				type: '',
 				healthMax: 100,
 				healthCurrent: 100,
 				attack: 1,
+				speed: 1,
 				defense: 0,
 			},
 		},
