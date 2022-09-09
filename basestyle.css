@@ -378,7 +378,7 @@ body {
     border-radius: 50%;
     list-style: none;
     overflow: hidden;
-    background: white;
+    background-color: rgb(153, 150, 150);
     text-align: center;
 }
 
@@ -391,7 +391,7 @@ body {
     height: 50%;
     transform-origin: 0% 100%;
     border: 1px solid black;
-    background-color: aqua;
+    background-color: rgb(153, 150, 150);
 }
 
 .outer {
@@ -478,7 +478,7 @@ body {
     height: 50%;
     transform-origin: 0% 100%;
     border: 1px solid black;
-    background-color: white;
+    background-color: rgb(153, 150, 150);
 }
 
 .inner {
@@ -522,6 +522,15 @@ body {
 
 .breakup-inner:nth-child(8) {
     transform: rotate(315deg) skewY(-45deg);
+}
+
+
+.fighting {
+    background-color:rgb(243, 112, 112)
+}
+
+.defeated {
+    background-color:rgb(226, 169, 100);
 }
 
 

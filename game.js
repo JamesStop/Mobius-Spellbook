@@ -150,7 +150,7 @@ let game = {
 		combat: {
 			world: 0,
 			floor: 1,
-			room: 1,
+			room: 22,
 			player: {
 				healthMax: 10,
 				healthCurrent: 10,

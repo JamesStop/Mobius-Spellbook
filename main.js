@@ -450,7 +450,41 @@ const createEnemy = () => {
 
 //Enemy Creation Functions end//
 
+//Floor coloring functions start//
 
+const updateWholeFloor = () => {
+	const currentRoom = game.current.combat.room;
+	for (let i = 1; i < 26; i++) {
+		let room = document.querySelector(`#tower-cell-${i}`).classList;
+		room.remove('fighting');
+		room.remove('defeated');
+	}
+	if (currentRoom == 0) {
+		return;
+	}
+	if (currentRoom > 1) {
+		for (let i = 1; i < currentRoom; i++) {
+			updateRoomDefeated(i)
+		}
+	}
+	updateRoomFighting(currentRoom);
+}
+
+const updateRoomFighting = (roomNumber) => {
+	let room = document.querySelector(`#tower-cell-${roomNumber}`).classList;
+	room.remove('fighting');
+	room.remove('defeated');
+	room.add('fighting');
+}
+
+const updateRoomDefeated = (roomNumber) => {
+	let room = document.querySelector(`#tower-cell-${roomNumber}`).classList;
+	room.remove('fighting');
+	room.remove('defeated');
+	room.add('defeated');
+}
+
+//Floor coloring functions start//
 
 
 
