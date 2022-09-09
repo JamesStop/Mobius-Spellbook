@@ -1,6 +1,67 @@
 const resources = ['herb', 'mythril', 'yew', 'crystal', 'arcana'];
 const upgradeTypes = ['storage', 'active'];
 const assignmentButtons = ['golem-assign', 'golem-remove'];
+const enemyTypes = [
+	'skeleton',
+	'slime',
+	'goblin',
+	'kobold',
+	'witch',
+	'imp',
+	'zombie',
+];
+
+const enemies = {
+	skeleton: {
+		healthMulti: 0.8,
+		attackMulti: 1.2,
+		defenseMulti: 0.5,
+		speedMulti: 0.9,
+		resourceMulti: 0.8,
+	},
+	slime: {
+		healthMulti: 1.1,
+		attackMulti: 0.6,
+		defenseMulti: 1.25,
+		speedMulti: 0.5,
+		resourceMulti: 1.5,
+	},
+	goblin: {
+		healthMulti: 0.8,
+		attackMulti: 1.2,
+		defenseMulti: 1.1,
+		speedMulti: 1.1,
+		resourceMulti: 1.2,
+	},
+	kobold: {
+		healthMulti: 0.9,
+		attackMulti: 1.3,
+		defenseMulti: 1,
+		speedMulti: 1.2,
+		resourceMulti: 0.8,
+	},
+	witch: {
+		healthMulti: 0.5,
+		attackMulti: 1.5,
+		defenseMulti: 0.5,
+		speedMulti: 1.5,
+		resourceMulti: 0.5,
+	},
+	imp: {
+		healthMulti: 0.7,
+		attackMulti: 1.3,
+		defenseMulti: 1.2,
+		speedMulti: 2,
+		resourceMulti: 1.3,
+	},
+	zombie: {
+		healthMulti: 0.8,
+		attackMulti: 0.8,
+		defenseMulti: 1.1,
+		speedMulti: 0.5,
+		resourceMulti: 0.8,
+	},
+};
 
 const tooltips = {
 	purchase: {
@@ -196,8 +257,7 @@ const tooltips = {
 		golems: {
 			construct: {
 				title: 'Construct Magical Golem',
-				info:
-					'Construct a magical construct that you can assign to collect resources.',
+				info: 'Construct a magical construct that you can assign to collect resources.',
 				cost: '',
 				updateText() {
 					let costValue = game.current.resources.golems.cost.totalCost;

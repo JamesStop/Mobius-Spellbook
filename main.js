@@ -399,6 +399,35 @@ const golemAssign = (resource) => {
 
 //golems page functions end//
 
+//Combat related functions start//
+
+//floor and room changing functions start//
+
+const floorChange = (value) => {
+	game.current.combat.floor += value;
+}
+
+const roomChange = (value) => {
+	game.current.combat.floor += value;
+}
+
+//floor and room changing functions end//
+
+//Enemy Creation Functions start//
+
+
+
+//Enemy Creation Functions end//
+
+
+
+
+
+
+
+
+//Combat related functions end//
+
 //functions for tooltips start//
 
 const updateToolTip = (niche, type, resource) => {
