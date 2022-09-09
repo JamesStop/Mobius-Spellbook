@@ -152,8 +152,8 @@ let game = {
 			floor: 1,
 			room: 1,
 			player: {
-				healthMax: 100,
-				healthCurrent: 100,
+				healthMax: 10,
+				healthCurrent: 10,
 				attack: 1,
 				speed: 1,
 				defense: 0,
