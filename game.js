@@ -2,7 +2,7 @@
 
 let currentGameVersion = {
 	general: {
-		version: 0.1,
+		version: 0.0,
 	},
 	current: {
 		collecting: null,
@@ -197,12 +197,12 @@ let currentGameVersion = {
 					},
 				},
 			},
-			oneTime: {
-				
-			},
+			oneTime: {},
 		},
 	},
-	best: {},
+	best: {
+		hello: 'red',
+	},
 };
 
 let game = {};
