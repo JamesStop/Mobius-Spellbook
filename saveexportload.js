@@ -16,15 +16,17 @@ const load = () => {
     if (localStorage.getItem('savestring')) {
         savestring = localStorage.getItem('savestring');
         savegame = JSON.parse(LZString.decompressFromBase64(savestring))
-        game = {...game, ...savegame};
+        checkGameVersion(savegame);
+    } else {
+        game = currentGameVersion;
+    }
         resourceColorReset();
 		setResourcesActiveColor(game.current.collecting);
-        updateResourceAmount();
-        updateTotalProductionAll();
-        updateStorages();
-        updateUpgradesDisplayAll();
-        golemAssignColors(game.current.resources.golems.assignmentType);
-        updateGolemsTotal();
-        updateGolemsActiveAll();
-    }
+		updateResourceAmount();
+		updateTotalProductionAll();
+		updateStorages();
+		updateUpgradesDisplayAll();
+		golemAssignColors(game.current.resources.golems.assignmentType);
+		updateGolemsTotal();
+		updateGolemsActiveAll();
 }

@@ -1,8 +1,8 @@
 // This is the main game variable. Stores a majority of one's individual game information and settings//
 
-let game = {
+let currentGameVersion = {
 	general: {
-		version: 0.0,
+		version: 0.1,
 	},
 	current: {
 		collecting: null,
@@ -167,6 +167,44 @@ let game = {
 				defense: 0,
 			},
 		},
+		upgrades: {
+			repeatable: {
+				storage: {
+					tierOne: {
+						herb: 0,
+						mythril: 0,
+						yew: 0,
+						crystal: 0,
+						arcana: 0,
+					},
+				},
+				activeProduction: {
+					tierOne: {
+						herb: 0,
+						mythril: 0,
+						yew: 0,
+						crystal: 0,
+						arcana: 0,
+					},
+				},
+				golemProduction: {
+					tierOne: {
+						herb: 0,
+						mythril: 0,
+						yew: 0,
+						crystal: 0,
+						arcana: 0,
+					},
+				},
+			},
+			oneTime: {
+				
+			},
+		},
 	},
 	best: {},
 };
+
+let game = {};
+
+let versionChangeGame = {};
