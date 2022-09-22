@@ -101,7 +101,8 @@ const updateTotalProductionAll = () => {
 	resources.map((resource) => {
 		const updating = game.current.resources[resource];
 		if (resource === game.current.collecting) {
-			updating.totalPerSec = updating.golemPerSec + updating.active.activeTotal;
+			updating.totalPerSec =
+				updating.golemPerSec + updating.activeProduction.activeProductionTotal;
 		} else {
 			updating.totalPerSec = updating.golemPerSec;
 		}
@@ -112,7 +113,8 @@ const updateTotalProductionAll = () => {
 const updateTotalProductionIndividual = (resource) => {
 	const updating = game.current.resources[resource];
 	if (resource === game.current.collecting) {
-		updating.totalPerSec = updating.golemPerSec + updating.active.activeTotal;
+		updating.totalPerSec =
+			updating.golemPerSec + updating.activeProduction.activeProductionTotal;
 	} else {
 		updating.totalPerSec = updating.golemPerSec;
 	}
@@ -200,41 +202,58 @@ const updateUpgradesDisplayAll = () => {
 	resources.map((resource) => {
 		upgradeTypes.map((type) => {
 			document.querySelector(`#${resource}-${type}-level`).innerText =
-				game.current.resources[resource][type][`${type}Upgrades`];
+				game.current.upgrades.repeatable[type].tierOne[resource];
 		});
 	});
 };
 
 const updateUpgradesDisplaySingle = (type, resource) => {
 	document.querySelector(`#${resource}-${type}-level`).innerText =
-		game.current.resources[resource][type][`${type}Upgrades`];
+		game.current.upgrades.repeatable[type].tierOne[resource];
 };
 
 //Update upgrades level display functions start//
 
 //Purchase upgrades functions start//
 
-const purchaseUpgrade = (type, resource) => {
+const purchaseUpgrade = (upgradeType, type, tier, resource) => {
+	let upgrading = game.current.upgrades[upgradeType][type][tier][resource];
+	let baseCost = upgradeInfo[upgradeType][type][tier][resource].baseCost;
+	let baseIncrement =
+		upgradeInfo[upgradeType][type][tier][resource].costIncrement;
 	let upgradeResource = game.current.resources[resource];
-	let upgradeType = upgradeResource[type];
-	let cost = Math.ceil(
-		upgradeType[`${type}BaseCost`] *
-			upgradeType[`${type}CostIncrement`] ** upgradeType[`${type}Upgrades`]
-	);
-	if (upgradeResource.current >= cost) {
-		updateResourceAmountLoss(resource, cost);
-		upgradeType[`${type}Upgrades`] += 1;
+	let canUpgrade = true;
+	baseCost.forEach((thing) => {
+		let resourceType = Object.keys(thing);
+		let baseValue = thing[Object.keys(thing)];
+		let cost = Math.ceil(baseValue * baseIncrement ** upgrading);
+		if (game.current.resources[resourceType].current < cost) {
+			canUpgrade = false;
+		}
+	});
+	if (canUpgrade == true) {
+		baseCost.forEach((thing) => {
+			let resourceType = Object.keys(thing);
+			let baseValue = thing[Object.keys(thing)];
+			let cost = Math.ceil(baseValue * baseIncrement ** upgrading);
+			updateResourceAmountLoss(resourceType, cost);
+		});
+		game.current.upgrades[upgradeType][type][tier][resource] += 1;
 		updateUpgradesDisplaySingle(type, resource);
 		if (type == 'storage') {
-			upgradeType[`${type}Total`] = Math.floor(
-				upgradeType[`${type}Base`] *
-					upgradeType[`${type}BaseBonus`] ** upgradeType[`${type}Upgrades`]
+			game.current.resources[resource][type][`${type}Total`] = Math.floor(
+				game.current.resources[resource][type][`${type}Base`] *
+					upgradeInfo[upgradeType][type][tier][resource].bonusIncrement **
+						game.current.upgrades[upgradeType][type][tier][resource]
 			);
 			updateStorageSingle(resource);
 		}
-		if (type == 'active') {
-			upgradeType[`${type}Total`] =
-				1 + upgradeType[`${type}BaseBonus`] * upgradeType[`${type}Upgrades`];
+		if (type == 'activeProduction') {
+			console.log('hi')
+			game.current.resources[resource][type][`${type}Total`] =
+				1 +
+				upgradeInfo[upgradeType][type][tier][resource].bonusIncrement *
+					game.current.upgrades[upgradeType][type][tier][resource];
 			updateTotalProductionIndividual(resource);
 		}
 		updateToolTip('purchase', type, resource);
@@ -405,11 +424,11 @@ const golemAssign = (resource) => {
 
 const floorChange = (value) => {
 	game.current.combat.floor += value;
-}
+};
 
 const roomChange = (value) => {
 	game.current.combat.floor += value;
-}
+};
 
 //floor and room changing functions end//
 
@@ -417,7 +436,7 @@ const roomChange = (value) => {
 
 const chooseEnemyType = () => {
 	return enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
-}
+};
 
 const createEnemy = () => {
 	let typeOfEnemy = chooseEnemyType();
@@ -445,8 +464,7 @@ const createEnemy = () => {
 			enemyMultis.attackMulti
 	);
 	game.current.combat.enemy.speed = 1 * enemyMultis.speedMulti;
-}
-
+};
 
 //Enemy Creation Functions end//
 
@@ -464,32 +482,27 @@ const updateWholeFloor = () => {
 	}
 	if (currentRoom > 1) {
 		for (let i = 1; i < currentRoom; i++) {
-			updateRoomDefeated(i)
+			updateRoomDefeated(i);
 		}
 	}
 	updateRoomFighting(currentRoom);
-}
+};
 
 const updateRoomFighting = (roomNumber) => {
 	let room = document.querySelector(`#tower-cell-${roomNumber}`).classList;
 	room.remove('fighting');
 	room.remove('defeated');
 	room.add('fighting');
-}
+};
 
 const updateRoomDefeated = (roomNumber) => {
 	let room = document.querySelector(`#tower-cell-${roomNumber}`).classList;
 	room.remove('fighting');
 	room.remove('defeated');
 	room.add('defeated');
-}
+};
 
 //Floor coloring functions start//
-
-
-
-
-
 
 //Combat related functions end//
 

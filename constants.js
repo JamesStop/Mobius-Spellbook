@@ -1,5 +1,5 @@
 const resources = ['herb', 'mythril', 'yew', 'crystal', 'arcana'];
-const upgradeTypes = ['storage', 'active'];
+const upgradeTypes = ['storage', 'activeProduction'];
 const assignmentButtons = ['golem-assign', 'golem-remove'];
 const enemyTypes = [
 	'skeleton',
@@ -63,6 +63,79 @@ const enemies = {
 	},
 };
 
+const upgradeInfo = {
+	repeatable: {
+		storage: {
+			tierOne: {
+				herb: {
+					baseCost: [{ herb: 50 }],
+					costIncrement: 2,
+					bonusIncrement: 2,
+				},
+				mythril: {
+					baseCost: [{ mythril: 50 }],
+					costIncrement: 2,
+					bonusIncrement: 2,
+				},
+				yew: {
+					baseCost: [{ yew: 50 }],
+					costIncrement: 2,
+					bonusIncrement: 2,
+				},
+				crystal: {
+					baseCost: [{ crystal: 50 }],
+					costIncrement: 2,
+					bonusIncrement: 2,
+				},
+				arcana: {
+					baseCost: [{ arcana: 50 }],
+					costIncrement: 2,
+					bonusIncrement: 2,
+				},
+			},
+		},
+		activeProduction: {
+			tierOne: {
+				herb: {
+					baseCost: [{ herb: 100 }],
+					costIncrement: 1.5,
+					bonusIncrement: 1,
+				},
+				mythril: {
+					baseCost: [{ mythril: 100 }],
+					costIncrement: 1.5,
+					bonusIncrement: 1,
+				},
+				yew: {
+					baseCost: [{ yew: 100 }],
+					costIncrement: 1.5,
+					bonusIncrement: 1,
+				},
+				crystal: {
+					baseCost: [{ crystal: 100 }],
+					costIncrement: 1.5,
+					bonusIncrement: 1,
+				},
+				arcana: {
+					baseCost: [{ arcana: 100 }],
+					costIncrement: 1.5,
+					bonusIncrement: 1,
+				},
+			},
+		},
+		golemProduction: {
+			tierOne: {
+				herb: 0,
+				mythril: 0,
+				yew: 0,
+				crystal: 0,
+				arcana: 0,
+			},
+		},
+	},
+	oneTime: {},
+};
+
 const tooltips = {
 	purchase: {
 		storage: {
@@ -75,12 +148,12 @@ const tooltips = {
 				updateText() {
 					this.info =
 						this.infoBase +
-						game.current.resources.herb.storage.storageBaseBonus.toString() +
+						upgradeInfo.repeatable.storage.tierOne.herb.bonusIncrement.toString() +
 						'x';
 					let costValue = Math.ceil(
-						game.current.resources.herb.storage.storageBaseCost *
-							game.current.resources.herb.storage.storageCostIncrement **
-								game.current.resources.herb.storage.storageUpgrades
+						upgradeInfo.repeatable.storage.tierOne.herb.baseCost[0].herb *
+							upgradeInfo.repeatable.storage.tierOne.herb.costIncrement **
+								game.current.upgrades.repeatable.storage.tierOne.herb
 					);
 					this.cost = costValue.toString() + ' herbs';
 				},
@@ -94,12 +167,12 @@ const tooltips = {
 				updateText() {
 					this.info =
 						this.infoBase +
-						game.current.resources.mythril.storage.storageBaseBonus.toString() +
+						upgradeInfo.repeatable.storage.tierOne.mythril.bonusIncrement.toString() +
 						'x';
 					let costValue = Math.ceil(
-						game.current.resources.mythril.storage.storageBaseCost *
-							game.current.resources.mythril.storage.storageCostIncrement **
-								game.current.resources.mythril.storage.storageUpgrades
+						upgradeInfo.repeatable.storage.tierOne.mythril.baseCost[0].mythril *
+							upgradeInfo.repeatable.storage.tierOne.mythril.costIncrement **
+								game.current.upgrades.repeatable.storage.tierOne.mythril
 					);
 					this.cost = costValue.toString() + ' mythril';
 				},
@@ -113,12 +186,12 @@ const tooltips = {
 				updateText() {
 					this.info =
 						this.infoBase +
-						game.current.resources.yew.storage.storageBaseBonus.toString() +
+						upgradeInfo.repeatable.storage.tierOne.yew.bonusIncrement.toString() +
 						'x';
 					let costValue = Math.ceil(
-						game.current.resources.yew.storage.storageBaseCost *
-							game.current.resources.yew.storage.storageCostIncrement **
-								game.current.resources.yew.storage.storageUpgrades
+						upgradeInfo.repeatable.storage.tierOne.yew.baseCost[0].yew *
+							upgradeInfo.repeatable.storage.tierOne.yew.costIncrement **
+								game.current.upgrades.repeatable.storage.tierOne.yew
 					);
 					this.cost = costValue.toString() + ' yew';
 				},
@@ -132,12 +205,12 @@ const tooltips = {
 				updateText() {
 					this.info =
 						this.infoBase +
-						game.current.resources.crystal.storage.storageBaseBonus.toString() +
+						upgradeInfo.repeatable.storage.tierOne.crystal.bonusIncrement.toString() +
 						'x';
 					let costValue = Math.ceil(
-						game.current.resources.crystal.storage.storageBaseCost *
-							game.current.resources.crystal.storage.storageCostIncrement **
-								game.current.resources.crystal.storage.storageUpgrades
+						upgradeInfo.repeatable.storage.tierOne.crystal.baseCost[0].crystal *
+							upgradeInfo.repeatable.storage.tierOne.crystal.costIncrement **
+								game.current.upgrades.repeatable.storage.tierOne.crystal
 					);
 					this.cost = costValue.toString() + ' crystals';
 				},
@@ -151,18 +224,18 @@ const tooltips = {
 				updateText() {
 					this.info =
 						this.infoBase +
-						game.current.resources.arcana.storage.storageBaseBonus.toString() +
+						upgradeInfo.repeatable.storage.tierOne.arcana.bonusIncrement.toString() +
 						'x';
 					let costValue = Math.ceil(
-						game.current.resources.arcana.storage.storageBaseCost *
-							game.current.resources.arcana.storage.storageCostIncrement **
-								game.current.resources.arcana.storage.storageUpgrades
+						upgradeInfo.repeatable.storage.tierOne.arcana.baseCost[0].arcana *
+							upgradeInfo.repeatable.storage.tierOne.arcana.costIncrement **
+								game.current.upgrades.repeatable.storage.tierOne.arcana
 					);
 					this.cost = costValue.toString() + ' arcana';
 				},
 			},
 		},
-		active: {
+		activeProduction: {
 			herb: {
 				title: 'Herby Insight',
 				infoBase:
@@ -172,11 +245,13 @@ const tooltips = {
 				updateText() {
 					this.info =
 						this.infoBase +
-						game.current.resources.herb.active.activeBaseBonus.toString();
+						upgradeInfo.repeatable.activeProduction.tierOne.herb.bonusIncrement.toString();
 					let costValue = Math.ceil(
-						game.current.resources.herb.active.activeBaseCost *
-							game.current.resources.herb.active.activeCostIncrement **
-								game.current.resources.herb.active.activeUpgrades
+						upgradeInfo.repeatable.activeProduction.tierOne.herb.baseCost[0]
+							.herb *
+							upgradeInfo.repeatable.activeProduction.tierOne.herb
+								.costIncrement **
+								game.current.upgrades.repeatable.activeProduction.tierOne.herb
 					);
 					this.cost = costValue.toString() + ' herbs';
 				},
@@ -190,11 +265,14 @@ const tooltips = {
 				updateText() {
 					this.info =
 						this.infoBase +
-						game.current.resources.mythril.active.activeBaseBonus.toString();
+						upgradeInfo.repeatable.activeProduction.tierOne.mythril.bonusIncrement.toString();
 					let costValue = Math.ceil(
-						game.current.resources.mythril.active.activeBaseCost *
-							game.current.resources.mythril.active.activeCostIncrement **
-								game.current.resources.mythril.active.activeUpgrades
+						upgradeInfo.repeatable.activeProduction.tierOne.mythril.baseCost[0]
+							.mythril *
+							upgradeInfo.repeatable.activeProduction.tierOne.mythril
+								.costIncrement **
+								game.current.upgrades.repeatable.activeProduction.tierOne
+									.mythril
 					);
 					this.cost = costValue.toString() + ' mythril';
 				},
@@ -208,11 +286,13 @@ const tooltips = {
 				updateText() {
 					this.info =
 						this.infoBase +
-						game.current.resources.yew.active.activeBaseBonus.toString();
+						upgradeInfo.repeatable.activeProduction.tierOne.yew.bonusIncrement.toString();
 					let costValue = Math.ceil(
-						game.current.resources.yew.active.activeBaseCost *
-							game.current.resources.yew.active.activeCostIncrement **
-								game.current.resources.yew.active.activeUpgrades
+						upgradeInfo.repeatable.activeProduction.tierOne.yew.baseCost[0]
+							.yew *
+							upgradeInfo.repeatable.activeProduction.tierOne.yew
+								.costIncrement **
+								game.current.upgrades.repeatable.activeProduction.tierOne.yew
 					);
 					this.cost = costValue.toString() + ' yew';
 				},
@@ -226,11 +306,14 @@ const tooltips = {
 				updateText() {
 					this.info =
 						this.infoBase +
-						game.current.resources.crystal.active.activeBaseBonus.toString();
+						upgradeInfo.repeatable.activeProduction.tierOne.crystal.bonusIncrement.toString();
 					let costValue = Math.ceil(
-						game.current.resources.crystal.active.activeBaseCost *
-							game.current.resources.crystal.active.activeCostIncrement **
-								game.current.resources.crystal.active.activeUpgrades
+						upgradeInfo.repeatable.activeProduction.tierOne.crystal.baseCost[0]
+							.crystal *
+							upgradeInfo.repeatable.activeProduction.tierOne.crystal
+								.costIncrement **
+								game.current.upgrades.repeatable.activeProduction.tierOne
+									.crystal
 					);
 					this.cost = costValue.toString() + ' crystals';
 				},
@@ -244,11 +327,13 @@ const tooltips = {
 				updateText() {
 					this.info =
 						this.infoBase +
-						game.current.resources.arcana.active.activeBaseBonus.toString();
+						upgradeInfo.repeatable.activeProduction.tierOne.arcana.bonusIncrement.toString();
 					let costValue = Math.ceil(
-						game.current.resources.arcana.active.activeBaseCost *
-							game.current.resources.arcana.active.activeCostIncrement **
-								game.current.resources.arcana.active.activeUpgrades
+						upgradeInfo.repeatable.activeProduction.tierOne.arcana.baseCost[0]
+							.arcana *
+							upgradeInfo.repeatable.activeProduction.tierOne.arcana
+								.costIncrement **
+								game.current.upgrades.repeatable.activeProduction.tierOne.arcana
 					);
 					this.cost = costValue.toString() + ' arcana';
 				},
