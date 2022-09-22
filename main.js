@@ -221,7 +221,6 @@ const purchaseUpgrade = (upgradeType, type, tier, resource) => {
 	let baseCost = upgradeInfo[upgradeType][type][tier][resource].baseCost;
 	let baseIncrement =
 		upgradeInfo[upgradeType][type][tier][resource].costIncrement;
-	let upgradeResource = game.current.resources[resource];
 	let canUpgrade = true;
 	baseCost.forEach((thing) => {
 		let resourceType = Object.keys(thing);
