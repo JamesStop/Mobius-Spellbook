@@ -1,6 +1,6 @@
 // This is the main game variable. Stores a majority of one's individual game information and settings//
 
-let game = {
+let currentGameVersion = {
 	general: {
 		version: 0.0,
 	},
@@ -13,18 +13,9 @@ let game = {
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
-					storageUpgrades: 0,
-					storageBaseCost: 50,
-					storageCostIncrement: 2,
-					storageBaseBonus: 2,
 				},
-				active: {
-					activeBase: 1,
-					activeTotal: 1,
-					activeUpgrades: 0,
-					activeBaseCost: 100,
-					activeCostIncrement: 1.5,
-					activeBaseBonus: 1,
+				activeProduction: {
+					activeProductionTotal: 1,
 				},
 				golemPerSec: 0,
 				totalPerSec: 0,
@@ -35,18 +26,9 @@ let game = {
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
-					storageUpgrades: 0,
-					storageBaseCost: 50,
-					storageCostIncrement: 2,
-					storageBaseBonus: 2,
 				},
-				active: {
-					activeBase: 1,
-					activeTotal: 1,
-					activeUpgrades: 0,
-					activeBaseCost: 100,
-					activeCostIncrement: 1.5,
-					activeBaseBonus: 1,
+				activeProduction: {
+					activeProductionTotal: 1,
 				},
 				golemPerSec: 0,
 				totalPerSec: 0,
@@ -57,18 +39,9 @@ let game = {
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
-					storageUpgrades: 0,
-					storageBaseCost: 50,
-					storageCostIncrement: 2,
-					storageBaseBonus: 2,
 				},
-				active: {
-					activeBase: 1,
-					activeTotal: 1,
-					activeUpgrades: 0,
-					activeBaseCost: 100,
-					activeCostIncrement: 1.5,
-					activeBaseBonus: 1,
+				activeProduction: {
+					activeProductionTotal: 1,
 				},
 				golemPerSec: 0,
 				totalPerSec: 0,
@@ -79,18 +52,9 @@ let game = {
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
-					storageUpgrades: 0,
-					storageBaseCost: 50,
-					storageCostIncrement: 2,
-					storageBaseBonus: 2,
 				},
-				active: {
-					activeBase: 1,
-					activeTotal: 1,
-					activeUpgrades: 0,
-					activeBaseCost: 100,
-					activeCostIncrement: 1.5,
-					activeBaseBonus: 1,
+				activeProduction: {
+					activeProductionTotal: 1,
 				},
 				golemPerSec: 0,
 				totalPerSec: 0,
@@ -101,18 +65,9 @@ let game = {
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
-					storageUpgrades: 0,
-					storageBaseCost: 50,
-					storageCostIncrement: 2,
-					storageBaseBonus: 2,
 				},
-				active: {
-					activeBase: 1,
-					activeTotal: 1,
-					activeUpgrades: 0,
-					activeBaseCost: 100,
-					activeCostIncrement: 1.5,
-					activeBaseBonus: 1,
+				activeProduction: {
+					activeProductionTotal: 1,
 				},
 				golems: {
 					golemsBase: 1,
@@ -144,9 +99,67 @@ let game = {
 				cost: {
 					baseCost: 100,
 					totalCost: 100,
-				}
+				},
 			},
 		},
+		combat: {
+			world: 0,
+			floor: 1,
+			room: 22,
+			player: {
+				healthMax: 10,
+				healthCurrent: 10,
+				attack: 1,
+				speed: 1,
+				defense: 0,
+			},
+			enemy: {
+				type: '',
+				healthMax: 100,
+				healthCurrent: 100,
+				attack: 1,
+				speed: 1,
+				defense: 0,
+			},
+		},
+		upgrades: {
+			repeatable: {
+				storage: {
+					tierOne: {
+						herb: 0,
+						mythril: 0,
+						yew: 0,
+						crystal: 0,
+						arcana: 0,
+					},
+				},
+				activeProduction: {
+					tierOne: {
+						herb: 0,
+						mythril: 0,
+						yew: 0,
+						crystal: 0,
+						arcana: 0,
+					},
+				},
+				golemProduction: {
+					tierOne: {
+						herb: 0,
+						mythril: 0,
+						yew: 0,
+						crystal: 0,
+						arcana: 0,
+					},
+				},
+			},
+			oneTime: {},
+		},
 	},
-	best: {},
+	best: {
+		hello: 'red',
+	},
 };
+
+let game = {};
+
+let versionChangeGame = {};

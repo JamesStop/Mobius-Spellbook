@@ -88,7 +88,101 @@
 			</section>
 			<section class="special-resources-wrapper"></section>
 		</section>
-		<section class="combat-wrapper"></section>
+		<section class="combat-wrapper">
+			<div class="player-wrapper">
+				name
+				health
+				atk
+				defense
+				mana
+			</div>
+			<div class="enemy-wrapper">
+				name
+				health
+				atk
+				defense
+				mana
+			</div>
+			<div class="tower-wrapper">
+				<div class="circle-outer">
+					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-16"></div>
+  					</div>
+					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-15"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-14"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-13"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-12"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-11"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-10"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-9"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-8"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-7"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-6"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-5"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-4"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-3"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-2"></div>
+  					</div>
+  					<div class='breakup-outer'>
+    					<div class="outer" id="tower-cell-1"></div>
+  					</div>
+  					<div class='circle-inner'>
+    					<div class='breakup-inner'>
+    						<div class="inner" id="tower-cell-17"></div>
+    					</div>
+    					<div class='breakup-inner'>
+    						<div class="inner" id="tower-cell-18"></div>
+    					</div>
+    					<div class='breakup-inner'>
+    						<div class="inner" id="tower-cell-19"></div>
+    					</div>
+    					<div class='breakup-inner'>
+     						<div class="inner" id="tower-cell-20"></div>
+    					</div>
+    					<div class='breakup-inner'>
+      						<div class="inner" id="tower-cell-21"></div>
+    					</div>
+    					<div class='breakup-inner'>
+      						<div class="inner" id="tower-cell-22"></div>
+    					</div>
+    					<div class='breakup-inner'>
+      						<div class="inner" id="tower-cell-23"></div>
+    					</div>
+    					<div class='breakup-inner'>
+      						<div class="inner" id="tower-cell-24"></div>
+    					</div>
+    					<div class='circle-center ' id="tower-cell-25"></div>
+   </div>
+				</div>
+			</div>
+		</section>
 		<section class="text-log-wrapper"></section>
 		<section class="upgrades-wrapper">
 			<nav class="upgrades-nav">
@@ -101,21 +195,21 @@
 				<section class="storage-upgrades-wrapper">
 					<h3 class="upgrades-titles">Storage</h3>
 					<div class="upgrades-purchase-wrapper">
-						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'herb')" onmouseout="mouseout()" onclick="purchaseUpgrade('storage', 'herb')"><span>Herbs</span><span id="herb-storage-level">0</span></button>
-						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'mythril')" onmouseout="mouseout()" onclick="purchaseUpgrade('storage', 'mythril')"><span>Mythril</span><span id="mythril-storage-level">0</span></button>
-						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'yew')" onmouseout="mouseout()" onclick="purchaseUpgrade('storage', 'yew')"><span>Yew</span><span id="yew-storage-level">0</span></button>
-						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'crystal')" onmouseout="mouseout()" onclick="purchaseUpgrade('storage', 'crystal')"><span>Crystal</span><span id="crystal-storage-level">0</span></button>
-						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'arcana')" onmouseout="mouseout()" onclick="purchaseUpgrade('storage', 'arcana')"><span>Arcana</span><span id="arcana-storage-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'herb')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'storage', 'tierOne', 'herb')"><span>Herbs</span><span id="herb-storage-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'mythril')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'storage', 'tierOne', 'mythril')"><span>Mythril</span><span id="mythril-storage-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'yew')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'storage', 'tierOne', 'yew')"><span>Yew</span><span id="yew-storage-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'crystal')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'storage', 'tierOne', 'crystal')"><span>Crystal</span><span id="crystal-storage-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'arcana')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'storage', 'tierOne', 'arcana')"><span>Arcana</span><span id="arcana-storage-level">0</span></button>
 					</div>
 				</section>
 				<section class="active-production-upgrades-wrapper">
 					<h3 class="upgrades-titles">Active</h3>
 					<div class="upgrades-purchase-wrapper">
-						<button class="upgrades-purchase-button" c" onclick="purchaseUpgrade('active', 'herb')"><span>Herbs</span><span id="herb-active-level">0</span></button>
-						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'active', 'mythril')" onmouseout="mouseout()" onclick="purchaseUpgrade('active', 'mythril')"><span>Mythril</span><span id="mythril-active-level">0</span></button>
-						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'active', 'yew')" onmouseout="mouseout()" onclick="purchaseUpgrade('active', 'yew')"><span>Yew</span><span id="yew-active-level">0</span></button>
-						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'active', 'crystal')" onmouseout="mouseout()" onclick="purchaseUpgrade('active', 'crystal')"><span>Crystal</span><span id="crystal-active-level">0</span></button>
-						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'active', 'arcana')" onmouseout="mouseout()" onclick="purchaseUpgrade('active', 'arcana')"><span>Arcana</span><span id="arcana-active-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'activeProduction', 'herb')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'activeProduction', 'tierOne', 'herb')"><span>Herbs</span><span id="herb-activeProduction-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'activeProduction', 'mythril')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'activeProduction', 'tierOne', 'mythril')"><span>Mythril</span><span id="mythril-activeProduction-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'activeProduction', 'yew')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'activeProduction', 'tierOne', 'yew')"><span>Yew</span><span id="yew-activeProduction-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'activeProduction', 'crystal')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'activeProduction', 'tierOne', 'crystal')"><span>Crystal</span><span id="crystal-activeProduction-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'activeProduction', 'arcana')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'activeProduction', 'tierOne', 'arcana')"><span>Arcana</span><span id="arcana-activeProduction-level">0</span></button>
 					</div>
 				</section>
 			</div>
@@ -137,23 +231,23 @@
 				</section>
 				<section class="golem-assignment-wrapper">
 					<button class="golem-assignment" onclick="golemAssign('herb')">
-						<span>herb</span>
+						<span>Herbs</span>
 						<span id="herb-golem-count">0</span>
 					</button>
 					<button class="golem-assignment" onclick="golemAssign('mythril')">
-						<span>mythril</span>
+						<span>Mythril</span>
 						<span id="mythril-golem-count">0</span>
 					</button>
 					<button class="golem-assignment" onclick="golemAssign('yew')">
-						<span>yew</span>
+						<span>Yew</span>
 						<span id="yew-golem-count">0</span>
 					</button>
 					<button class="golem-assignment" onclick="golemAssign('crystal')">
-						<span>crystal</span>
+						<span>Crystals</span>
 						<span id="crystal-golem-count">0</span>
 					</button>
 					<button class="golem-assignment" onclick="golemAssign('arcana')">
-						<span>arcana</span>
+						<span>Arcana</span>
 						<span id="arcana-golem-count">0</span>
 					</button>
 				</section>
@@ -163,8 +257,8 @@
 		</section>
 		<section class="settings-wrapper">
 			<button class="settings-buttons" onclick="save()">Save</button>
-			<button class="settings-buttons">Export</button>
-			<button class="settings-buttons">Import</button>
+			<button class="settings-buttons" onclick="exporting()">Export</button>
+			<button class="settings-buttons" onclick="importing()">Import</button>
 			<button class="settings-buttons">Achievements</button>
 			<button class="settings-buttons">Settings</button>
 		</section>
@@ -172,6 +266,7 @@
 		<script src="game.js"></script>
 		<script src="constants.js"></script>
 		<script src="lz-string.js"></script>
+		<script src="updateversion.js"></script>
 		<script src="saveexportload.js"></script>
 		<script src="main.js"></script>
 	</body>
