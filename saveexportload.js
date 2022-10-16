@@ -29,6 +29,8 @@ const load = () => {
 	golemAssignColors(game.current.resources.golems.assignmentType);
 	updateGolemsTotal();
 	updateGolemsActiveAll();
+	allStatUpdate();
+	updateWholeFloor();
 };
 
 const exporting = () => {

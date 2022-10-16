@@ -467,6 +467,50 @@ const createEnemy = () => {
 
 //Enemy Creation Functions end//
 
+//Stats Display updating Functions start//
+
+const updateStat = (person, stat) => {
+	document.querySelector(`#${person}-${stat}`).innerText = game.current.combat[person][stat];
+}
+
+const allStatUpdate = () => {
+	const people = ['player', 'enemy'];
+	const stats = ['attack', 'defense', 'healthMax', 'healthCurrent', 'manaMax', 'manaCurrent']
+	people.map((person) => {
+		stats.map((stat) => {
+			updateStat(person, stat);
+		})
+	})
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Stats Display updating Functions end//
+
+
 //Floor coloring functions start//
 
 const updateWholeFloor = () => {
