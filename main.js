@@ -527,6 +527,15 @@ const updateRoomDefeated = (roomNumber) => {
 	room.add('defeated');
 };
 
+const floorDisplay = () => {
+	document.querySelector(`#floor-display`).innerText = game.current.combat.floor;
+}
+
+const roomDisplay = () => {
+	document.querySelector(`#room-display`).innerText = game.current.combat.room;
+}
+
+
 //Floor coloring functions start//
 
 //Combat related functions end//

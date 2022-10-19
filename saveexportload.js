@@ -30,6 +30,8 @@ const load = () => {
 	updateGolemsTotal();
 	updateGolemsActiveAll();
 	allStatUpdate();
+	floorDisplay();
+	roomDisplay();
 	updateWholeFloor();
 };
 

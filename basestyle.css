@@ -456,6 +456,12 @@ body {
     align-items: center;
 }
 
+.floor-room-display {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+}
+
 /*Combat tower styling start*/
 
 .circle-outer {
