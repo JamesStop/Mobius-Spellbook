@@ -463,9 +463,35 @@ const createEnemy = () => {
 			enemyMultis.attackMulti
 	);
 	game.current.combat.enemy.speed = 1 * enemyMultis.speedMulti;
+	stats.map((stat) => {
+		updateStat("enemy", stat);
+	})
+
 };
 
 //Enemy Creation Functions end//
+
+//Stats Display updating Functions start//
+
+const updateStat = (person, stat) => {
+	document.querySelector(`#${person}-${stat}`).innerText = game.current.combat[person][stat];
+}
+
+const allStatUpdate = () => {
+	people.map((person) => {
+		stats.map((stat) => {
+			updateStat(person, stat);
+		})
+	})
+}
+
+
+
+
+
+
+//Stats Display updating Functions end//
+
 
 //Floor coloring functions start//
 
@@ -500,6 +526,15 @@ const updateRoomDefeated = (roomNumber) => {
 	room.remove('defeated');
 	room.add('defeated');
 };
+
+const floorDisplay = () => {
+	document.querySelector(`#floor-display`).innerText = game.current.combat.floor;
+}
+
+const roomDisplay = () => {
+	document.querySelector(`#room-display`).innerText = game.current.combat.room;
+}
+
 
 //Floor coloring functions start//
 

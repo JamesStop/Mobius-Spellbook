@@ -90,14 +90,16 @@
 		</section>
 		<section class="combat-wrapper">
 			<div class="player-wrapper">
-				<div class="player-name" id="player-name">Name: </div>
-				<div class="player-attack">Atk: <span id="player-attack">0</span></div>
+				<div class="player-name" id="player-name">You</div>
+				<div class="player-attack">Atk: 
+					<span id="player-attack">0</span>
+				</div>
 				<div class="player-health">HP: 
 					<div class="health-display">
 						<div class="player-health-bar">
 						</div>
 						<div class="health-numbers">
-							<span id="player-health">0</span> / <span>0</span>
+							<span id="player-healthCurrent">0</span> / <span id="player-healthMax">0</span>
 						</div>
 					</div>
 				</div>
@@ -107,19 +109,41 @@
 						<div class="player-mana-bar">
 						</div>
 						<div class="mana-numbers">
-							<span id="player-mana">0</span> / <span>0</span>
+							<span id="player-manaCurrent">0</span> / <span id="player-manaMax"></span>0</span>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="enemy-wrapper">
-				<div class="enemy-name" id="enemy-name">Name: </div>
-				<div class="enemy-attack" id="enemy-attack">Atk: </div>
-				<div class="enemy-health" id="enemy-health">HP: </div>
-				<div class="enemy-defense" id="enemy-defense">Def: </div>
-				<div class="enemy-mana" id="enemy-mana">Mana: </div>
+				<div class="enemy-name" id="enemy-name">You</div>
+				<div class="enemy-attack">Atk: 
+					<span id="enemy-attack">0</span>
+				</div>
+				<div class="enemy-health">HP: 
+					<div class="health-display">
+						<div class="enemy-health-bar">
+						</div>
+						<div class="health-numbers">
+							<span id="enemy-healthCurrent">0</span> / <span id="enemy-healthMax">0</span>
+						</div>
+					</div>
+				</div>
+				<div class="enemy-defense">Def: <span  id="enemy-defense">0</span></div>
+				<div class="enemy-mana">MP: 
+					<div class="mana-display">
+						<div class="enemy-mana-bar">
+						</div>
+						<div class="mana-numbers">
+							<span id="enemy-manaCurrent">0</span> / <span id="enemy-manaMax"></span>0</span>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="tower-wrapper">
+				<div class="floor-room-display">
+					<div>Floor: <span id="floor-display"></span></div>
+					<div>Room: <span id="room-display"></span></div>
+				</div>
 				<div class="circle-outer">
 					<div class='breakup-outer'>
     					<div class="outer" id="tower-cell-16"></div>

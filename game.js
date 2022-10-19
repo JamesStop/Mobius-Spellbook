@@ -105,10 +105,12 @@ let currentGameVersion = {
 		combat: {
 			world: 0,
 			floor: 1,
-			room: 22,
+			room: 1,
 			player: {
 				healthMax: 10,
 				healthCurrent: 10,
+				manaMax: 0,
+				manaCurrent: 0,
 				attack: 1,
 				speed: 1,
 				defense: 0,
@@ -117,6 +119,8 @@ let currentGameVersion = {
 				type: '',
 				healthMax: 100,
 				healthCurrent: 100,
+				manaMax: 0,
+				manaCurrent: 0,
 				attack: 1,
 				speed: 1,
 				defense: 0,
