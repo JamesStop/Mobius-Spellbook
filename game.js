@@ -104,8 +104,8 @@ let currentGameVersion = {
 		},
 		combat: {
 			world: 0,
-			floor: 0,
-			room: 0,
+			floor: 1,
+			room: 1,
 			player: {
 				healthMax: 10,
 				healthCurrent: 10,

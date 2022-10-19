@@ -463,6 +463,10 @@ const createEnemy = () => {
 			enemyMultis.attackMulti
 	);
 	game.current.combat.enemy.speed = 1 * enemyMultis.speedMulti;
+	stats.map((stat) => {
+		updateStat("enemy", stat);
+	})
+
 };
 
 //Enemy Creation Functions end//
@@ -474,34 +478,12 @@ const updateStat = (person, stat) => {
 }
 
 const allStatUpdate = () => {
-	const people = ['player', 'enemy'];
-	const stats = ['attack', 'defense', 'healthMax', 'healthCurrent', 'manaMax', 'manaCurrent']
 	people.map((person) => {
 		stats.map((stat) => {
 			updateStat(person, stat);
 		})
 	})
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
