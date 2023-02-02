@@ -15,6 +15,7 @@ let currentGameVersion = {
 					storageTotal: 250,
 				},
 				activeProduction: {
+					activeProductionBase: 1,
 					activeProductionTotal: 1,
 				},
 				golemPerSec: 0,
@@ -28,6 +29,7 @@ let currentGameVersion = {
 					storageTotal: 250,
 				},
 				activeProduction: {
+					activeProductionBase: 1,
 					activeProductionTotal: 1,
 				},
 				golemPerSec: 0,
@@ -41,6 +43,7 @@ let currentGameVersion = {
 					storageTotal: 250,
 				},
 				activeProduction: {
+					activeProductionBase: 1,
 					activeProductionTotal: 1,
 				},
 				golemPerSec: 0,
@@ -54,6 +57,7 @@ let currentGameVersion = {
 					storageTotal: 250,
 				},
 				activeProduction: {
+					activeProductionBase: 1,
 					activeProductionTotal: 1,
 				},
 				golemPerSec: 0,
@@ -67,6 +71,7 @@ let currentGameVersion = {
 					storageTotal: 250,
 				},
 				activeProduction: {
+					activeProductionBase: 1,
 					activeProductionTotal: 1,
 				},
 				golems: {

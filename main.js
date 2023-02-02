@@ -216,6 +216,27 @@ const updateUpgradesDisplaySingle = (type, resource) => {
 
 //Purchase upgrades functions start//
 
+
+const purchasedUpgrade = {
+	storageUpgrade(resource) {
+		game.current.resources[resource].storage.storageTotal = Math.floor(
+			game.current.resources[resource].storage.storageBase *
+			upgradeInfo.repeatable.storage.tierOne[resource].bonusIncrement **
+			game.current.upgrades.repeatable.storage.tierOne[resource]
+		);
+		updateStorageSingle(resource);
+	},
+	activeProductionUpgrade(resource) {
+		game.current.resources[resource].activeProduction.activeProductionTotal = Math.floor(
+			game.current.resources[resource].activeProduction.activeProductionBase +
+			upgradeInfo.repeatable.activeProduction.tierOne[resource].bonusIncrement *
+			game.current.upgrades.repeatable.activeProduction.tierOne[resource]
+		)
+		updateTotalProductionIndividual(resource);
+	}
+}
+
+
 const purchaseUpgrade = (upgradeType, type, tier, resource) => {
 	let upgrading = game.current.upgrades[upgradeType][type][tier][resource];
 	let baseCost = upgradeInfo[upgradeType][type][tier][resource].baseCost;
@@ -239,22 +260,7 @@ const purchaseUpgrade = (upgradeType, type, tier, resource) => {
 		});
 		game.current.upgrades[upgradeType][type][tier][resource] += 1;
 		updateUpgradesDisplaySingle(type, resource);
-		if (type == 'storage') {
-			game.current.resources[resource][type][`${type}Total`] = Math.floor(
-				game.current.resources[resource][type][`${type}Base`] *
-					upgradeInfo[upgradeType][type][tier][resource].bonusIncrement **
-						game.current.upgrades[upgradeType][type][tier][resource]
-			);
-			updateStorageSingle(resource);
-		}
-		if (type == 'activeProduction') {
-			console.log('hi')
-			game.current.resources[resource][type][`${type}Total`] =
-				1 +
-				upgradeInfo[upgradeType][type][tier][resource].bonusIncrement *
-					game.current.upgrades[upgradeType][type][tier][resource];
-			updateTotalProductionIndividual(resource);
-		}
+		purchasedUpgrade[`${type}Upgrade`](resource)
 		updateToolTip('purchase', type, resource);
 	}
 };
