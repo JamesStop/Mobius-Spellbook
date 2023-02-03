@@ -207,9 +207,9 @@ const updateUpgradesDisplayAll = () => {
 	});
 };
 
-const updateUpgradesDisplaySingle = (type, resource) => {
+const updateUpgradesDisplaySingle = (upgradeType, type, tier, resource) => {
 	document.querySelector(`#${resource}-${type}-level`).innerText =
-		game.current.upgrades.repeatable[type].tierOne[resource];
+		game.current.upgrades[upgradeType][type][tier][resource];
 };
 
 //Update upgrades level display functions start//
@@ -217,53 +217,65 @@ const updateUpgradesDisplaySingle = (type, resource) => {
 //Purchase upgrades functions start//
 
 
-const purchasedUpgrade = {
-	storageUpgrade(resource) {
-		game.current.resources[resource].storage.storageTotal = Math.floor(
-			game.current.resources[resource].storage.storageBase *
-			upgradeInfo.repeatable.storage.tierOne[resource].bonusIncrement **
-			game.current.upgrades.repeatable.storage.tierOne[resource]
-		);
-		updateStorageSingle(resource);
-	},
-	activeProductionUpgrade(resource) {
-		game.current.resources[resource].activeProduction.activeProductionTotal = Math.floor(
-			game.current.resources[resource].activeProduction.activeProductionBase +
-			upgradeInfo.repeatable.activeProduction.tierOne[resource].bonusIncrement *
-			game.current.upgrades.repeatable.activeProduction.tierOne[resource]
-		)
-		updateTotalProductionIndividual(resource);
-	}
-}
+
 
 
 const purchaseUpgrade = (upgradeType, type, tier, resource) => {
-	let upgrading = game.current.upgrades[upgradeType][type][tier][resource];
-	let baseCost = upgradeInfo[upgradeType][type][tier][resource].baseCost;
-	let baseIncrement =
-		upgradeInfo[upgradeType][type][tier][resource].costIncrement;
-	let canUpgrade = true;
-	baseCost.forEach((thing) => {
-		let resourceType = Object.keys(thing);
-		let baseValue = thing[Object.keys(thing)];
-		let cost = Math.ceil(baseValue * baseIncrement ** upgrading);
-		if (game.current.resources[resourceType].current < cost) {
-			canUpgrade = false;
-		}
-	});
-	if (canUpgrade == true) {
+	if (upgradeType == 'repeatable') {
+		let upgrading = game.current.upgrades[upgradeType][type][tier][resource];
+		let baseCost = upgradeInfo[upgradeType][type][tier][resource].baseCost;
+		let baseIncrement =
+			upgradeInfo[upgradeType][type][tier][resource].costIncrement;
+		let canUpgrade = true;
 		baseCost.forEach((thing) => {
 			let resourceType = Object.keys(thing);
 			let baseValue = thing[Object.keys(thing)];
 			let cost = Math.ceil(baseValue * baseIncrement ** upgrading);
-			updateResourceAmountLoss(resourceType, cost);
+			if (game.current.resources[resourceType].current < cost) {
+				canUpgrade = false;
+			}
 		});
-		game.current.upgrades[upgradeType][type][tier][resource] += 1;
-		updateUpgradesDisplaySingle(type, resource);
-		purchasedUpgrade[`${type}Upgrade`](resource)
-		updateToolTip('purchase', type, resource);
+		if (canUpgrade == true) {
+			baseCost.forEach((thing) => {
+				let resourceType = Object.keys(thing);
+				let baseValue = thing[Object.keys(thing)];
+				let cost = Math.ceil(baseValue * baseIncrement ** upgrading);
+				updateResourceAmountLoss(resourceType, cost);
+			});
+			game.current.upgrades[upgradeType][type][tier][resource] += 1;
+			updateUpgradesDisplaySingle(upgradeType, type, tier, resource);
+			purchasedUpgrade[`${type}Upgrade`](resource)
+			updateToolTip('purchase', type, resource);
+		}
+	} else if (upgradeType == 'oneTime') {
+		let baseCost = upgradeInfo[upgradeType][type].baseCost
+		let canUpgrade = true;
+		baseCost.forEach((thing) => {
+			let resourceType = Object.keys(thing);
+			let baseValue = thing[Object.keys(thing)];
+			let cost = Math.ceil(baseValue);
+			if (game.current.resources[resourceType].current < cost) {
+				canUpgrade = false;
+			}
+		});
+		if (canUpgrade == true) {
+			baseCost.forEach((thing) => {
+				let resourceType = Object.keys(thing);
+				let baseValue = thing[Object.keys(thing)];
+				let cost = Math.ceil(baseValue);
+				updateResourceAmountLoss(resourceType, cost);
+			});
+			game.current.upgrades[upgradeType][type] = 1
+			unlocks[`${type}Unlock`]()
+		}
 	}
 };
+
+const unlockAll = () => {
+	Object.keys(unlocks).map((unlock) => {
+		unlocks[unlock]()
+	})
+}
 
 //Purchase upgrades functions end//
 

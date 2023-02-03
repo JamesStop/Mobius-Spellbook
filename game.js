@@ -6,6 +6,8 @@ let currentGameVersion = {
 	},
 	current: {
 		collecting: null,
+		location: 'town',
+		fighting: false,
 		resources: {
 			herb: {
 				current: 0,
@@ -161,7 +163,9 @@ let currentGameVersion = {
 					},
 				},
 			},
-			oneTime: {},
+			oneTime: {
+				fight: 0,
+			},
 		},
 	},
 	best: {
