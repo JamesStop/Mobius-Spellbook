@@ -6,8 +6,6 @@ let currentGameVersion = {
 	},
 	current: {
 		collecting: null,
-		location: 'town',
-		fighting: false,
 		resources: {
 			herb: {
 				current: 0,
@@ -111,8 +109,12 @@ let currentGameVersion = {
 		},
 		combat: {
 			world: 0,
-			floor: 1,
-			room: 1,
+			floor: 0,
+			room: 0,
+			fighting: false,
+			autoFighting: false,
+			location: 'town',
+			direction: 'up',
 			player: {
 				healthMax: 10,
 				healthCurrent: 10,
@@ -125,7 +127,7 @@ let currentGameVersion = {
 			enemy: {
 				type: '',
 				healthMax: 100,
-				healthCurrent: 100,
+				healthCurrent: 0,
 				manaMax: 0,
 				manaCurrent: 0,
 				attack: 1,

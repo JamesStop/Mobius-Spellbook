@@ -520,12 +520,23 @@ const updateWholeFloor = () => {
 		room.remove('fighting');
 		room.remove('defeated');
 	}
-	if (currentRoom == 0) {
-		return;
-	}
-	if (currentRoom > 1) {
-		for (let i = 1; i < currentRoom; i++) {
-			updateRoomDefeated(i);
+	if (game.current.combat.direction == 'up') {
+		if (currentRoom == 0) {
+			return;
+		}
+		if (currentRoom > 1) {
+			for (let i = 1; i < currentRoom; i++) {
+				updateRoomDefeated(i);
+			}
+		}
+	} else if (game.current.combat.direction == 'down') {
+		if (currentRoom == 0) {
+			return;
+		}
+		if (currentRoom > 1) {
+			for (let i = 1; i < currentRoom; i++) {
+				updateRoomDefeated(i);
+			}
 		}
 	}
 	updateRoomFighting(currentRoom);
@@ -554,7 +565,76 @@ const roomDisplay = () => {
 }
 
 
-//Floor coloring functions start//
+//Floor coloring functions end//
+
+//Fighting functions start//
+
+const startAscending = () => {
+	if (game.current.combat.location == 'town') {
+		game.current.combat.location = 'tower'
+		game.current.combat.direction = 'up'
+		game.current.combat.floor = 1
+		game.current.combat.room = 1
+		startFighting()
+		console.log('hi')
+	}
+}
+
+const startDescending = () => {
+	if (game.current.combat.location == 'tower') {
+		game.current.combat.direction = 'down'
+	}
+}
+
+const startFighting = () => {
+	if (game.current.combat.location =='tower' && game.current.combat.fighting == false) {
+		game.current.combat.fighting = true
+		if (game.current.combat.enemy.healthCurrent > 0) {
+			fight()
+		} else {
+			newFight()
+		}
+	}
+}
+
+const attack = (attacker, defender) => {
+	game.current.combat[defender].healthCurrent -= game.current.combat[attacker].attack
+	console.log(game.current.combat[defender].healthCurrent)
+	updateStat(defender, 'healthCurrent')
+	if (game.current.combat[defender].healthCurrent > 0) {
+		setTimeout(attack(defender, attacker), 1000)
+	} else {
+		console.log('death')
+	}
+}
+
+
+const fight = () => {
+	if (game.current.combat.enemy.speed > game.current.combat.player.speed) {
+		attack('enemy', 'player')
+	} else {
+		attack('player', 'enemy')
+	}
+}
+
+
+const newFight = () => {
+	createEnemy()
+	fight()
+}
+
+const autoFighting = () => {
+	if (game.current.combat.autoFighting) {
+		if (game.current.combat.player.healthCurrent == game.current.combat.player.healthMax && !game.current.combat.fighting ) {
+			startFighting()
+		}
+		autoFighting()
+	}
+}
+
+
+//Fighting functions end//
+
 
 //Combat related functions end//
 
