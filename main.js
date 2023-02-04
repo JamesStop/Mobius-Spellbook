@@ -576,7 +576,6 @@ const startAscending = () => {
 		game.current.combat.floor = 1
 		game.current.combat.room = 1
 		startFighting()
-		console.log('hi')
 	}
 }
 
@@ -599,18 +598,25 @@ const startFighting = () => {
 
 const attack = (attacker, defender) => {
 	game.current.combat[defender].healthCurrent -= game.current.combat[attacker].attack
-	console.log(game.current.combat[defender].healthCurrent)
 	updateStat(defender, 'healthCurrent')
 	if (game.current.combat[defender].healthCurrent > 0) {
-		setTimeout(attack(defender, attacker), 1000)
+		game.current.combat[attacker].healthCurrent -= game.current.combat[defender].attack
+		updateStat(attacker, 'healthCurrent')
+		if (game.current.combat[attacker].healthCurrent > 0) {
+			setTimeout(() => {attack(defender, attacker)}, 500)
+		} else {
+			console.log(`${attacker} death`)
+		}
+		
 	} else {
-		console.log('death')
+		console.log(`${defender} death`)
 	}
 }
 
 
 const fight = () => {
 	if (game.current.combat.enemy.speed > game.current.combat.player.speed) {
+		
 		attack('enemy', 'player')
 	} else {
 		attack('player', 'enemy')
