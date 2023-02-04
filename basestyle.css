@@ -188,13 +188,7 @@ body {
 
 /*Upgrades upgrades tab styling start*/
 
-.storage-upgrades-wrapper {
-    display: flex;
-    flex-direction: column;
-
-}
-
-.active-production-upgrades-wrapper {
+.type-upgrades-wrapper {
     display: flex;
     flex-direction: column;
 
@@ -210,15 +204,14 @@ body {
 .upgrades-purchase-wrapper {
     display: grid;
     grid-template-columns: repeat(5, minmax(60px, 20%));
-    grid-template-rows: repeat(1, 60px);
-    height: 100%;
+    grid-template-rows: repeat(1, 100%);
     padding: 5px;
     align-items: center;
     justify-items: center;
 }
 
 .upgrades-purchase-button {
-    height: 90%;
+    height: 55px;
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -460,6 +453,19 @@ body {
     position: absolute;
     top: 5px;
     left: 5px;
+}
+
+.fight-buttons-section {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.fight-buttons-section button {
+    height: 35px;
+    width: 75px;
 }
 
 /*Combat tower styling start*/

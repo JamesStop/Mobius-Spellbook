@@ -207,57 +207,75 @@ const updateUpgradesDisplayAll = () => {
 	});
 };
 
-const updateUpgradesDisplaySingle = (type, resource) => {
+const updateUpgradesDisplaySingle = (upgradeType, type, tier, resource) => {
 	document.querySelector(`#${resource}-${type}-level`).innerText =
-		game.current.upgrades.repeatable[type].tierOne[resource];
+		game.current.upgrades[upgradeType][type][tier][resource];
 };
 
 //Update upgrades level display functions start//
 
 //Purchase upgrades functions start//
 
+
+
+
+
 const purchaseUpgrade = (upgradeType, type, tier, resource) => {
-	let upgrading = game.current.upgrades[upgradeType][type][tier][resource];
-	let baseCost = upgradeInfo[upgradeType][type][tier][resource].baseCost;
-	let baseIncrement =
-		upgradeInfo[upgradeType][type][tier][resource].costIncrement;
-	let canUpgrade = true;
-	baseCost.forEach((thing) => {
-		let resourceType = Object.keys(thing);
-		let baseValue = thing[Object.keys(thing)];
-		let cost = Math.ceil(baseValue * baseIncrement ** upgrading);
-		if (game.current.resources[resourceType].current < cost) {
-			canUpgrade = false;
-		}
-	});
-	if (canUpgrade == true) {
+	if (upgradeType == 'repeatable') {
+		let upgrading = game.current.upgrades[upgradeType][type][tier][resource];
+		let baseCost = upgradeInfo[upgradeType][type][tier][resource].baseCost;
+		let baseIncrement =
+			upgradeInfo[upgradeType][type][tier][resource].costIncrement;
+		let canUpgrade = true;
 		baseCost.forEach((thing) => {
 			let resourceType = Object.keys(thing);
 			let baseValue = thing[Object.keys(thing)];
 			let cost = Math.ceil(baseValue * baseIncrement ** upgrading);
-			updateResourceAmountLoss(resourceType, cost);
+			if (game.current.resources[resourceType].current < cost) {
+				canUpgrade = false;
+			}
 		});
-		game.current.upgrades[upgradeType][type][tier][resource] += 1;
-		updateUpgradesDisplaySingle(type, resource);
-		if (type == 'storage') {
-			game.current.resources[resource][type][`${type}Total`] = Math.floor(
-				game.current.resources[resource][type][`${type}Base`] *
-					upgradeInfo[upgradeType][type][tier][resource].bonusIncrement **
-						game.current.upgrades[upgradeType][type][tier][resource]
-			);
-			updateStorageSingle(resource);
+		if (canUpgrade == true) {
+			baseCost.forEach((thing) => {
+				let resourceType = Object.keys(thing);
+				let baseValue = thing[Object.keys(thing)];
+				let cost = Math.ceil(baseValue * baseIncrement ** upgrading);
+				updateResourceAmountLoss(resourceType, cost);
+			});
+			game.current.upgrades[upgradeType][type][tier][resource] += 1;
+			updateUpgradesDisplaySingle(upgradeType, type, tier, resource);
+			purchasedUpgrade[`${type}Upgrade`](resource)
+			updateToolTip('purchase', type, resource);
 		}
-		if (type == 'activeProduction') {
-			console.log('hi')
-			game.current.resources[resource][type][`${type}Total`] =
-				1 +
-				upgradeInfo[upgradeType][type][tier][resource].bonusIncrement *
-					game.current.upgrades[upgradeType][type][tier][resource];
-			updateTotalProductionIndividual(resource);
+	} else if (upgradeType == 'oneTime') {
+		let baseCost = upgradeInfo[upgradeType][type].baseCost
+		let canUpgrade = true;
+		baseCost.forEach((thing) => {
+			let resourceType = Object.keys(thing);
+			let baseValue = thing[Object.keys(thing)];
+			let cost = Math.ceil(baseValue);
+			if (game.current.resources[resourceType].current < cost) {
+				canUpgrade = false;
+			}
+		});
+		if (canUpgrade == true) {
+			baseCost.forEach((thing) => {
+				let resourceType = Object.keys(thing);
+				let baseValue = thing[Object.keys(thing)];
+				let cost = Math.ceil(baseValue);
+				updateResourceAmountLoss(resourceType, cost);
+			});
+			game.current.upgrades[upgradeType][type] = 1
+			unlocks[`${type}Unlock`]()
 		}
-		updateToolTip('purchase', type, resource);
 	}
 };
+
+const unlockAll = () => {
+	Object.keys(unlocks).map((unlock) => {
+		unlocks[unlock]()
+	})
+}
 
 //Purchase upgrades functions end//
 
@@ -502,12 +520,23 @@ const updateWholeFloor = () => {
 		room.remove('fighting');
 		room.remove('defeated');
 	}
-	if (currentRoom == 0) {
-		return;
-	}
-	if (currentRoom > 1) {
-		for (let i = 1; i < currentRoom; i++) {
-			updateRoomDefeated(i);
+	if (game.current.combat.direction == 'up') {
+		if (currentRoom == 0) {
+			return;
+		}
+		if (currentRoom > 1) {
+			for (let i = 1; i < currentRoom; i++) {
+				updateRoomDefeated(i);
+			}
+		}
+	} else if (game.current.combat.direction == 'down') {
+		if (currentRoom == 0) {
+			return;
+		}
+		if (currentRoom > 1) {
+			for (let i = 1; i < currentRoom; i++) {
+				updateRoomDefeated(i);
+			}
 		}
 	}
 	updateRoomFighting(currentRoom);
@@ -536,7 +565,82 @@ const roomDisplay = () => {
 }
 
 
-//Floor coloring functions start//
+//Floor coloring functions end//
+
+//Fighting functions start//
+
+const startAscending = () => {
+	if (game.current.combat.location == 'town') {
+		game.current.combat.location = 'tower'
+		game.current.combat.direction = 'up'
+		game.current.combat.floor = 1
+		game.current.combat.room = 1
+		startFighting()
+	}
+}
+
+const startDescending = () => {
+	if (game.current.combat.location == 'tower') {
+		game.current.combat.direction = 'down'
+	}
+}
+
+const startFighting = () => {
+	if (game.current.combat.location =='tower' && game.current.combat.fighting == false) {
+		game.current.combat.fighting = true
+		if (game.current.combat.enemy.healthCurrent > 0) {
+			fight()
+		} else {
+			newFight()
+		}
+	}
+}
+
+const attack = (attacker, defender) => {
+	game.current.combat[defender].healthCurrent -= game.current.combat[attacker].attack
+	updateStat(defender, 'healthCurrent')
+	if (game.current.combat[defender].healthCurrent > 0) {
+		game.current.combat[attacker].healthCurrent -= game.current.combat[defender].attack
+		updateStat(attacker, 'healthCurrent')
+		if (game.current.combat[attacker].healthCurrent > 0) {
+			setTimeout(() => {attack(defender, attacker)}, 500)
+		} else {
+			console.log(`${attacker} death`)
+		}
+		
+	} else {
+		console.log(`${defender} death`)
+	}
+}
+
+
+const fight = () => {
+	if (game.current.combat.enemy.speed > game.current.combat.player.speed) {
+		
+		attack('enemy', 'player')
+	} else {
+		attack('player', 'enemy')
+	}
+}
+
+
+const newFight = () => {
+	createEnemy()
+	fight()
+}
+
+const autoFighting = () => {
+	if (game.current.combat.autoFighting) {
+		if (game.current.combat.player.healthCurrent == game.current.combat.player.healthMax && !game.current.combat.fighting ) {
+			startFighting()
+		}
+		autoFighting()
+	}
+}
+
+
+//Fighting functions end//
+
 
 //Combat related functions end//
 

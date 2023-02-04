@@ -135,7 +135,11 @@ const upgradeInfo = {
 			},
 		},
 	},
-	oneTime: {},
+	oneTime: {
+		fight: {
+			baseCost: [{ herb: 250 }, { mythril: 250 }, { yew: 250 }, { crystal: 250 }, { arcana: 250 }],
+		}
+	},
 };
 
 const tooltips = {
@@ -352,5 +356,45 @@ const tooltips = {
 				},
 			},
 		},
+		individual: {
+			fight: {
+				title: 'Purchase a tower key',
+				info: 'Allows access into the tower, where you can train your magic.',
+				cost: '',
+				updateText() {
+					this.cost = '250 of each resource';
+				},
+			}
+		}
 	},
 };
+
+const purchasedUpgrade = {
+	storageUpgrade(resource) {
+		game.current.resources[resource].storage.storageTotal = Math.floor(
+			game.current.resources[resource].storage.storageBase *
+			upgradeInfo.repeatable.storage.tierOne[resource].bonusIncrement **
+			game.current.upgrades.repeatable.storage.tierOne[resource]
+		);
+		updateStorageSingle(resource);
+	},
+	activeProductionUpgrade(resource) {
+		game.current.resources[resource].activeProduction.activeProductionTotal = Math.floor(
+			game.current.resources[resource].activeProduction.activeProductionBase +
+			upgradeInfo.repeatable.activeProduction.tierOne[resource].bonusIncrement *
+			game.current.upgrades.repeatable.activeProduction.tierOne[resource]
+		)
+		updateTotalProductionIndividual(resource);
+	}, 
+};
+
+const unlocks = {
+	fightUnlock() {
+		if (game.current.upgrades.oneTime.fight == 1) {
+		const combat = document.querySelector(`#combat-wrapper`).classList
+		combat.remove('hidden')
+		const upgrade = document.querySelector(`#fight-unlock`).classList
+		upgrade.add('hidden')
+		}
+	}
+}

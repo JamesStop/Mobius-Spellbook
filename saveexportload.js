@@ -33,6 +33,7 @@ const load = () => {
 	floorDisplay();
 	roomDisplay();
 	updateWholeFloor();
+	unlockAll();
 };
 
 const exporting = () => {
