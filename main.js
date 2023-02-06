@@ -505,10 +505,27 @@ const allStatUpdate = () => {
 
 
 
-
-
-
 //Stats Display updating Functions end//
+
+//Health Regen functions start//
+
+const regenHealth = () => {
+	setTimeout(() => {
+		if (game.current.combat.player.healthCurrent < game.current.combat.player.healthMax && !game.current.combat.fighting ) {
+			game.current.combat.player.healthCurrent += 1
+			updateStat('player', 'healthCurrent')
+			console.log('heal')
+			regenHealth()
+		}}, 500)
+}
+
+
+
+
+
+//Health Regen functions end//
+
+
 
 
 //Floor coloring functions start//
@@ -576,6 +593,8 @@ const startAscending = () => {
 		game.current.combat.floor = 1
 		game.current.combat.room = 1
 		startFighting()
+		$('#ascend-button').addClass('hidden')
+		$('#fight-button, #descend-button').removeClass('hidden')
 	}
 }
 
@@ -605,10 +624,18 @@ const attack = (attacker, defender) => {
 		if (game.current.combat[attacker].healthCurrent > 0) {
 			setTimeout(() => {attack(defender, attacker)}, 500)
 		} else {
+			if (attacker == 'player') {
+				console.log('you died')
+				fightLose()
+			}
 			console.log(`${attacker} death`)
 		}
 		
 	} else {
+		if (defender == 'player') {
+			console.log('you died')
+			fightLose()
+		}
 		console.log(`${defender} death`)
 	}
 }
@@ -637,6 +664,26 @@ const autoFighting = () => {
 		autoFighting()
 	}
 }
+
+//Fight win/lose functions start//
+
+const fightLose = () => {
+	//Post into text that you lost fight
+	//stop fighting
+	game.current.combat.fighting = false
+	//start healing
+	regenHealth()
+}
+
+
+const fightWin = () => {
+
+}
+
+//Fight win/lose functions end//
+
+
+
 
 
 //Fighting functions end//
