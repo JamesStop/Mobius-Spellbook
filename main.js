@@ -437,17 +437,7 @@ const golemAssign = (resource) => {
 
 //Combat related functions start//
 
-//floor and room changing functions start//
 
-const floorChange = (value) => {
-	game.current.combat.floor += value;
-};
-
-const roomChange = (value) => {
-	game.current.combat.floor += value;
-};
-
-//floor and room changing functions end//
 
 //Enemy Creation Functions start//
 
@@ -526,7 +516,46 @@ const regenHealth = () => {
 //Health Regen functions end//
 
 
+//floor and room changing functions start//
 
+const roomChange = () => {
+	updateRoomDefeated(game.current.combat.room)
+	if (game.current.combat.direction == 'up') {
+		if (game.current.combat.room < 25) {
+			game.current.combat.room += 1
+		} else {
+			game.current.combat.room = 1
+			game.current.combat.floor += 1
+			updateWholeFloor()
+			floorDisplay()
+		}
+	} else if (game.current.combat.direction == 'down') {
+		if (game.current.combat.room > 1 && game.current.combat.floor > 1) {
+			game.current.combat.room -= 1
+		} else if (game.current.combat.room == 1 && game.current.combat.floor > 1) {
+			game.current.combat.room = 25
+			game.current.combat.floor -= 1
+			updateWholeFloor()
+			floorDisplay()
+		} else if (game.current.combat.room == 1 && game.current.combat.floor == 1) {
+			game.current.combat.room = 0
+			game.current.combat.floor = 0
+			game.current.combat.location = 'town'
+			game.current.combat.fighting = false
+			game.current.combat.autoFighting = false
+			updateWholeFloor()
+			floorDisplay()
+		}
+	}
+	if (game.current.combat.room > 0) {
+		updateRoomFighting(game.current.combat.room)
+	}
+	roomDisplay()
+}
+
+
+
+//floor and room changing functions end//
 
 //Floor coloring functions start//
 
@@ -535,7 +564,8 @@ const updateWholeFloor = () => {
 	for (let i = 1; i < 26; i++) {
 		let room = document.querySelector(`#tower-cell-${i}`).classList;
 		room.remove('fighting');
-		room.remove('defeated');
+		room.remove('upDefeated');
+		room.remove('downDefeated');
 	}
 	if (game.current.combat.direction == 'up') {
 		if (currentRoom == 0) {
@@ -562,15 +592,22 @@ const updateWholeFloor = () => {
 const updateRoomFighting = (roomNumber) => {
 	let room = document.querySelector(`#tower-cell-${roomNumber}`).classList;
 	room.remove('fighting');
-	room.remove('defeated');
+	room.remove('upDefeated');
+	room.remove('downDefeated');
 	room.add('fighting');
 };
 
 const updateRoomDefeated = (roomNumber) => {
 	let room = document.querySelector(`#tower-cell-${roomNumber}`).classList;
 	room.remove('fighting');
-	room.remove('defeated');
-	room.add('defeated');
+	room.remove('upDefeated');
+	room.remove('downDefeated');
+	if (game.current.combat.direction == 'up') {
+		room.add('upDefeated');
+	} else {
+		room.add('downDefeated');
+	}
+	
 };
 
 const floorDisplay = () => {
@@ -595,6 +632,9 @@ const startAscending = () => {
 		startFighting()
 		$('#ascend-button').addClass('hidden')
 		$('#fight-button, #descend-button').removeClass('hidden')
+		floorDisplay()
+		roomDisplay()
+		updateRoomFighting(game.current.combat.room)
 	}
 }
 
@@ -605,7 +645,7 @@ const startDescending = () => {
 }
 
 const startFighting = () => {
-	if (game.current.combat.location =='tower' && game.current.combat.fighting == false) {
+	if (game.current.combat.location =='tower' && game.current.combat.fighting == false && game.current.combat.player.healthCurrent > 0) {
 		game.current.combat.fighting = true
 		if (game.current.combat.enemy.healthCurrent > 0) {
 			fight()
@@ -616,28 +656,43 @@ const startFighting = () => {
 }
 
 const attack = (attacker, defender) => {
-	game.current.combat[defender].healthCurrent -= game.current.combat[attacker].attack
-	updateStat(defender, 'healthCurrent')
-	if (game.current.combat[defender].healthCurrent > 0) {
-		game.current.combat[attacker].healthCurrent -= game.current.combat[defender].attack
-		updateStat(attacker, 'healthCurrent')
-		if (game.current.combat[attacker].healthCurrent > 0) {
-			setTimeout(() => {attack(defender, attacker)}, 500)
+	setTimeout(() => {
+		if (game.current.combat[defender].healthCurrent - game.current.combat[attacker].attack < 0) {
+			game.current.combat[defender].healthCurrent = 0
 		} else {
-			if (attacker == 'player') {
+			game.current.combat[defender].healthCurrent -= game.current.combat[attacker].attack
+		}
+		updateStat(defender, 'healthCurrent')
+		if (game.current.combat[defender].healthCurrent > 0) {
+			if (game.current.combat[attacker].healthCurrent - game.current.combat[defender].attack < 0) {
+				game.current.combat[attacker].healthCurrent = 0
+			} else {
+				game.current.combat[attacker].healthCurrent -= game.current.combat[defender].attack
+			}
+			updateStat(attacker, 'healthCurrent')
+			if (game.current.combat[attacker].healthCurrent > 0) {
+				attack(attacker, defender)
+			} else {
+				if (attacker == 'player') {
+					console.log('you died')
+					fightLose()
+				} else {
+					fightWin()
+				}
+				console.log(`${attacker} death`)
+			}
+			
+		} else {
+			if (defender == 'player') {
 				console.log('you died')
 				fightLose()
+			} else {
+				fightWin()
 			}
-			console.log(`${attacker} death`)
+			console.log(`${defender} death`)
 		}
-		
-	} else {
-		if (defender == 'player') {
-			console.log('you died')
-			fightLose()
-		}
-		console.log(`${defender} death`)
-	}
+	}, 500)
+	
 }
 
 
@@ -652,8 +707,10 @@ const fight = () => {
 
 
 const newFight = () => {
-	createEnemy()
-	fight()
+	setTimeout(() => {
+		createEnemy()
+		fight()
+	}, 500)
 }
 
 const autoFighting = () => {
@@ -677,7 +734,9 @@ const fightLose = () => {
 
 
 const fightWin = () => {
-
+	//give reward drops if any
+	roomChange()
+	newFight()
 }
 
 //Fight win/lose functions end//
