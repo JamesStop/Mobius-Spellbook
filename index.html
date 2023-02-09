@@ -145,8 +145,10 @@
 					<div>Room: <span id="room-display"></span></div>
 				</div>
 				<div class="fight-buttons-section">
-					<button className="fight-button" onclick="startAscending()">Ascend Tower</button>
-					<button className="auto-fight-button">AutoFight</button>
+					<button class="fight-button" onclick="startAscending()" id="ascend-button">Ascend Tower</button>
+					<button class="fight-button hidden" onclick="startFighting()" id="fight-button">Fight</button>
+					<button class="fight-button hidden" onclick="startDescending()" id="descend-button">Descend Tower</button>
+					<button class="auto-fight-button">AutoFight</button>
 				</div>
 				
 				<div class="circle-outer">
@@ -314,6 +316,7 @@
 			<button class="settings-buttons">Settings</button>
 		</section>
 		<div class="purchaseTooltips hidden" id="purchaseTooltips"><span class="purchaseTooltipName" id="purchaseTooltipName"></span><span class='purchaseTooltipInfo' id="purchaseTooltipInfo"></span><span class="purchaseTooltipCost" id="purchaseTooltipCost"></span></div>
+		<script src="jquery-3.6.3.js"></script>
 		<script src="game.js"></script>
 		<script src="constants.js"></script>
 		<script src="lz-string.js"></script>
