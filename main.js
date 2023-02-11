@@ -519,7 +519,8 @@ const regenHealth = () => {
 //floor and room changing functions start//
 
 const roomChange = () => {
-	updateRoomDefeated(game.current.combat.room)
+	if (game.current.combat.location == 'tower') {
+		updateRoomDefeated(game.current.combat.room)
 	if (game.current.combat.direction == 'up') {
 		if (game.current.combat.room < 25) {
 			game.current.combat.room += 1
@@ -530,7 +531,7 @@ const roomChange = () => {
 			floorDisplay()
 		}
 	} else if (game.current.combat.direction == 'down') {
-		if (game.current.combat.room > 1 && game.current.combat.floor > 1) {
+		if (game.current.combat.room > 1) {
 			game.current.combat.room -= 1
 		} else if (game.current.combat.room == 1 && game.current.combat.floor > 1) {
 			game.current.combat.room = 25
@@ -545,12 +546,15 @@ const roomChange = () => {
 			game.current.combat.autoFighting = false
 			updateWholeFloor()
 			floorDisplay()
+			allCombatButtons()
 		}
 	}
 	if (game.current.combat.room > 0) {
 		updateRoomFighting(game.current.combat.room)
 	}
 	roomDisplay()
+	}
+	
 }
 
 
@@ -602,9 +606,10 @@ const updateRoomDefeated = (roomNumber) => {
 	room.remove('fighting');
 	room.remove('upDefeated');
 	room.remove('downDefeated');
-	if (game.current.combat.direction == 'up') {
+	if (game.current.combat.room >= roomNumber ) {
 		room.add('upDefeated');
-	} else {
+	}
+	if (game.current.combat.direction =='down' && game.current.combat.room <= roomNumber) {
 		room.add('downDefeated');
 	}
 	
@@ -620,6 +625,26 @@ const roomDisplay = () => {
 
 
 //Floor coloring functions end//
+
+//Combat buttons displays functions //
+
+const allCombatButtons = () => {
+	if (game.current.combat.location == 'tower') {
+		$('#ascend-button').addClass('hidden')
+		$('#fight-button').removeClass('hidden')
+		if (game.current.combat.direction == 'up') {
+			$('#descend-button').removeClass('hidden')
+		} else {
+			$('#descend-button').addClass('hidden')
+		}
+	} else {
+		$('#ascend-button').removeClass('hidden')
+		$('#fight-button').addClass('hidden')
+		$('#descend-button').addClass('hidden')
+	}
+}
+
+//Combat buttons displays functsions end//
 
 //Fighting functions start//
 
@@ -736,7 +761,9 @@ const fightLose = () => {
 const fightWin = () => {
 	//give reward drops if any
 	roomChange()
-	newFight()
+	if (game.current.combat.fighting && game.current.combat.location == 'tower') {
+		newFight()
+	}
 }
 
 //Fight win/lose functions end//
