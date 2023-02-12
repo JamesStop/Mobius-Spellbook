@@ -87,10 +87,12 @@ const setCollectingResource = (resource) => {
 };
 
 const resourceBarClick = (resource) => {
-	resourceColorReset();
-	setResourcesActiveColor(resource);
-	setCollectingResource(resource);
-	updateTotalProductionAll();
+	if (game.current.combat.location != 'tower') {
+		resourceColorReset();
+		setResourcesActiveColor(resource);
+		setCollectingResource(resource);
+		updateTotalProductionAll();
+	}
 };
 
 //Resource bar click functions end//
@@ -221,52 +223,54 @@ const updateUpgradesDisplaySingle = (upgradeType, type, tier, resource) => {
 
 
 const purchaseUpgrade = (upgradeType, type, tier, resource) => {
-	if (upgradeType == 'repeatable') {
-		let upgrading = game.current.upgrades[upgradeType][type][tier][resource];
-		let baseCost = upgradeInfo[upgradeType][type][tier][resource].baseCost;
-		let baseIncrement =
-			upgradeInfo[upgradeType][type][tier][resource].costIncrement;
-		let canUpgrade = true;
-		baseCost.forEach((thing) => {
-			let resourceType = Object.keys(thing);
-			let baseValue = thing[Object.keys(thing)];
-			let cost = Math.ceil(baseValue * baseIncrement ** upgrading);
-			if (game.current.resources[resourceType].current < cost) {
-				canUpgrade = false;
-			}
-		});
-		if (canUpgrade == true) {
+	if (game.current.combat.location != 'tower') {
+		if (upgradeType == 'repeatable') {
+			let upgrading = game.current.upgrades[upgradeType][type][tier][resource];
+			let baseCost = upgradeInfo[upgradeType][type][tier][resource].baseCost;
+			let baseIncrement =
+				upgradeInfo[upgradeType][type][tier][resource].costIncrement;
+			let canUpgrade = true;
 			baseCost.forEach((thing) => {
 				let resourceType = Object.keys(thing);
 				let baseValue = thing[Object.keys(thing)];
 				let cost = Math.ceil(baseValue * baseIncrement ** upgrading);
-				updateResourceAmountLoss(resourceType, cost);
+				if (game.current.resources[resourceType].current < cost) {
+					canUpgrade = false;
+				}
 			});
-			game.current.upgrades[upgradeType][type][tier][resource] += 1;
-			updateUpgradesDisplaySingle(upgradeType, type, tier, resource);
-			purchasedUpgrade[`${type}Upgrade`](resource)
-			updateToolTip('purchase', type, resource);
-		}
-	} else if (upgradeType == 'oneTime') {
-		let baseCost = upgradeInfo[upgradeType][type].baseCost
-		let canUpgrade = true;
-		baseCost.forEach((thing) => {
-			let resourceType = Object.keys(thing);
-			let baseValue = thing[Object.keys(thing)];
-			let cost = Math.ceil(baseValue);
-			if (game.current.resources[resourceType].current < cost) {
-				canUpgrade = false;
+			if (canUpgrade == true) {
+				baseCost.forEach((thing) => {
+					let resourceType = Object.keys(thing);
+					let baseValue = thing[Object.keys(thing)];
+					let cost = Math.ceil(baseValue * baseIncrement ** upgrading);
+					updateResourceAmountLoss(resourceType, cost);
+				});
+				game.current.upgrades[upgradeType][type][tier][resource] += 1;
+				updateUpgradesDisplaySingle(upgradeType, type, tier, resource);
+				purchasedUpgrade[`${type}Upgrade`](resource)
+				updateToolTip('purchase', type, resource);
 			}
-		});
-		if (canUpgrade == true) {
+		} else if (upgradeType == 'oneTime') {
+			let baseCost = upgradeInfo[upgradeType][type].baseCost
+			let canUpgrade = true;
 			baseCost.forEach((thing) => {
 				let resourceType = Object.keys(thing);
 				let baseValue = thing[Object.keys(thing)];
 				let cost = Math.ceil(baseValue);
-				updateResourceAmountLoss(resourceType, cost);
+				if (game.current.resources[resourceType].current < cost) {
+					canUpgrade = false;
+				}
 			});
-			game.current.upgrades[upgradeType][type] = 1
-			unlocks[`${type}Unlock`]()
+			if (canUpgrade == true) {
+				baseCost.forEach((thing) => {
+					let resourceType = Object.keys(thing);
+					let baseValue = thing[Object.keys(thing)];
+					let cost = Math.ceil(baseValue);
+					updateResourceAmountLoss(resourceType, cost);
+				});
+				game.current.upgrades[upgradeType][type] = 1
+				unlocks[`${type}Unlock`]()
+			}
 		}
 	}
 };
@@ -311,30 +315,32 @@ const updateGolemsActiveSingle = (resource) => {
 //golem build functions start//
 
 const buildGolem = () => {
-	let canBuild = true;
-	for (let i = 0; i < resources.length; i++) {
-		let resource = resources[i];
-		if (
-			game.current.resources[resource].current <
-			game.current.resources.golems.cost.totalCost
-		) {
-			canBuild = false;
-			break;
+	if (game.current.combat.location != 'tower') {
+		let canBuild = true;
+		for (let i = 0; i < resources.length; i++) {
+			let resource = resources[i];
+			if (
+				game.current.resources[resource].current <
+				game.current.resources.golems.cost.totalCost
+			) {
+				canBuild = false;
+				break;
+			}
 		}
-	}
-	if (canBuild) {
-		if (
-			game.current.resources.golems.total <
-			game.current.resources.golems.storage.storageTotal
-		) {
-			resources.map((resource) => {
-				game.current.resources[resource].current -=
-					game.current.resources.golems.cost.totalCost;
-			});
-			game.current.resources.golems.total += 1;
-			game.current.resources.golems.inactive += 1;
-			updateResourceAmount();
-			updateGolemsTotal();
+		if (canBuild) {
+			if (
+				game.current.resources.golems.total <
+				game.current.resources.golems.storage.storageTotal
+			) {
+				resources.map((resource) => {
+					game.current.resources[resource].current -=
+						game.current.resources.golems.cost.totalCost;
+				});
+				game.current.resources.golems.total += 1;
+				game.current.resources.golems.inactive += 1;
+				updateResourceAmount();
+				updateGolemsTotal();
+			}
 		}
 	}
 };
@@ -660,6 +666,9 @@ const startAscending = () => {
 		floorDisplay()
 		roomDisplay()
 		updateRoomFighting(game.current.combat.room)
+		game.current.collecting = null
+		updateTotalProductionAll()
+		resourceColorReset()
 	}
 }
 
