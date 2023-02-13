@@ -14,18 +14,12 @@ const upgradesNavColorReset = () => {
 		'something-selector',
 	];
 	upgradesNavIds.map((id) => {
-		const button = document.querySelector(`#${id}`).classList;
-		button.remove('nav-selected');
-		button.remove('nav-unselected');
-		button.add('nav-unselected');
+		$(`#${id}`).removeClass('nav-selected').addClass('nav-unselected')
 	});
 };
 
 const setUpgradesNavActiveColor = (id) => {
-	const button = document.querySelector(`#${id}`).classList;
-	button.remove('nav-selected');
-	button.remove('nav-unselected');
-	button.add('nav-selected');
+	$(`#${id}`).removeClass('nav-unselected').addClass('nav-selected')
 };
 
 const upgradesDisplayHide = () => {
@@ -36,16 +30,13 @@ const upgradesDisplayHide = () => {
 		'something-display',
 	];
 	UpgradesDisplaysIds.map((id) => {
-		const display = document.querySelector(`#${id}`).classList;
-		display.remove('hidden');
-		display.add('hidden');
+		$(`#${id}`).addClass('hidden')
 	});
 };
 
 const upgradesDisplayShow = (id) => {
 	const displayId = id.replace('selector', 'display');
-	const display = document.querySelector(`#${displayId}`).classList;
-	display.remove('hidden');
+	$(`#${displayId}`).removeClass('hidden')
 };
 
 const upgradesNavBarClick = (id) => {
@@ -66,19 +57,13 @@ const resourceColorReset = () => {
 		'arcana-button',
 	];
 	resourceBarIds.map((id) => {
-		const button = document.querySelector(`#${id}`).classList;
-		button.remove('color-inactive');
-		button.remove('color-active');
-		button.add('color-inactive');
+		$(`#${id}`).removeClass('color-active').addClass('color-inactive');
 	});
 };
 
 const setResourcesActiveColor = (id) => {
 	if (id != null) {
-		const button = document.querySelector(`#${id}-button`).classList;
-		button.remove('color-inactive');
-		button.remove('color-active');
-		button.add('color-active');
+		$(`#${id}-button`).removeClass('color-inactive').addClass('color-active');
 	}
 };
 
@@ -108,7 +93,7 @@ const updateTotalProductionAll = () => {
 		} else {
 			updating.totalPerSec = updating.golemPerSec;
 		}
-		document.querySelector(`#${resource}-sec`).innerText = updating.totalPerSec;
+		$(`#${resource}-sec`).text(updating.totalPerSec)
 	});
 };
 
@@ -120,7 +105,7 @@ const updateTotalProductionIndividual = (resource) => {
 	} else {
 		updating.totalPerSec = updating.golemPerSec;
 	}
-	document.querySelector(`#${resource}-sec`).innerText = updating.totalPerSec;
+	$(`#${resource}-sec`).text(updating.totalPerSec)
 };
 
 //Resource idle production update functions end//
@@ -130,13 +115,13 @@ const updateTotalProductionIndividual = (resource) => {
 const updateResourceAmount = () => {
 	resources.map((resource) => {
 		const updating = game.current.resources[resource];
-		document.querySelector(`#${resource}-current`).innerText = updating.current;
+		$(`#${resource}-current`).text(updating.current)
 	});
 };
 
 const updateResourceAmountSingle = (resource) => {
 	const updating = game.current.resources[resource];
-	document.querySelector(`#${resource}-current`).innerText = updating.current;
+	$(`#${resource}-current`).text(updating.current)
 };
 
 const updateResourceAmountGain = (resource, value) => {
@@ -186,14 +171,12 @@ window.setInterval(() => {
 
 const updateStorages = () => {
 	resources.map((resource) => {
-		document.querySelector(`#${resource}-storage-max`).innerText =
-			game.current.resources[resource].storage.storageTotal;
+		$(`#${resource}-storage-max`).text(game.current.resources[resource].storage.storageTotal)
 	});
 };
 
 const updateStorageSingle = (resource) => {
-	document.querySelector(`#${resource}-storage-max`).innerText =
-		game.current.resources[resource].storage.storageTotal;
+	$(`#${resource}-storage-max`).text(game.current.resources[resource].storage.storageTotal)
 };
 
 //Update storage max display functions start//
@@ -203,15 +186,13 @@ const updateStorageSingle = (resource) => {
 const updateUpgradesDisplayAll = () => {
 	resources.map((resource) => {
 		upgradeTypes.map((type) => {
-			document.querySelector(`#${resource}-${type}-level`).innerText =
-				game.current.upgrades.repeatable[type].tierOne[resource];
+			$(`#${resource}-${type}-level`).text(game.current.upgrades.repeatable[type].tierOne[resource])
 		});
 	});
 };
 
 const updateUpgradesDisplaySingle = (upgradeType, type, tier, resource) => {
-	document.querySelector(`#${resource}-${type}-level`).innerText =
-		game.current.upgrades[upgradeType][type][tier][resource];
+	$(`#${resource}-${type}-level`).text(game.current.upgrades.repeatable[type][tier][resource])
 };
 
 //Update upgrades level display functions start//
@@ -277,9 +258,9 @@ const purchaseUpgrade = (upgradeType, type, tier, resource) => {
 
 const unlockAll = () => {
 	Object.keys(unlocks).map((unlock) => {
-		unlocks[unlock]()
-	})
-}
+		unlocks[unlock]();
+	});
+};
 
 //Purchase upgrades functions end//
 
@@ -288,26 +269,20 @@ const unlockAll = () => {
 //golems display function start//
 
 const updateGolemsTotal = () => {
-	document.querySelector(`#golems-total-display`).innerText =
-		game.current.resources.golems.total;
-	document.querySelector(`#golems-total-working-display`).innerText =
-		game.current.resources.golems.total;
+	$(`#golems-total-display`).text(game.current.resources.golems.total);
+	$(`#golems-total-working-display`).text(game.current.resources.golems.total);
 };
 
 const updateGolemsActiveAll = () => {
 	resources.map((resource) => {
-		document.querySelector(`#${resource}-golem-count`).innerText =
-			game.current.resources.golems.types[resource];
+		$(`#${resource}-golem-count`).text(game.current.resources.golems.types[resource])
 	});
-	document.querySelector('#golems-active-display').innerText =
-		game.current.resources.golems.active;
+	$('#golems-active-display').text(game.current.resources.golems.active)
 };
 
 const updateGolemsActiveSingle = (resource) => {
-	document.querySelector(`#${resource}-golem-count`).innerText =
-		game.current.resources.golems.types[resource];
-	document.querySelector('#golems-active-display').innerText =
-		game.current.resources.golems.active;
+	$(`#${resource}-golem-count`).text(game.current.resources.golems.types[resource])
+	$('#golems-active-display').text(game.current.resources.golems.active)
 };
 
 //golems display function end//
@@ -351,9 +326,9 @@ const buildGolem = () => {
 
 const golemAssignColors = (id) => {
 	assignmentButtons.map((button) => {
-		document.querySelector(`#${button}`).classList.remove(`${button}-active`);
+		$(`#${button}`).removeClass(`${button}-active`);
 	});
-	document.querySelector(`#golem-${id}`).classList.add(`golem-${id}-active`);
+	$(`#golem-${id}`).addClass(`golem-${id}-active`);
 };
 
 const assignType = (id) => {
@@ -488,7 +463,7 @@ const createEnemy = () => {
 //Stats Display updating Functions start//
 
 const updateStat = (person, stat) => {
-	document.querySelector(`#${person}-${stat}`).innerText = game.current.combat[person][stat];
+	$(`#${person}-${stat}`).text(game.current.combat[person][stat])
 }
 
 const allStatUpdate = () => {
@@ -572,10 +547,7 @@ const roomChange = () => {
 const updateWholeFloor = () => {
 	const currentRoom = game.current.combat.room;
 	for (let i = 1; i < 26; i++) {
-		let room = document.querySelector(`#tower-cell-${i}`).classList;
-		room.remove('fighting');
-		room.remove('upDefeated');
-		room.remove('downDefeated');
+		$(`#tower-cell-${i}`).removeClass('fighting upDefeated downDefeated')
 	}
 	if (game.current.combat.direction == 'up') {
 		if (currentRoom == 0) {
@@ -600,33 +572,26 @@ const updateWholeFloor = () => {
 };
 
 const updateRoomFighting = (roomNumber) => {
-	let room = document.querySelector(`#tower-cell-${roomNumber}`).classList;
-	room.remove('fighting');
-	room.remove('upDefeated');
-	room.remove('downDefeated');
-	room.add('fighting');
+	$(`#tower-cell-${roomNumber}`).removeClass('upDefeated downDefeated').addClass('fighting')
 };
 
 const updateRoomDefeated = (roomNumber) => {
-	let room = document.querySelector(`#tower-cell-${roomNumber}`).classList;
-	room.remove('fighting');
-	room.remove('upDefeated');
-	room.remove('downDefeated');
+	$(`#tower-cell-${roomNumber}`).removeClass('fighting upDefeated downDefeated')
 	if (game.current.combat.room >= roomNumber ) {
-		room.add('upDefeated');
+		$(`#tower-cell-${roomNumber}`).addClass('upDefeated');
 	}
 	if (game.current.combat.direction =='down' && game.current.combat.room <= roomNumber) {
-		room.add('downDefeated');
+		$(`#tower-cell-${roomNumber}`).addClass('downDefeated');
 	}
 	
 };
 
 const floorDisplay = () => {
-	document.querySelector(`#floor-display`).innerText = game.current.combat.floor;
+	$(`#floor-display`).text(game.current.combat.floor)
 }
 
 const roomDisplay = () => {
-	document.querySelector(`#room-display`).innerText = game.current.combat.room;
+	$(`#room-display`).text(game.current.combat.room)
 }
 
 
@@ -790,25 +755,18 @@ const fightWin = () => {
 
 const updateToolTip = (niche, type, resource) => {
 	tooltips[niche][type][resource].updateText(resource);
-	document.querySelector('#purchaseTooltipName').innerText =
-		tooltips[niche][type][resource].title;
-	document.querySelector('#purchaseTooltipInfo').innerText =
-		tooltips[niche][type][resource].info;
-	document.querySelector('#purchaseTooltipCost').innerText =
-		tooltips[niche][type][resource].cost;
+	$('#purchaseTooltipName').text(tooltips[niche][type][resource].title)
+	$('#purchaseTooltipInfo').text(tooltips[niche][type][resource].info)
+	$('#purchaseTooltipCost').text(tooltips[niche][type][resource].cost)
 };
 
 const mousein = (event, niche, type, resource) => {
 	updateToolTip(niche, type, resource);
-	let tooltip = document.querySelector(`#${niche}Tooltips`);
-	tooltip.style.top = `${event.y - 200}px`;
-	tooltip.style.left = `${event.x - 200}px`;
-	tooltip.classList.remove('hidden');
+	$(`#${niche}Tooltips`).css({"top": `${event.y - 200}px`, 'left':  `${event.x - 200}px`}).removeClass('hidden')
 };
 
 const mouseout = (event) => {
-	let tooltip = document.querySelector('#purchaseTooltips').classList;
-	tooltip.add('hidden');
+	$('#purchaseTooltips').addClass('hidden')
 };
 
 //functions for tooltips end//
