@@ -34,6 +34,10 @@ const load = () => {
 	roomDisplay();
 	updateWholeFloor();
 	unlockAll();
+	allCombatButtons()
+	if (game.current.combat.fighting) {
+		fight()
+	}
 };
 
 const exporting = () => {
