@@ -337,10 +337,12 @@ body {
     flex-direction: column;
     border: 1px solid black;
     position: relative;
+    font-size: 1rem;
 }
 
 .player-name,
 .enemy-name {
+    margin: 5px;
     position: absolute;
     top: 0;
     left: 25%;

@@ -431,7 +431,7 @@ const createEnemy = () => {
 	let enemyMultis = enemies[typeOfEnemy];
 	let currentFloor = game.current.combat.floor;
 	let currentRoom = game.current.combat.room;
-	game.current.combat.enemy.type = typeOfEnemy;
+	game.current.combat.enemy.name = typeOfEnemy;
 	game.current.combat.enemy.healthMax = Math.ceil(
 		10 *
 			1.15 ** (currentFloor - 1) *
@@ -454,8 +454,8 @@ const createEnemy = () => {
 	game.current.combat.enemy.speed = 1 * enemyMultis.speedMulti;
 	stats.map((stat) => {
 		updateStat("enemy", stat);
+		$("#enemy-name").text(game.current.combat.enemy.type)
 	})
-
 };
 
 //Enemy Creation Functions end//
@@ -464,6 +464,9 @@ const createEnemy = () => {
 
 const updateStat = (person, stat) => {
 	$(`#${person}-${stat}`).text(game.current.combat[person][stat])
+	if (stat == 'healthCurrent') {
+		$(`#${person}-health-bar`).css({"width": `${Math.floor((game.current.combat[person].healthCurrent / game.current.combat[person].healthMax) * 100)}%`})
+	}
 }
 
 const allStatUpdate = () => {
@@ -485,7 +488,6 @@ const regenHealth = () => {
 		if (game.current.combat.player.healthCurrent < game.current.combat.player.healthMax && !game.current.combat.fighting ) {
 			game.current.combat.player.healthCurrent += 1
 			updateStat('player', 'healthCurrent')
-			console.log('heal')
 			regenHealth()
 		}}, 500)
 }

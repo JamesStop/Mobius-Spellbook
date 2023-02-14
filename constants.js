@@ -1,7 +1,7 @@
 const resources = ['herb', 'mythril', 'yew', 'crystal', 'arcana'];
 const upgradeTypes = ['storage', 'activeProduction'];
 const assignmentButtons = ['golem-assign', 'golem-remove'];
-const stats = ['attack', 'defense', 'healthMax', 'healthCurrent', 'manaMax', 'manaCurrent'];
+const stats = ['name', 'attack', 'defense', 'healthMax', 'healthCurrent', 'manaMax', 'manaCurrent'];
 const people = ['player', 'enemy'];
 const enemyTypes = [
 	'skeleton',
