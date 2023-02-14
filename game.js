@@ -116,6 +116,7 @@ let currentGameVersion = {
 			location: 'town',
 			direction: 'up',
 			player: {
+				name: '',
 				healthMax: 10,
 				healthCurrent: 10,
 				manaMax: 0,
@@ -125,7 +126,7 @@ let currentGameVersion = {
 				defense: 0,
 			},
 			enemy: {
-				type: '',
+				name: '',
 				healthMax: 100,
 				healthCurrent: 0,
 				manaMax: 0,
