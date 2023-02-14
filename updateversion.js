@@ -8,8 +8,6 @@ const checkGameVersion = (savegame) => {
 };
 
 
-
-
 const updateGameVersionTwo = (base, saveData) => {
 	let newVersion = base
 	let save = saveData
