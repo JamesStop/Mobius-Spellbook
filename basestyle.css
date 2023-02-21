@@ -164,10 +164,11 @@ body {
     border-top-right-radius: 10px;
 }
 
-#spellbook-selector, #golems-selector, #something-selector {
+.temp-hidden {
     height: 0;
     font-size: 0;
     border-top: 0;
+    cursor: default;
 }
 
 

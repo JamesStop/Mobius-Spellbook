@@ -40,10 +40,12 @@ const upgradesDisplayShow = (id) => {
 };
 
 const upgradesNavBarClick = (id) => {
-	upgradesNavColorReset();
-	setUpgradesNavActiveColor(id);
-	upgradesDisplayHide();
-	upgradesDisplayShow(id);
+	if ($(`#${id}`).attr('class').split(/\s+/).includes('temp-hidden') == false) {
+		upgradesNavColorReset();
+		setUpgradesNavActiveColor(id);
+		upgradesDisplayHide();
+		upgradesDisplayShow(id);
+	}
 };
 
 //Resource bar click functions start//

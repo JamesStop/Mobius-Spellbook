@@ -413,7 +413,7 @@ const purchasedUpgrade = {
 const unlocks = {
 	spellbookUnlock() {
 		if (game.current.unlocks.spellbook) {
-			$(`#spellbook-selector`).css({'height' : "100%", 'font-size' : '1.5vh', 'border-top' : '2px solid rgb(77, 77, 77)'})
+			$(`#spellbook-selector`).removeClass('temp-hidden')
 			$(`#fight-unlock`).removeClass('hidden')
 			$(`#spellbook-unlock`).addClass('hidden')
 		}
@@ -426,8 +426,8 @@ const unlocks = {
 		}
 	},
 	golemsUnlock() {
-		if (game.current.unlocks.spellbook) {
-			$(`#golems-selector`).css({'height' : "100%", 'font-size' : '1.5vh', 'border-top' : '2px solid rgb(77, 77, 77)'})
+		if (game.current.unlocks.golems) {
+			$(`#golems-selector`).removeClass('temp-hidden')
 			$(`#golems-unlock`).addClass('hidden')
 		}
 	},
