@@ -234,15 +234,17 @@
 		<section class="upgrades-wrapper">
 			<nav class="upgrades-nav">
 				<button class="upgrades-nav-selector nav-selected" id="upgrades-selector" onclick="upgradesNavBarClick(id)"><span>Upgrades</span></button>
-				<button class="upgrades-nav-selector" id="golems-selector" onclick="upgradesNavBarClick(id)"><span>Golems</span></button>
 				<button class="upgrades-nav-selector" id="spellbook-selector" onclick="upgradesNavBarClick(id)"><span>Spell Book</span></button>
+				<button class="upgrades-nav-selector" id="golems-selector" onclick="upgradesNavBarClick(id)"><span>Golems</span></button>
 				<button class="upgrades-nav-selector" id="something-selector" onclick="upgradesNavBarClick(id)"><span>????</span></div>
 			</nav>
 			<div class="upgrades-display-wrapper" id="upgrades-display">
 				<section class="type-upgrades-wrapper">
 					<h3 class="upgrades-titles">One Time</h3>
 					<div class="upgrades-purchase-wrapper">
-						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'individual', 'fight')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'fight', null, null)" id="fight-unlock"><span>Tower Key</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'individual', 'spellbook')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'spellbook', null, null)" id="spellbook-unlock"><span>Spell book</span></button>
+						<button class="upgrades-purchase-button hidden" onmouseover="mousein(event, 'purchase', 'individual', 'fight')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'fight', null, null)" id="fight-unlock"><span>Tower Key</span></button>
+						<button class="upgrades-purchase-button hidden" onmouseover="mousein(event, 'purchase', 'individual', 'golems')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'golems', null, null)" id="golems-unlock hidden"><span>Golem Core</span></button>
 					</div>
 				</section>
 				<section class="type-upgrades-wrapper">

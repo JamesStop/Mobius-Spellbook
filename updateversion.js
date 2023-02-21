@@ -12,10 +12,12 @@ const updateGameVersionTwo = (base, saveData) => {
 	let newVersion = base
 	let save = saveData
 	Object.keys(newVersion).map((key) => {
-		if (typeof(newVersion[key]) == 'object' && newVersion[key]) {
-			newVersion = {...newVersion, [key]: updateGameVersionTwo(newVersion[key], saveData[key])}
-		} else {
-			newVersion = {...newVersion, [key]: save[key]}
+		if (save.hasOwnProprety(key)) {
+			if (typeof(newVersion[key]) == 'object' && newVersion[key]) {
+				newVersion = {...newVersion, [key]: updateGameVersionTwo(newVersion[key], saveData[key])}
+			} else {
+				newVersion = {...newVersion, [key]: save[key]}
+			}
 		}
 	})
 	return newVersion

@@ -166,10 +166,12 @@ let currentGameVersion = {
 					},
 				},
 			},
-			oneTime: {
-				fight: 0,
-			},
 		},
+		unlocks: {
+			golems: false,
+			spellbook: false,
+			fight: false,
+		}
 	},
 	best: {
 		hello: 'red',

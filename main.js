@@ -93,7 +93,9 @@ const updateTotalProductionAll = () => {
 		} else {
 			updating.totalPerSec = updating.golemPerSec;
 		}
-		$(`#${resource}-sec`).text(updating.totalPerSec)
+		$(`#${resource}-sec`).text(() => {
+			return formatNumbers(updating.totalPerSec)
+		})
 	});
 };
 
@@ -105,7 +107,9 @@ const updateTotalProductionIndividual = (resource) => {
 	} else {
 		updating.totalPerSec = updating.golemPerSec;
 	}
-	$(`#${resource}-sec`).text(updating.totalPerSec)
+	$(`#${resource}-sec`).text(() => {
+		return formatNumbers(updating.totalPerSec)
+	})
 };
 
 //Resource idle production update functions end//
@@ -115,13 +119,17 @@ const updateTotalProductionIndividual = (resource) => {
 const updateResourceAmount = () => {
 	resources.map((resource) => {
 		const updating = game.current.resources[resource];
-		$(`#${resource}-current`).text(updating.current)
+		$(`#${resource}-current`).text(() => {
+			return formatNumbers(updating.current)
+		})
 	});
 };
 
 const updateResourceAmountSingle = (resource) => {
 	const updating = game.current.resources[resource];
-	$(`#${resource}-current`).text(updating.current)
+	$(`#${resource}-current`).text(() => {
+		return formatNumbers(updating.current)
+	})
 };
 
 const updateResourceAmountGain = (resource, value) => {
@@ -171,12 +179,16 @@ window.setInterval(() => {
 
 const updateStorages = () => {
 	resources.map((resource) => {
-		$(`#${resource}-storage-max`).text(game.current.resources[resource].storage.storageTotal)
+		$(`#${resource}-storage-max`).text(() => {
+			return formatNumbers(game.current.resources[resource].storage.storageTotal)
+		})
 	});
 };
 
 const updateStorageSingle = (resource) => {
-	$(`#${resource}-storage-max`).text(game.current.resources[resource].storage.storageTotal)
+	$(`#${resource}-storage-max`).text(() => {
+		return formatNumbers(game.current.resources[resource].storage.storageTotal)
+	})
 };
 
 //Update storage max display functions start//
@@ -186,13 +198,17 @@ const updateStorageSingle = (resource) => {
 const updateUpgradesDisplayAll = () => {
 	resources.map((resource) => {
 		upgradeTypes.map((type) => {
-			$(`#${resource}-${type}-level`).text(game.current.upgrades.repeatable[type].tierOne[resource])
+			$(`#${resource}-${type}-level`).text(() => {
+				return formatNumbers(game.current.upgrades.repeatable[type].tierOne[resource])
+			})
 		});
 	});
 };
 
 const updateUpgradesDisplaySingle = (upgradeType, type, tier, resource) => {
-	$(`#${resource}-${type}-level`).text(game.current.upgrades.repeatable[type][tier][resource])
+	$(`#${resource}-${type}-level`).text(() => {
+		return formatNumbers(game.current.upgrades.repeatable[type].tierOne[resource])
+	})
 };
 
 //Update upgrades level display functions start//
@@ -249,7 +265,7 @@ const purchaseUpgrade = (upgradeType, type, tier, resource) => {
 					let cost = Math.ceil(baseValue);
 					updateResourceAmountLoss(resourceType, cost);
 				});
-				game.current.upgrades[upgradeType][type] = 1
+				game.current.unlocks[type] = true
 				unlocks[`${type}Unlock`]()
 			}
 		}
@@ -269,20 +285,32 @@ const unlockAll = () => {
 //golems display function start//
 
 const updateGolemsTotal = () => {
-	$(`#golems-total-display`).text(game.current.resources.golems.total);
-	$(`#golems-total-working-display`).text(game.current.resources.golems.total);
+	$(`#golems-total-display`).text(() => {
+		return formatNumbers(game.current.resources.golems.total)
+	});
+	$(`#golems-total-working-display`).text(() => {
+		return formatNumbers(game.current.resources.golems.total)
+	});
 };
 
 const updateGolemsActiveAll = () => {
 	resources.map((resource) => {
-		$(`#${resource}-golem-count`).text(game.current.resources.golems.types[resource])
+		$(`#${resource}-golem-count`).text(() => {
+			return formatNumbers(game.current.resources.golems.types[resource])
+		})
 	});
-	$('#golems-active-display').text(game.current.resources.golems.active)
+	$('#golems-active-display').text(() => {
+		return formatNumbers(game.current.resources.golems.active)
+	})
 };
 
 const updateGolemsActiveSingle = (resource) => {
-	$(`#${resource}-golem-count`).text(game.current.resources.golems.types[resource])
-	$('#golems-active-display').text(game.current.resources.golems.active)
+	$(`#${resource}-golem-count`).text(() => {
+		return formatNumbers(game.current.resources.golems.types[resource])
+	})
+	$('#golems-active-display').text(() => {
+		return formatNumbers(game.current.resources.golems.active)
+	})
 };
 
 //golems display function end//
@@ -463,7 +491,14 @@ const createEnemy = () => {
 //Stats Display updating Functions start//
 
 const updateStat = (person, stat) => {
-	$(`#${person}-${stat}`).text(game.current.combat[person][stat])
+	$(`#${person}-${stat}`).text(() => {
+		if (stat != 'name') {
+			return formatNumbers(game.current.combat[person][stat])
+		} else {
+			return game.current.combat[person][stat]
+		}
+		
+	})
 	if (stat == 'healthCurrent') {
 		$(`#${person}-health-bar`).css({"width": `${Math.floor((game.current.combat[person].healthCurrent / game.current.combat[person].healthMax) * 100)}%`})
 	}
@@ -727,9 +762,7 @@ const autoFighting = () => {
 
 const fightLose = () => {
 	//Post into text that you lost fight
-	//stop fighting
 	game.current.combat.fighting = false
-	//start healing
 	regenHealth()
 }
 
@@ -744,9 +777,13 @@ const fightWin = () => {
 
 //Fight win/lose functions end//
 
+//Enemy resource drop functions start//
 
+const enemyDrops = () => {
+	
+}
 
-
+//Enemy resource drop functions end//
 
 //Fighting functions end//
 
