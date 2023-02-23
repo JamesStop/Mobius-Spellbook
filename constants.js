@@ -142,7 +142,7 @@ const upgradeInfo = {
 		fight: {
 			baseCost: [{ herb: 250 }, { mythril: 250 }, { yew: 250 }, { crystal: 250 }, { arcana: 250 }],
 		},
-		fight: {
+		golems: {
 			baseCost: [{ herb: 1000 }, { mythril: 1000 }, { yew: 1000 }, { crystal: 1000 }, { arcana: 1000 }],
 		}
 	},
@@ -420,9 +420,8 @@ const unlocks = {
 	},
 	fightUnlock() {
 		if (game.current.unlocks.fight) {
-			$(`#combat-wrapper`).removeClass('hidden')
 			$(`#fight-unlock`).addClass('hidden')
-			$(`#golems-unlock`).remove('hidden')
+			$(`#golems-unlock, #enemy-wrapper, #player-wrapper, #tower-wrapper`).removeClass('hidden')
 		}
 	},
 	golemsUnlock() {

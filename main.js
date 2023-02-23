@@ -252,9 +252,11 @@ const purchaseUpgrade = (upgradeType, type, tier, resource) => {
 		} else if (upgradeType == 'oneTime') {
 			let baseCost = upgradeInfo[upgradeType][type].baseCost
 			let canUpgrade = true;
+			console.log(baseCost)
 			baseCost.forEach((thing) => {
 				let resourceType = Object.keys(thing);
 				let baseValue = thing[Object.keys(thing)];
+				console.log(baseValue)
 				let cost = Math.ceil(baseValue);
 				if (game.current.resources[resourceType].current < cost) {
 					canUpgrade = false;

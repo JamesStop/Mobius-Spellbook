@@ -88,8 +88,8 @@
 			</section>
 			<section class="special-resources-wrapper"></section>
 		</section>
-		<section class="combat-wrapper hidden" id="combat-wrapper">
-			<div class="player-wrapper">
+		<section class="combat-wrapper" id="combat-wrapper">
+			<div class="player-wrapper hidden" id="player-wrapper">
 				<div class="player-name" id="player-name">You</div>
 				<div class="player-attack">Atk: 
 					<span id="player-attack">0</span>
@@ -114,7 +114,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="enemy-wrapper">
+			<div class="enemy-wrapper hidden" id="enemy-wrapper">
 				<div class="enemy-name" id="enemy-name"></div>
 				<div class="enemy-attack">Atk: 
 					<span id="enemy-attack">0</span>
@@ -139,7 +139,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="tower-wrapper">
+			<div class="tower-wrapper hidden" id="tower-wrapper">
 				<div class="floor-room-display">
 					<div>Floor: <span id="floor-display"></span></div>
 					<div>Room: <span id="room-display"></span></div>
@@ -244,7 +244,7 @@
 					<div class="upgrades-purchase-wrapper">
 						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'individual', 'spellbook')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'spellbook', null, null)" id="spellbook-unlock"><span>Spell book</span></button>
 						<button class="upgrades-purchase-button hidden" onmouseover="mousein(event, 'purchase', 'individual', 'fight')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'fight', null, null)" id="fight-unlock"><span>Tower Key</span></button>
-						<button class="upgrades-purchase-button hidden" onmouseover="mousein(event, 'purchase', 'individual', 'golems')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'golems', null, null)" id="golems-unlock hidden"><span>Golem Core</span></button>
+						<button class="upgrades-purchase-button hidden" onmouseover="mousein(event, 'purchase', 'individual', 'golems')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'golems', null, null)" id="golems-unlock"><span>Golem Core</span></button>
 					</div>
 				</section>
 				<section class="type-upgrades-wrapper">
