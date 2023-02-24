@@ -9,7 +9,6 @@ let currentGameVersion = {
 		resources: {
 			herb: {
 				current: 0,
-				total: 0,
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
@@ -23,7 +22,6 @@ let currentGameVersion = {
 			},
 			mythril: {
 				current: 0,
-				total: 0,
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
@@ -37,7 +35,6 @@ let currentGameVersion = {
 			},
 			yew: {
 				current: 0,
-				total: 0,
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
@@ -51,7 +48,6 @@ let currentGameVersion = {
 			},
 			crystal: {
 				current: 0,
-				total: 0,
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
@@ -65,7 +61,6 @@ let currentGameVersion = {
 			},
 			arcana: {
 				current: 0,
-				total: 0,
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
@@ -171,10 +166,53 @@ let currentGameVersion = {
 			golems: false,
 			spellbook: false,
 			fight: false,
+		}, 
+		stats: {
+			resources: {
+				herb: {
+					total: 0,
+					best: 0,
+				},
+				mythril: {
+					total: 0,
+					best: 0,
+				},
+				yew: {
+					total: 0,
+					best: 0,
+				},
+				crystal: {
+					total: 0,
+					best: 0,
+				},
+				arcana: {
+					total: 0,
+					best: 0,
+				},
+			}
 		}
 	},
-	best: {
-		hello: 'red',
+	overallStats: {
+		total: {
+			resources: {
+				herb: 0,
+				mythril: 0,
+				yew: 0,
+				crystal: 0,
+				arcana: 0,
+			}
+		},
+		best: {
+			floor: 0,
+			room: 0,
+			resources: {
+				herb: 0,
+				mythril: 0,
+				yew: 0,
+				crystal: 0,
+				arcana: 0,
+			}
+		},
 	},
 };
 
