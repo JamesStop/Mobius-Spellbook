@@ -101,6 +101,12 @@ let currentGameVersion = {
 					totalCost: 100,
 				},
 			},
+			souls: {
+				current: 0,
+				storage: {
+					storageTotal: Infinity,
+				},
+			}
 		},
 		combat: {
 			world: 0,
@@ -168,7 +174,10 @@ let currentGameVersion = {
 			fight: false,
 		}, 
 		stats: {
-
+			best: {
+				floor: 0,
+				room: 0
+			}
 		}
 	},
 	overallStats: {

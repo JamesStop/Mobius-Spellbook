@@ -250,11 +250,9 @@ const purchaseUpgrade = (upgradeType, type, tier, resource) => {
 		} else if (upgradeType == 'oneTime') {
 			let baseCost = upgradeInfo[upgradeType][type].baseCost
 			let canUpgrade = true;
-			console.log(baseCost)
 			baseCost.forEach((thing) => {
 				let resourceType = Object.keys(thing);
 				let baseValue = thing[Object.keys(thing)];
-				console.log(baseValue)
 				let cost = Math.ceil(baseValue);
 				if (game.current.resources[resourceType].current < cost) {
 					canUpgrade = false;
@@ -550,6 +548,13 @@ const roomChange = () => {
 			updateWholeFloor()
 			floorDisplay()
 		}
+		if (game.current.combat.floor > game.current.stats.best.floor) {
+			game.current.stats.best.floor = game.current.combat.floor
+			game.current.stats.best.room = 0
+		}
+		if (game.current.stats.best.floor == game.current.combat.floor && game.current.combat.room > game.current.stats.best.room) {
+			game.current.stats.best.room = game.current.combat.room
+		}
 		if (game.current.combat.floor > game.overallStats.best.floor) {
 			game.overallStats.best.floor = game.current.combat.floor
 			game.overallStats.best.room = 0
@@ -671,6 +676,14 @@ const startAscending = () => {
 		game.current.combat.direction = 'up'
 		game.current.combat.floor = 1
 		game.current.combat.room = 1
+		if (game.current.stats.best.floor == 0) {
+			game.current.stats.best.floor = 1
+			game.current.stats.best.room = 1
+		}
+		if (game.overallStats.best.floor == 0) {
+			game.overallStats.best.floor = 1
+			game.overallStats.best.room = 1
+		}
 		startFighting()
 		$('#ascend-button').addClass('hidden')
 		$('#fight-button, #descend-button').removeClass('hidden')
@@ -778,6 +791,7 @@ const fightLose = () => {
 
 const fightWin = () => {
 	//give reward drops if any
+	enemyDrops()
 	roomChange()
 	if (game.current.combat.fighting && game.current.combat.location == 'tower') {
 		newFight()
@@ -789,7 +803,19 @@ const fightWin = () => {
 //Enemy resource drop functions start//
 
 const enemyDrops = () => {
-	
+	if (game.current.stats.best.floor == 1 && game.current.stats.best.room == 1) {
+		game.current.resources.souls.current += 1
+	}
+	let resourceDrop = Math.random()
+	if (resourceDrop > 0.6) {
+		let basicResource = resources[Math.floor(Math.random() * 5)]
+		console.log(basicResource)
+		let dropValue = Math.floor(((Math.random() * (26 - game.current.combat.room)) + game.current.combat.room) * (1.2 ** (game.current.combat.floor - 1)) * (game.current.resources[basicResource].activeProduction.activeProductionTotal ** .5))
+		updateResourceAmountGain(basicResource, dropValue)
+	} else if (resourceDrop < 0.125){
+		console.log('souls')
+		game.current.resources.souls.current += Math.floor(((Math.random() * (26 - game.current.combat.room)) + game.current.combat.room) * (1.2 ** (game.current.combat.floor - 1)))
+	}
 }
 
 //Enemy resource drop functions end//
