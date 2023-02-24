@@ -168,50 +168,16 @@ let currentGameVersion = {
 			fight: false,
 		}, 
 		stats: {
-			resources: {
-				herb: {
-					total: 0,
-					best: 0,
-				},
-				mythril: {
-					total: 0,
-					best: 0,
-				},
-				yew: {
-					total: 0,
-					best: 0,
-				},
-				crystal: {
-					total: 0,
-					best: 0,
-				},
-				arcana: {
-					total: 0,
-					best: 0,
-				},
-			}
+
 		}
 	},
 	overallStats: {
 		total: {
-			resources: {
-				herb: 0,
-				mythril: 0,
-				yew: 0,
-				crystal: 0,
-				arcana: 0,
-			}
+
 		},
 		best: {
 			floor: 0,
 			room: 0,
-			resources: {
-				herb: 0,
-				mythril: 0,
-				yew: 0,
-				crystal: 0,
-				arcana: 0,
-			}
 		},
 	},
 };

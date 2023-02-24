@@ -139,24 +139,8 @@ const updateResourceAmountGain = (resource, value) => {
 	if (updating.current != updating.storage.storageTotal) {
 		if (updating.current + value > updating.storage.storageTotal) {
 			updating.current += updating.storage.storageTotal - updating.current;
-			game.current.stats.resources[resource].total += updating.storage.storageTotal - updating.current;
-			game.overallStats.total.resources[resource] += updating.storage.storageTotal - updating.current;
-			if (updating.current > game.current.stats.resources[resource].best) {
-				game.current.stats.resources[resource].best = updating.current
-			}
-			if (updating.current > game.overallStats.best.resources[resource]) {
-				game.overallStats.best.resources[resource] = updating.current
-			}
 		} else {
 			updating.current += value;
-			game.current.stats.resources[resource].total += value;
-			game.overallStats.total.resources[resource] += value
-			if (updating.current > game.current.stats.resources[resource].best) {
-				game.current.stats.resources[resource].best = updating.current
-			}
-			if (updating.current > game.overallStats.best.resources[resource]) {
-				game.overallStats.best.resources[resource] = updating.current
-			}
 		}
 		updateResourceAmountSingle(resource);
 	}
@@ -565,6 +549,13 @@ const roomChange = () => {
 			game.current.combat.floor += 1
 			updateWholeFloor()
 			floorDisplay()
+		}
+		if (game.current.combat.floor > game.overallStats.best.floor) {
+			game.overallStats.best.floor = game.current.combat.floor
+			game.overallStats.best.room = 0
+		}
+		if (game.overallStats.best.floor == game.current.combat.floor && game.current.combat.room > game.overallStats.best.room) {
+			game.overallStats.best.room = game.current.combat.room
 		}
 	} else if (game.current.combat.direction == 'down') {
 		if (game.current.combat.room > 1) {
