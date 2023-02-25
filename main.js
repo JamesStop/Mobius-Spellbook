@@ -40,10 +40,12 @@ const upgradesDisplayShow = (id) => {
 };
 
 const upgradesNavBarClick = (id) => {
-	upgradesNavColorReset();
-	setUpgradesNavActiveColor(id);
-	upgradesDisplayHide();
-	upgradesDisplayShow(id);
+	if ($(`#${id}`).attr('class').split(/\s+/).includes('temp-hidden') == false) {
+		upgradesNavColorReset();
+		setUpgradesNavActiveColor(id);
+		upgradesDisplayHide();
+		upgradesDisplayShow(id);
+	}
 };
 
 //Resource bar click functions start//
@@ -93,7 +95,9 @@ const updateTotalProductionAll = () => {
 		} else {
 			updating.totalPerSec = updating.golemPerSec;
 		}
-		$(`#${resource}-sec`).text(updating.totalPerSec)
+		$(`#${resource}-sec`).text(() => {
+			return formatNumbers(updating.totalPerSec)
+		})
 	});
 };
 
@@ -105,7 +109,9 @@ const updateTotalProductionIndividual = (resource) => {
 	} else {
 		updating.totalPerSec = updating.golemPerSec;
 	}
-	$(`#${resource}-sec`).text(updating.totalPerSec)
+	$(`#${resource}-sec`).text(() => {
+		return formatNumbers(updating.totalPerSec)
+	})
 };
 
 //Resource idle production update functions end//
@@ -115,13 +121,17 @@ const updateTotalProductionIndividual = (resource) => {
 const updateResourceAmount = () => {
 	resources.map((resource) => {
 		const updating = game.current.resources[resource];
-		$(`#${resource}-current`).text(updating.current)
+		$(`#${resource}-current`).text(() => {
+			return formatNumbers(updating.current)
+		})
 	});
 };
 
 const updateResourceAmountSingle = (resource) => {
 	const updating = game.current.resources[resource];
-	$(`#${resource}-current`).text(updating.current)
+	$(`#${resource}-current`).text(() => {
+		return formatNumbers(updating.current)
+	})
 };
 
 const updateResourceAmountGain = (resource, value) => {
@@ -129,10 +139,8 @@ const updateResourceAmountGain = (resource, value) => {
 	if (updating.current != updating.storage.storageTotal) {
 		if (updating.current + value > updating.storage.storageTotal) {
 			updating.current += updating.storage.storageTotal - updating.current;
-			updating.total += updating.storage.storageTotal - updating.current;
 		} else {
 			updating.current += value;
-			updating.total += value;
 		}
 		updateResourceAmountSingle(resource);
 	}
@@ -171,12 +179,16 @@ window.setInterval(() => {
 
 const updateStorages = () => {
 	resources.map((resource) => {
-		$(`#${resource}-storage-max`).text(game.current.resources[resource].storage.storageTotal)
+		$(`#${resource}-storage-max`).text(() => {
+			return formatNumbers(game.current.resources[resource].storage.storageTotal)
+		})
 	});
 };
 
 const updateStorageSingle = (resource) => {
-	$(`#${resource}-storage-max`).text(game.current.resources[resource].storage.storageTotal)
+	$(`#${resource}-storage-max`).text(() => {
+		return formatNumbers(game.current.resources[resource].storage.storageTotal)
+	})
 };
 
 //Update storage max display functions start//
@@ -186,13 +198,17 @@ const updateStorageSingle = (resource) => {
 const updateUpgradesDisplayAll = () => {
 	resources.map((resource) => {
 		upgradeTypes.map((type) => {
-			$(`#${resource}-${type}-level`).text(game.current.upgrades.repeatable[type].tierOne[resource])
+			$(`#${resource}-${type}-level`).text(() => {
+				return formatNumbers(game.current.upgrades.repeatable[type].tierOne[resource])
+			})
 		});
 	});
 };
 
 const updateUpgradesDisplaySingle = (upgradeType, type, tier, resource) => {
-	$(`#${resource}-${type}-level`).text(game.current.upgrades.repeatable[type][tier][resource])
+	$(`#${resource}-${type}-level`).text(() => {
+		return formatNumbers(game.current.upgrades.repeatable[type].tierOne[resource])
+	})
 };
 
 //Update upgrades level display functions start//
@@ -249,7 +265,7 @@ const purchaseUpgrade = (upgradeType, type, tier, resource) => {
 					let cost = Math.ceil(baseValue);
 					updateResourceAmountLoss(resourceType, cost);
 				});
-				game.current.upgrades[upgradeType][type] = 1
+				game.current.unlocks[type] = true
 				unlocks[`${type}Unlock`]()
 			}
 		}
@@ -264,25 +280,84 @@ const unlockAll = () => {
 
 //Purchase upgrades functions end//
 
+//Spells page functions start//
+
+const singleSpellDisplay = (spell) => {
+	$(`#${spell}-level`).text(game.current.combat.spells[spell].level)
+	$(`#${spell}-expCurrent`).text(game.current.combat.spells[spell].expCurrent)
+	$(`#${spell}-expMax`).text(game.current.combat.spells[spell].expMax)
+	$(`#${spell}-exp-bar`).css({'width': `${Math.floor((game.current.combat.spells[spell].expCurrent / game.current.combat.spells[spell].expMax) * 100)}%`})
+
+}
+
+const allSpellDisplay = () => {
+	Object.keys(game.current.combat.spells).map((spell) => {
+		singleSpellDisplay(spell)
+	})
+}
+
+const gainSpellExp = (spell, amount) => {
+	let expCount = amount
+	let currentSpell = game.current.combat.spells[spell]
+	while (expCount > 0) {
+		if (currentSpell.expCurrent + expCount >= currentSpell.expMax) {
+			currentSpell.expCurrent = 0
+			spellLevelUp(spell, 1)
+			expCount -= (currentSpell.expMax - currentSpell.expCurrent)
+		} else {
+			game.current.combat.spells[spell].expCurrent += expCount
+			expCount = 0
+		}
+	}
+	singleSpellDisplay(spell)
+}
+
+const spellLevelUp = (spell, amount) => {
+	let levels = amount
+	let currentSpell = game.current.combat.spells[spell]
+	while (levels > 0) {
+		currentSpell.level += 1
+		currentSpell.expMax = Math.floor(currentSpell.costGrowth * currentSpell.expMax)
+		currentSpell.powerBase += currentSpell.spellGrowth
+		levels -= 1
+	}
+	singleSpellDisplay(spell)
+}
+
+
+//Spells page functions end//
+
 //golems page functions start//
 
 //golems display function start//
 
 const updateGolemsTotal = () => {
-	$(`#golems-total-display`).text(game.current.resources.golems.total);
-	$(`#golems-total-working-display`).text(game.current.resources.golems.total);
+	$(`#golems-total-display`).text(() => {
+		return formatNumbers(game.current.resources.golems.total)
+	});
+	$(`#golems-total-working-display`).text(() => {
+		return formatNumbers(game.current.resources.golems.total)
+	});
 };
 
 const updateGolemsActiveAll = () => {
 	resources.map((resource) => {
-		$(`#${resource}-golem-count`).text(game.current.resources.golems.types[resource])
+		$(`#${resource}-golem-count`).text(() => {
+			return formatNumbers(game.current.resources.golems.types[resource])
+		})
 	});
-	$('#golems-active-display').text(game.current.resources.golems.active)
+	$('#golems-active-display').text(() => {
+		return formatNumbers(game.current.resources.golems.active)
+	})
 };
 
 const updateGolemsActiveSingle = (resource) => {
-	$(`#${resource}-golem-count`).text(game.current.resources.golems.types[resource])
-	$('#golems-active-display').text(game.current.resources.golems.active)
+	$(`#${resource}-golem-count`).text(() => {
+		return formatNumbers(game.current.resources.golems.types[resource])
+	})
+	$('#golems-active-display').text(() => {
+		return formatNumbers(game.current.resources.golems.active)
+	})
 };
 
 //golems display function end//
@@ -463,7 +538,14 @@ const createEnemy = () => {
 //Stats Display updating Functions start//
 
 const updateStat = (person, stat) => {
-	$(`#${person}-${stat}`).text(game.current.combat[person][stat])
+	$(`#${person}-${stat}`).text(() => {
+		if (stat != 'name') {
+			return formatNumbers(game.current.combat[person][stat])
+		} else {
+			return game.current.combat[person][stat]
+		}
+		
+	})
 	if (stat == 'healthCurrent') {
 		$(`#${person}-health-bar`).css({"width": `${Math.floor((game.current.combat[person].healthCurrent / game.current.combat[person].healthMax) * 100)}%`})
 	}
@@ -486,7 +568,8 @@ const allStatUpdate = () => {
 const regenHealth = () => {
 	setTimeout(() => {
 		if (game.current.combat.player.healthCurrent < game.current.combat.player.healthMax && !game.current.combat.fighting ) {
-			game.current.combat.player.healthCurrent += 1
+			game.current.combat.player.healthCurrent += game.current.combat.spells.heal.powerBase
+			gainSpellExp('heal', 1)
 			updateStat('player', 'healthCurrent')
 			regenHealth()
 		}}, 500)
@@ -512,6 +595,20 @@ const roomChange = () => {
 			game.current.combat.floor += 1
 			updateWholeFloor()
 			floorDisplay()
+		}
+		if (game.current.combat.floor > game.current.stats.best.floor) {
+			game.current.stats.best.floor = game.current.combat.floor
+			game.current.stats.best.room = 0
+		}
+		if (game.current.stats.best.floor == game.current.combat.floor && game.current.combat.room > game.current.stats.best.room) {
+			game.current.stats.best.room = game.current.combat.room
+		}
+		if (game.current.combat.floor > game.overallStats.best.floor) {
+			game.overallStats.best.floor = game.current.combat.floor
+			game.overallStats.best.room = 0
+		}
+		if (game.overallStats.best.floor == game.current.combat.floor && game.current.combat.room > game.overallStats.best.room) {
+			game.overallStats.best.room = game.current.combat.room
 		}
 	} else if (game.current.combat.direction == 'down') {
 		if (game.current.combat.room > 1) {
@@ -627,6 +724,14 @@ const startAscending = () => {
 		game.current.combat.direction = 'up'
 		game.current.combat.floor = 1
 		game.current.combat.room = 1
+		if (game.current.stats.best.floor == 0) {
+			game.current.stats.best.floor = 1
+			game.current.stats.best.room = 1
+		}
+		if (game.overallStats.best.floor == 0) {
+			game.overallStats.best.floor = 1
+			game.overallStats.best.room = 1
+		}
 		startFighting()
 		$('#ascend-button').addClass('hidden')
 		$('#fight-button, #descend-button').removeClass('hidden')
@@ -727,15 +832,14 @@ const autoFighting = () => {
 
 const fightLose = () => {
 	//Post into text that you lost fight
-	//stop fighting
 	game.current.combat.fighting = false
-	//start healing
 	regenHealth()
 }
 
 
 const fightWin = () => {
 	//give reward drops if any
+	enemyDrops()
 	roomChange()
 	if (game.current.combat.fighting && game.current.combat.location == 'tower') {
 		newFight()
@@ -744,9 +848,25 @@ const fightWin = () => {
 
 //Fight win/lose functions end//
 
+//Enemy resource drop functions start//
 
+const enemyDrops = () => {
+	if (game.current.stats.best.floor == 1 && game.current.stats.best.room == 1) {
+		game.current.resources.souls.current += 1
+	}
+	let resourceDrop = Math.random()
+	if (resourceDrop > 0.6) {
+		let basicResource = resources[Math.floor(Math.random() * 5)]
+		console.log(basicResource)
+		let dropValue = Math.floor(((Math.random() * (26 - game.current.combat.room)) + game.current.combat.room) * (1.2 ** (game.current.combat.floor - 1)) * (game.current.resources[basicResource].activeProduction.activeProductionTotal ** .5))
+		updateResourceAmountGain(basicResource, dropValue)
+	} else if (resourceDrop < 0.125){
+		console.log('souls')
+		game.current.resources.souls.current += Math.floor(((Math.random() * (26 - game.current.combat.room)) + game.current.combat.room) * (1.2 ** (game.current.combat.floor - 1)))
+	}
+}
 
-
+//Enemy resource drop functions end//
 
 //Fighting functions end//
 

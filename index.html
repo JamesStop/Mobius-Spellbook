@@ -88,8 +88,8 @@
 			</section>
 			<section class="special-resources-wrapper"></section>
 		</section>
-		<section class="combat-wrapper hidden" id="combat-wrapper">
-			<div class="player-wrapper">
+		<section class="combat-wrapper" id="combat-wrapper">
+			<div class="player-wrapper hidden" id="player-wrapper">
 				<div class="player-name" id="player-name">You</div>
 				<div class="player-attack">Atk: 
 					<span id="player-attack">0</span>
@@ -114,7 +114,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="enemy-wrapper">
+			<div class="enemy-wrapper hidden" id="enemy-wrapper">
 				<div class="enemy-name" id="enemy-name"></div>
 				<div class="enemy-attack">Atk: 
 					<span id="enemy-attack">0</span>
@@ -139,7 +139,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="tower-wrapper">
+			<div class="tower-wrapper hidden" id="tower-wrapper">
 				<div class="floor-room-display">
 					<div>Floor: <span id="floor-display"></span></div>
 					<div>Room: <span id="room-display"></span></div>
@@ -234,15 +234,17 @@
 		<section class="upgrades-wrapper">
 			<nav class="upgrades-nav">
 				<button class="upgrades-nav-selector nav-selected" id="upgrades-selector" onclick="upgradesNavBarClick(id)"><span>Upgrades</span></button>
-				<button class="upgrades-nav-selector" id="golems-selector" onclick="upgradesNavBarClick(id)"><span>Golems</span></button>
-				<button class="upgrades-nav-selector" id="spellbook-selector" onclick="upgradesNavBarClick(id)"><span>Spell Book</span></button>
-				<button class="upgrades-nav-selector" id="something-selector" onclick="upgradesNavBarClick(id)"><span>????</span></div>
+				<button class="upgrades-nav-selector temp-hidden" id="spellbook-selector" onclick="upgradesNavBarClick(id)"><span>Spell Book</span></button>
+				<button class="upgrades-nav-selector temp-hidden" id="golems-selector" onclick="upgradesNavBarClick(id)"><span>Golems</span></button>
+				<button class="upgrades-nav-selector temp-hidden" id="something-selector" onclick="upgradesNavBarClick(id)"><span>????</span></div>
 			</nav>
 			<div class="upgrades-display-wrapper" id="upgrades-display">
 				<section class="type-upgrades-wrapper">
 					<h3 class="upgrades-titles">One Time</h3>
 					<div class="upgrades-purchase-wrapper">
-						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'individual', 'fight')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'fight', null, null)" id="fight-unlock"><span>Tower Key</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'individual', 'spellbook')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'spellbook', null, null)" id="spellbook-unlock"><span>Spell book</span></button>
+						<button class="upgrades-purchase-button hidden" onmouseover="mousein(event, 'purchase', 'individual', 'fight')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'fight', null, null)" id="fight-unlock"><span>Tower Key</span></button>
+						<button class="upgrades-purchase-button hidden" onmouseover="mousein(event, 'purchase', 'individual', 'golems')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'golems', null, null)" id="golems-unlock"><span>Golem Core</span></button>
 					</div>
 				</section>
 				<section class="type-upgrades-wrapper">
@@ -305,7 +307,30 @@
 					</button>
 				</section>
 			</div>
-			<div class="upgrades-display-wrapper hidden" id="spellbook-display">spellbook</div>
+			<div class="upgrades-display-wrapper spellbook-display hidden" id="spellbook-display">
+				<div class="spell-display heal-color">
+					<span class="-name">Heal</span>
+					<span class="spell-level" id="heal-level">1</span>
+					<div class="exp-display">
+						<div class="exp-bar" id="heal-exp-bar">
+						</div>
+						<div class="exp-numbers">
+							<span id="heal-expCurrent">0</span> / <span id="heal-expMax">25</span>
+						</div>
+					</div>
+				</div>
+				<div class="spell-display manaBolt-color">
+					<span class="spell-name"> Mana Bolt</span>
+					<span class="spell-level" id="manaBolt-level">1</span>
+					<div class="exp-display">
+						<div class="exp-bar" id="manaBolt-exp-bar">
+						</div>
+						<div class="exp-numbers">
+							<span id="manaBolt-expCurrent">0</span> / <span id="manaBolt-expMax">50</span>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="upgrades-display-wrapper hidden" id="something-display">???</div>
 		</section>
 		<section class="settings-wrapper">

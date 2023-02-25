@@ -60,7 +60,7 @@ body {
 
 .resource-box {
     height: 80%;
-    min-width: 150px;
+    min-width: 160px;
     width: 20%;
     background-color: rgb(135, 189, 189);
     display: flex;
@@ -98,7 +98,7 @@ body {
 }
 
 .resource-storage {
-    font-size: 2.5vh;
+    font-size: 2.2vh;
 }
 
 /*individual boxes styling end*/
@@ -149,6 +149,8 @@ body {
     align-items: flex-end;
 }
 
+
+
 .upgrades-nav-selector {
     height: 100%;
     width: 25%;
@@ -161,6 +163,16 @@ body {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
+
+.temp-hidden {
+    height: 0;
+    font-size: 0;
+    border-top: 0;
+    cursor: default;
+}
+
+
+
 
 .nav-selected {
     background-color: rgb(236, 182, 182);
@@ -175,9 +187,9 @@ body {
     height: 85%;
     width: 95%;
     background-color: rgb(236, 182, 182);
+    border: 2px solid rgb(77, 77, 77);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    border: 2px solid rgb(77, 77, 77);
     border-top: none;
     padding: 10px;
     display: flex;
@@ -185,6 +197,8 @@ body {
     gap: 15px;
     overflow-y: auto;
 }
+
+
 
 /*Upgrades upgrades tab styling start*/
 
@@ -313,6 +327,60 @@ body {
 
 /*Upgrades golems tab styling end*/
 
+/* upgrades spellbook tab styleing start*/
+
+.spellbook-display {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+}
+
+.spell-display {
+    height: 90%;
+    width: 90%;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: 2px solid black;
+    padding: 5px;
+}
+
+.exp-display {
+    height: 25%;
+    width: 85%;
+    display: flex;
+    border: 1px solid black;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+    background-color: rgb(240, 222, 196);
+}
+
+.exp-numbers {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.exp-bar {
+    background-color: rgb(209, 145, 61);
+}
+
+.heal-color {
+    background-color: rgb(56, 209, 56);
+}
+
+.manaBolt-color {
+    background-color: rgb(56, 209, 209);
+}
+
+/* upgrades spellbook tab styleing end*/
+
 /*Upgrades box styling end*/
 
 /*Combat box styling start*/
@@ -332,6 +400,7 @@ body {
 .player-wrapper,
 .enemy-wrapper {
     height: 20%;
+    min-height: 100px;
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -445,6 +514,7 @@ body {
 
 .tower-wrapper {
     height: 80%;
+    max-height: calc(100% - 100px);
     width: 100%;
     display: flex;
     justify-content: center;
@@ -474,8 +544,8 @@ body {
 
 .circle-outer {
     border: 1px solid black;
-    height: calc(59vmin - 50px);
-    width: calc(59vmin - 50px);
+    height: calc(59vmin - 100px);
+    width: calc(59vmin - 100px);
     border-radius: 50%;
     list-style: none;
     overflow: hidden;

@@ -136,8 +136,14 @@ const upgradeInfo = {
 		},
 	},
 	oneTime: {
+		spellbook: {
+			baseCost: [{ herb: 50 }, { mythril: 50 }, { yew: 50 }, { crystal: 50 }, { arcana: 50 }],
+		},
 		fight: {
 			baseCost: [{ herb: 250 }, { mythril: 250 }, { yew: 250 }, { crystal: 250 }, { arcana: 250 }],
+		},
+		golems: {
+			baseCost: [{ herb: 1000 }, { mythril: 1000 }, { yew: 1000 }, { crystal: 1000 }, { arcana: 1000 }],
 		}
 	},
 };
@@ -161,7 +167,7 @@ const tooltips = {
 							upgradeInfo.repeatable.storage.tierOne.herb.costIncrement **
 								game.current.upgrades.repeatable.storage.tierOne.herb
 					);
-					this.cost = costValue.toString() + ' herbs';
+					this.cost = formatNumbers(costValue) + ' herbs';
 				},
 			},
 			mythril: {
@@ -180,7 +186,7 @@ const tooltips = {
 							upgradeInfo.repeatable.storage.tierOne.mythril.costIncrement **
 								game.current.upgrades.repeatable.storage.tierOne.mythril
 					);
-					this.cost = costValue.toString() + ' mythril';
+					this.cost = formatNumbers(costValue) + ' mythril';
 				},
 			},
 			yew: {
@@ -199,7 +205,7 @@ const tooltips = {
 							upgradeInfo.repeatable.storage.tierOne.yew.costIncrement **
 								game.current.upgrades.repeatable.storage.tierOne.yew
 					);
-					this.cost = costValue.toString() + ' yew';
+					this.cost = formatNumbers(costValue) + ' yew';
 				},
 			},
 			crystal: {
@@ -218,7 +224,7 @@ const tooltips = {
 							upgradeInfo.repeatable.storage.tierOne.crystal.costIncrement **
 								game.current.upgrades.repeatable.storage.tierOne.crystal
 					);
-					this.cost = costValue.toString() + ' crystals';
+					this.cost = formatNumbers(costValue) + ' crystals';
 				},
 			},
 			arcana: {
@@ -237,7 +243,7 @@ const tooltips = {
 							upgradeInfo.repeatable.storage.tierOne.arcana.costIncrement **
 								game.current.upgrades.repeatable.storage.tierOne.arcana
 					);
-					this.cost = costValue.toString() + ' arcana';
+					this.cost = formatNumbers(costValue) + ' arcana';
 				},
 			},
 		},
@@ -259,7 +265,7 @@ const tooltips = {
 								.costIncrement **
 								game.current.upgrades.repeatable.activeProduction.tierOne.herb
 					);
-					this.cost = costValue.toString() + ' herbs';
+					this.cost = formatNumbers(costValue) + ' herbs';
 				},
 			},
 			mythril: {
@@ -280,7 +286,7 @@ const tooltips = {
 								game.current.upgrades.repeatable.activeProduction.tierOne
 									.mythril
 					);
-					this.cost = costValue.toString() + ' mythril';
+					this.cost = formatNumbers(costValue) + ' mythril';
 				},
 			},
 			yew: {
@@ -300,7 +306,7 @@ const tooltips = {
 								.costIncrement **
 								game.current.upgrades.repeatable.activeProduction.tierOne.yew
 					);
-					this.cost = costValue.toString() + ' yew';
+					this.cost = formatNumbers(costValue) + ' yew';
 				},
 			},
 			crystal: {
@@ -321,7 +327,7 @@ const tooltips = {
 								game.current.upgrades.repeatable.activeProduction.tierOne
 									.crystal
 					);
-					this.cost = costValue.toString() + ' crystals';
+					this.cost = formatNumbers(costValue) + ' crystals';
 				},
 			},
 			arcana: {
@@ -341,7 +347,7 @@ const tooltips = {
 								.costIncrement **
 								game.current.upgrades.repeatable.activeProduction.tierOne.arcana
 					);
-					this.cost = costValue.toString() + ' arcana';
+					this.cost = formatNumbers(costValue) + ' arcana';
 				},
 			},
 		},
@@ -352,17 +358,33 @@ const tooltips = {
 				cost: '',
 				updateText() {
 					let costValue = game.current.resources.golems.cost.totalCost;
-					this.cost = costValue.toString() + ' of each resource';
+					this.cost = formatNumbers(costValue) + ' of each resource';
 				},
 			},
 		},
 		individual: {
+			spellbook: {
+				title: 'Purchase a tower key',
+				info: 'A spellbook containing basic combat spells. An aspiring mage\'s best friend',
+				cost: '',
+				updateText() {
+					this.cost = '50 of each resource';
+				},
+			},
 			fight: {
 				title: 'Purchase a tower key',
 				info: 'Allows access into the tower, where you can train your magic.',
 				cost: '',
 				updateText() {
 					this.cost = '250 of each resource';
+				},
+			},
+			golems: {
+				title: 'Purchase a tower key',
+				info: 'The bases for golemancy allowing passive production. Useful for when you\'re climbing that tower',
+				cost: '',
+				updateText() {
+					this.cost = '1000 of each resource';
 				},
 			}
 		}
@@ -389,12 +411,43 @@ const purchasedUpgrade = {
 };
 
 const unlocks = {
-	fightUnlock() {
-		if (game.current.upgrades.oneTime.fight == 1) {
-		const combat = document.querySelector(`#combat-wrapper`).classList
-		combat.remove('hidden')
-		const upgrade = document.querySelector(`#fight-unlock`).classList
-		upgrade.add('hidden')
+	spellbookUnlock() {
+		if (game.current.unlocks.spellbook) {
+			$(`#spellbook-selector`).removeClass('temp-hidden')
+			$(`#fight-unlock`).removeClass('hidden')
+			$(`#spellbook-unlock`).addClass('hidden')
 		}
+	},
+	fightUnlock() {
+		if (game.current.unlocks.fight) {
+			$(`#fight-unlock`).addClass('hidden')
+			$(`#golems-unlock, #enemy-wrapper, #player-wrapper, #tower-wrapper`).removeClass('hidden')
+		}
+	},
+	golemsUnlock() {
+		if (game.current.unlocks.golems) {
+			$(`#golems-selector`).removeClass('temp-hidden')
+			$(`#golems-unlock`).addClass('hidden')
+		}
+	},
+}
+
+
+
+
+
+const formatNumbers = (number) => {
+	if (number.toString().length >= 6) {
+		if (number.toExponential(2).toString()[3] == '0') {
+			if (number.toExponential(1).toString()[2] == '0') {
+				return number.toExponential(0).toString().replace('+', '')
+			} else {
+				return number.toExponential(1).toString().replace('+', '')
+			}
+		} else {
+			return number.toExponential(2).toString().replace('+', '')
+		}
+	} else {
+		return number.toString()
 	}
 }

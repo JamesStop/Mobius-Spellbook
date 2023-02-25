@@ -9,7 +9,6 @@ let currentGameVersion = {
 		resources: {
 			herb: {
 				current: 0,
-				total: 0,
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
@@ -23,7 +22,6 @@ let currentGameVersion = {
 			},
 			mythril: {
 				current: 0,
-				total: 0,
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
@@ -37,7 +35,6 @@ let currentGameVersion = {
 			},
 			yew: {
 				current: 0,
-				total: 0,
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
@@ -51,7 +48,6 @@ let currentGameVersion = {
 			},
 			crystal: {
 				current: 0,
-				total: 0,
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
@@ -65,7 +61,6 @@ let currentGameVersion = {
 			},
 			arcana: {
 				current: 0,
-				total: 0,
 				storage: {
 					storageBase: 250,
 					storageTotal: 250,
@@ -106,6 +101,12 @@ let currentGameVersion = {
 					totalCost: 100,
 				},
 			},
+			souls: {
+				current: 0,
+				storage: {
+					storageTotal: Infinity,
+				},
+			}
 		},
 		combat: {
 			world: 0,
@@ -115,15 +116,18 @@ let currentGameVersion = {
 			autoFighting: false,
 			location: 'town',
 			direction: 'up',
+			spellCurrent: 'manaBolt',
 			player: {
 				name: '',
 				healthMax: 10,
 				healthCurrent: 10,
 				manaMax: 0,
 				manaCurrent: 0,
+				manaRegen: 0,
 				attack: 1,
 				speed: 1,
 				defense: 0,
+				spellPower: 1,
 			},
 			enemy: {
 				name: '',
@@ -135,6 +139,26 @@ let currentGameVersion = {
 				speed: 1,
 				defense: 0,
 			},
+			spells: {
+				heal: {
+					level: 1,
+					powerBase: 1,
+					expCurrent: 0,
+					expMax: 25,
+					manaCost: 0,
+					spellGrowth: 1,
+					costGrowth: 1.25,
+				},
+				manaBolt: {
+					level: 1,
+					powerBase: 1,
+					expCurrent: 0,
+					expMax: 50,
+					manaCost: 1,
+					spellGrowth: 1,
+					costGrowth: 1.6,
+				}
+			}
 		},
 		upgrades: {
 			repeatable: {
@@ -166,13 +190,27 @@ let currentGameVersion = {
 					},
 				},
 			},
-			oneTime: {
-				fight: 0,
-			},
 		},
+		unlocks: {
+			golems: false,
+			spellbook: false,
+			fight: false,
+		}, 
+		stats: {
+			best: {
+				floor: 0,
+				room: 0
+			}
+		}
 	},
-	best: {
-		hello: 'red',
+	overallStats: {
+		total: {
+
+		},
+		best: {
+			floor: 0,
+			room: 0,
+		},
 	},
 };
 
