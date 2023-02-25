@@ -280,6 +280,53 @@ const unlockAll = () => {
 
 //Purchase upgrades functions end//
 
+//Spells page functions start//
+
+const singleSpellDisplay = (spell) => {
+	$(`#${spell}-level`).text(game.current.combat.spells[spell].level)
+	$(`#${spell}-expCurrent`).text(game.current.combat.spells[spell].expCurrent)
+	$(`#${spell}-expMax`).text(game.current.combat.spells[spell].expMax)
+	$(`#${spell}-exp-bar`).css({'width': `${Math.floor((game.current.combat.spells[spell].expCurrent / game.current.combat.spells[spell].expMax) * 100)}%`})
+
+}
+
+const allSpellDisplay = () => {
+	Object.keys(game.current.combat.spells).map((spell) => {
+		singleSpellDisplay(spell)
+	})
+}
+
+const gainSpellExp = (spell, amount) => {
+	let expCount = amount
+	let currentSpell = game.current.combat.spells[spell]
+	while (expCount > 0) {
+		if (currentSpell.expCurrent + expCount >= currentSpell.expMax) {
+			currentSpell.expCurrent = 0
+			spellLevelUp(spell, 1)
+			expCount -= (currentSpell.expMax - currentSpell.expCurrent)
+		} else {
+			game.current.combat.spells[spell].expCurrent += expCount
+			expCount = 0
+		}
+	}
+	singleSpellDisplay(spell)
+}
+
+const spellLevelUp = (spell, amount) => {
+	let levels = amount
+	let currentSpell = game.current.combat.spells[spell]
+	while (levels > 0) {
+		currentSpell.level += 1
+		currentSpell.expMax = Math.floor(currentSpell.costGrowth * currentSpell.expMax)
+		currentSpell.powerBase *= currentSpell.powerGrowth
+		levels -= 1
+	}
+	singleSpellDisplay(spell)
+}
+
+
+//Spells page functions end//
+
 //golems page functions start//
 
 //golems display function start//

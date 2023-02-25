@@ -38,6 +38,7 @@ const load = () => {
 	if (game.current.combat.fighting) {
 		fight()
 	}
+	allSpellDisplay()
 };
 
 const exporting = () => {

@@ -144,15 +144,19 @@ let currentGameVersion = {
 					level: 1,
 					powerBase: 1,
 					expCurrent: 0,
-					expMax: 10,
+					expMax: 25,
 					manaCost: 0,
+					spellGrowth: 1,
+					costGrowth: 1.25,
 				},
 				manaBolt: {
 					level: 1,
 					powerBase: 1,
 					expCurrent: 0,
-					expMax: 10,
+					expMax: 50,
 					manaCost: 1,
+					spellGrowth: 1,
+					costGrowth: 1.6,
 				}
 			}
 		},
