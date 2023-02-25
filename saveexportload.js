@@ -37,6 +37,10 @@ const load = () => {
 	allCombatButtons()
 	if (game.current.combat.fighting) {
 		fight()
+	} else if (!game.current.combat.fighting && game.current.combat.location == 'tower') {
+		setTimeout(() => {
+			regenHealth()
+		}, 500)
 	}
 	allSpellDisplay()
 };

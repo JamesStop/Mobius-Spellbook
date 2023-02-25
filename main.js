@@ -318,7 +318,7 @@ const spellLevelUp = (spell, amount) => {
 	while (levels > 0) {
 		currentSpell.level += 1
 		currentSpell.expMax = Math.floor(currentSpell.costGrowth * currentSpell.expMax)
-		currentSpell.powerBase *= currentSpell.powerGrowth
+		currentSpell.powerBase += currentSpell.spellGrowth
 		levels -= 1
 	}
 	singleSpellDisplay(spell)
@@ -568,7 +568,8 @@ const allStatUpdate = () => {
 const regenHealth = () => {
 	setTimeout(() => {
 		if (game.current.combat.player.healthCurrent < game.current.combat.player.healthMax && !game.current.combat.fighting ) {
-			game.current.combat.player.healthCurrent += 1
+			game.current.combat.player.healthCurrent += game.current.combat.spells.heal.powerBase
+			gainSpellExp('heal', 1)
 			updateStat('player', 'healthCurrent')
 			regenHealth()
 		}}, 500)
