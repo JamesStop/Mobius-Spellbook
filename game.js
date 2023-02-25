@@ -116,15 +116,18 @@ let currentGameVersion = {
 			autoFighting: false,
 			location: 'town',
 			direction: 'up',
+			spellCurrent: 'manaBolt',
 			player: {
 				name: '',
 				healthMax: 10,
 				healthCurrent: 10,
 				manaMax: 0,
 				manaCurrent: 0,
+				manaRegen: 0,
 				attack: 1,
 				speed: 1,
 				defense: 0,
+				spellPower: 1,
 			},
 			enemy: {
 				name: '',
@@ -136,6 +139,22 @@ let currentGameVersion = {
 				speed: 1,
 				defense: 0,
 			},
+			spells: {
+				heal: {
+					level: 1,
+					powerBase: 1,
+					expCurrent: 0,
+					expMax: 10,
+					manaCost: 0,
+				},
+				manaBolt: {
+					level: 1,
+					powerBase: 1,
+					expCurrent: 0,
+					expMax: 10,
+					manaCost: 1,
+				}
+			}
 		},
 		upgrades: {
 			repeatable: {

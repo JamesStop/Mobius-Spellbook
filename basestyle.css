@@ -327,6 +327,69 @@ body {
 
 /*Upgrades golems tab styling end*/
 
+/* upgrades spellbook tab styleing start*/
+
+.spellbook-display {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+}
+
+.spell-display {
+    height: 90%;
+    width: 90%;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border: 2px solid black;
+    padding: 5px;
+}
+
+.exp-display {
+    height: 25%;
+    width: 85%;
+    display: flex;
+    border: 1px solid black;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.exp-numbers {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.health-display {
+    width: 85%;
+    display: flex;
+    border: 1px solid black;
+    border-radius: 25px;
+    position: relative;
+    overflow: hidden;
+}
+
+.exp-bar {
+    background-color: rgb(209, 145, 61);
+    width: 100%;
+}
+
+.heal-color {
+    background-color: rgb(56, 209, 56);
+}
+
+.manaBolt-color {
+    background-color: rgb(56, 209, 209);
+}
+
+/* upgrades spellbook tab styleing end*/
+
 /*Upgrades box styling end*/
 
 /*Combat box styling start*/
