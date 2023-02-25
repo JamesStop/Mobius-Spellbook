@@ -568,7 +568,11 @@ const allStatUpdate = () => {
 const regenHealth = () => {
 	setTimeout(() => {
 		if (game.current.combat.player.healthCurrent < game.current.combat.player.healthMax && !game.current.combat.fighting ) {
-			game.current.combat.player.healthCurrent += game.current.combat.spells.heal.powerBase
+			if (game.current.combat.player.healthCurrent + game.current.combat.spells.heal.powerBase > game.current.combat.player.healthMax) {
+				game.current.combat.player.healthCurrent = gane.current.combat.player.healthMax
+			} else {
+				game.current.combat.player.healthCurrent += game.current.combat.spells.heal.powerBase
+			}
 			gainSpellExp('heal', 1)
 			updateStat('player', 'healthCurrent')
 			regenHealth()
