@@ -437,17 +437,17 @@ const unlocks = {
 
 
 const formatNumbers = (number) => {
-	if (number.toString().length >= 6) {
+	if (Math.floor(number).toString().length >= 6) {
 		if (number.toExponential(2).toString()[3] == '0') {
 			if (number.toExponential(1).toString()[2] == '0') {
-				return number.toExponential(0).toString().replace('+', '')
+				return Math.floor(number).toExponential(0).toString().replace('+', '')
 			} else {
-				return number.toExponential(1).toString().replace('+', '')
+				return Math.floor(number).toExponential(1).toString().replace('+', '')
 			}
 		} else {
-			return number.toExponential(2).toString().replace('+', '')
+			return Math.floor(number).toExponential(2).toString().replace('+', '')
 		}
 	} else {
-		return number.toString()
+		return Math.floor(number).toString()
 	}
 }
