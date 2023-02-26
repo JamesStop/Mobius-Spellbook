@@ -121,7 +121,7 @@ let currentGameVersion = {
 				name: '',
 				healthMax: 10,
 				healthCurrent: 10,
-				manaMax: 0,
+				manaMax: 10,
 				manaCurrent: 0,
 				manaRegen: 0,
 				attack: 1,

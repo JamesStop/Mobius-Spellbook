@@ -549,6 +549,9 @@ const updateStat = (person, stat) => {
 	if (stat == 'healthCurrent') {
 		$(`#${person}-health-bar`).css({"width": `${Math.floor((game.current.combat[person].healthCurrent / game.current.combat[person].healthMax) * 100)}%`})
 	}
+	if (stat == 'manaCurrent') {
+		$(`#${person}-mana-bar`).css({"width": `${Math.floor((game.current.combat[person].manaCurrent / game.current.combat[person].manaMax) * 100)}%`})
+	}
 }
 
 const allStatUpdate = () => {
@@ -569,7 +572,7 @@ const regenHealth = () => {
 	setTimeout(() => {
 		if (game.current.combat.player.healthCurrent < game.current.combat.player.healthMax && !game.current.combat.fighting ) {
 			if (game.current.combat.player.healthCurrent + game.current.combat.spells.heal.powerBase > game.current.combat.player.healthMax) {
-				game.current.combat.player.healthCurrent = gane.current.combat.player.healthMax
+				game.current.combat.player.healthCurrent = game.current.combat.player.healthMax
 			} else {
 				game.current.combat.player.healthCurrent += game.current.combat.spells.heal.powerBase
 			}
@@ -579,6 +582,22 @@ const regenHealth = () => {
 		}}, 500)
 }
 
+const regenMana = () => {
+	if (game.current.combat.player.manaCurrent < game.current.combat.player.manaMax) {
+		if (game.current.combat.player.manaCurrent + game.current.combat.player.manaRegen >= game.current.combat.player.manaMax) {
+			game.current.combat.player.manaCurrent = game.current.combat.player.manaMax
+		} else {
+			game.current.combat.player.manaCurrent += game.current.combat.player.manaRegen
+		}
+		updateStat('player', 'manaCurrent')
+	}
+}
+
+window.setInterval(() => {
+	if (game.current.unlocks.spellbook) {
+		regenMana()
+	}
+}, 500)
 
 
 
@@ -765,19 +784,39 @@ const startFighting = () => {
 	}
 }
 
+const getDamage = (attacker) => {
+	let attacking = game.current.combat[attacker]
+	if (attacker == 'enemy') {
+		return attacking.attack
+	} else {
+		let spellCurrent = game.current.combat.spellCurrent
+		if (attacking.manaCurrent >= game.current.combat.spells[spellCurrent].manaCost) {
+			attacking.manaCurrent -= game.current.combat.spells[spellCurrent].manaCost;
+			let spellDamage = game.current.combat.spells[spellCurrent].powerBase * attacking.spellPower
+			updateStat(attacker, 'manaCurrent')
+			gainSpellExp(spellCurrent, spellDamage)
+			return spellDamage
+		} else {
+			return attacking.attack
+		}
+	}
+}
+
 const attack = (attacker, defender) => {
 	setTimeout(() => {
-		if (game.current.combat[defender].healthCurrent - game.current.combat[attacker].attack < 0) {
+		let attackerDamage = getDamage(attacker)
+		if (game.current.combat[defender].healthCurrent - attackerDamage < 0) {
 			game.current.combat[defender].healthCurrent = 0
 		} else {
-			game.current.combat[defender].healthCurrent -= game.current.combat[attacker].attack
+			game.current.combat[defender].healthCurrent -= attackerDamage
 		}
 		updateStat(defender, 'healthCurrent')
 		if (game.current.combat[defender].healthCurrent > 0) {
-			if (game.current.combat[attacker].healthCurrent - game.current.combat[defender].attack < 0) {
+			let defenderDamage = getDamage(defender)
+			if (game.current.combat[attacker].healthCurrent - defenderDamage < 0) {
 				game.current.combat[attacker].healthCurrent = 0
 			} else {
-				game.current.combat[attacker].healthCurrent -= game.current.combat[defender].attack
+				game.current.combat[attacker].healthCurrent -= defenderDamage
 			}
 			updateStat(attacker, 'healthCurrent')
 			if (game.current.combat[attacker].healthCurrent > 0) {
