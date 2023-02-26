@@ -274,7 +274,7 @@ const purchaseUpgrade = (upgradeType, type, tier, resource) => {
 
 const unlockAll = () => {
 	Object.keys(unlocks).map((unlock) => {
-		unlocks[`${unlock}Unlock`]();
+		unlocks[unlock]();
 	});
 };
 
