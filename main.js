@@ -283,9 +283,9 @@ const unlockAll = () => {
 //Spells page functions start//
 
 const singleSpellDisplay = (spell) => {
-	$(`#${spell}-level`).text(game.current.combat.spells[spell].level)
-	$(`#${spell}-expCurrent`).text(game.current.combat.spells[spell].expCurrent)
-	$(`#${spell}-expMax`).text(game.current.combat.spells[spell].expMax)
+	$(`#${spell}-level`).text(formatNumbers(game.current.combat.spells[spell].level))
+	$(`#${spell}-expCurrent`).text(formatNumbers(game.current.combat.spells[spell].expCurrent))
+	$(`#${spell}-expMax`).text(formatNumbers(game.current.combat.spells[spell].expMax))
 	$(`#${spell}-exp-bar`).css({'width': `${Math.floor((game.current.combat.spells[spell].expCurrent / game.current.combat.spells[spell].expMax) * 100)}%`})
 
 }
@@ -319,6 +319,7 @@ const spellLevelUp = (spell, amount) => {
 		currentSpell.level += 1
 		currentSpell.expMax = Math.floor(currentSpell.costGrowth * currentSpell.expMax)
 		currentSpell.powerBase += currentSpell.spellGrowth
+		game.current.combat.player.manaRegenBase += currentSpell.levelManaRegen
 		levels -= 1
 	}
 	singleSpellDisplay(spell)
@@ -571,12 +572,14 @@ const allStatUpdate = () => {
 const regenHealth = () => {
 	setTimeout(() => {
 		if (game.current.combat.player.healthCurrent < game.current.combat.player.healthMax && !game.current.combat.fighting ) {
-			if (game.current.combat.player.healthCurrent + game.current.combat.spells.heal.powerBase > game.current.combat.player.healthMax) {
+			let healAmount = game.current.combat.spells.heal.powerBase * game.current.combat.player.spellPower
+			if (game.current.combat.player.healthCurrent + healAmount > game.current.combat.player.healthMax) {
+				healAmount = game.current.combat.player.healthMax - game.current.combat.player.healthCurrent
 				game.current.combat.player.healthCurrent = game.current.combat.player.healthMax
 			} else {
-				game.current.combat.player.healthCurrent += game.current.combat.spells.heal.powerBase
+				game.current.combat.player.healthCurrent += healAmount
 			}
-			gainSpellExp('heal', 1)
+			gainSpellExp('heal', (healAmount / 4))
 			updateStat('player', 'healthCurrent')
 			regenHealth()
 		}}, 500)
@@ -584,10 +587,10 @@ const regenHealth = () => {
 
 const regenMana = () => {
 	if (game.current.combat.player.manaCurrent < game.current.combat.player.manaMax) {
-		if (game.current.combat.player.manaCurrent + game.current.combat.player.manaRegen >= game.current.combat.player.manaMax) {
+		if (game.current.combat.player.manaCurrent + game.current.combat.player.manaRegenBase >= game.current.combat.player.manaMax) {
 			game.current.combat.player.manaCurrent = game.current.combat.player.manaMax
 		} else {
-			game.current.combat.player.manaCurrent += game.current.combat.player.manaRegen
+			game.current.combat.player.manaCurrent += game.current.combat.player.manaRegenBase
 		}
 		updateStat('player', 'manaCurrent')
 	}
@@ -823,22 +826,18 @@ const attack = (attacker, defender) => {
 				attack(attacker, defender)
 			} else {
 				if (attacker == 'player') {
-					console.log('you died')
 					fightLose()
 				} else {
 					fightWin()
 				}
-				console.log(`${attacker} death`)
 			}
 			
 		} else {
 			if (defender == 'player') {
-				console.log('you died')
 				fightLose()
 			} else {
 				fightWin()
 			}
-			console.log(`${defender} death`)
 		}
 	}, 500)
 	

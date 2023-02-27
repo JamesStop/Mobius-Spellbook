@@ -122,8 +122,8 @@ let currentGameVersion = {
 				healthMax: 10,
 				healthCurrent: 10,
 				manaMax: 10,
-				manaCurrent: 0,
-				manaRegen: 0,
+				manaCurrent: 10,
+				manaRegenBase: 0.1,
 				attack: 1,
 				speed: 1,
 				defense: 0,
@@ -148,6 +148,7 @@ let currentGameVersion = {
 					manaCost: 0,
 					spellGrowth: 1,
 					costGrowth: 1.25,
+					levelManaRegen: 0.02
 				},
 				manaBolt: {
 					level: 1,
@@ -157,6 +158,7 @@ let currentGameVersion = {
 					manaCost: 1,
 					spellGrowth: 1,
 					costGrowth: 1.6,
+					levelManaRegen: 0.05
 				}
 			}
 		},
