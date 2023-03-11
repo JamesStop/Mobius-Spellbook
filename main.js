@@ -942,3 +942,13 @@ load();
 autoSave();
 
 //Saving and loading related functions end//
+
+
+
+
+
+//Text testing
+
+const addtext = () => {
+	$(`<div class="single-text">hello</div>`).insertBefore(".anchor")
+}
