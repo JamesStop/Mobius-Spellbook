@@ -287,7 +287,6 @@ const singleSpellDisplay = (spell) => {
 	$(`#${spell}-expCurrent`).text(formatNumbers(game.current.combat.spells[spell].expCurrent))
 	$(`#${spell}-expMax`).text(formatNumbers(game.current.combat.spells[spell].expMax))
 	$(`#${spell}-exp-bar`).css({'width': `${Math.floor((game.current.combat.spells[spell].expCurrent / game.current.combat.spells[spell].expMax) * 100)}%`})
-
 }
 
 const allSpellDisplay = () => {
@@ -796,8 +795,12 @@ const getDamage = (attacker) => {
 		if (attacking.manaCurrent >= game.current.combat.spells[spellCurrent].manaCost) {
 			attacking.manaCurrent -= game.current.combat.spells[spellCurrent].manaCost;
 			let spellDamage = game.current.combat.spells[spellCurrent].powerBase * attacking.spellPower
+			let spellExp = (1 + ((spellDamage) * .5))
+			if (game.current.combat.enemy.healthCurrent < spellDamage) {
+				spellExp = (1+ ((game.current.combat.enemy.healthCurrent) * .5))
+			}
 			updateStat(attacker, 'manaCurrent')
-			gainSpellExp(spellCurrent, spellDamage)
+			gainSpellExp(spellCurrent, spellExp)
 			return spellDamage
 		} else {
 			return attacking.attack
