@@ -779,54 +779,53 @@ const startFighting = () => {
 	if (game.current.combat.location =='tower' && game.current.combat.fighting == false && game.current.combat.player.healthCurrent > 0) {
 		game.current.combat.fighting = true
 		if (game.current.combat.enemy.healthCurrent > 0) {
-			fight()
+			startFight()
 		} else {
 			newFight()
 		}
 	}
 }
 
-const getDamage = (attacker) => {
+const attack = (attacker, defender) => {
 	let attacking = game.current.combat[attacker]
+	let defending = game.current.combat[defender]
+	let damage = 1
+	let spellCastCheck = false
 	if (attacker == 'enemy') {
-		return attacking.attack
+		damage = attacking.attack
 	} else {
-		let spellCurrent = game.current.combat.spellCurrent
-		if (attacking.manaCurrent >= game.current.combat.spells[spellCurrent].manaCost) {
-			attacking.manaCurrent -= game.current.combat.spells[spellCurrent].manaCost;
-			let spellDamage = game.current.combat.spells[spellCurrent].powerBase * attacking.spellPower
-			let spellExp = (1 + ((spellDamage) * .5))
-			if (game.current.combat.enemy.healthCurrent < spellDamage) {
-				spellExp = (1+ ((game.current.combat.enemy.healthCurrent) * .5))
-			}
+		let spell = game.current.combat.spells[game.current.combat.spellCurrent]
+		if (attacking.manaCurrent >= spell.manaCost) {
+			spellCastCheck = true
+			attacking.manaCurrent -= spell.manaCost;
+			damage = spell.powerBase * attacking.spellPower
 			updateStat(attacker, 'manaCurrent')
-			gainSpellExp(spellCurrent, spellExp)
-			return spellDamage
 		} else {
-			return attacking.attack
+			damage = attacking.attack
+		}
+	}
+	if (defending.healthCurrent - damage < 0) {
+		defending.healthCurrent = 0
+		if (defender = 'enemy' && spellCastCheck) {
+			gainSpellExp(game.current.combat.spellCurrent, (1 + ((defending.healthCurrent) * .5)))
+		}
+	} else {
+		defending.healthCurrent -= damage
+		if (defender = 'enemy' && spellCastCheck) {
+			gainSpellExp(game.current.combat.spellCurrent, (1 + ((damage) * .5)))
 		}
 	}
 }
 
-const attack = (attacker, defender) => {
+const fight = (attacker, defender) => {
 	setTimeout(() => {
-		let attackerDamage = getDamage(attacker)
-		if (game.current.combat[defender].healthCurrent - attackerDamage < 0) {
-			game.current.combat[defender].healthCurrent = 0
-		} else {
-			game.current.combat[defender].healthCurrent -= attackerDamage
-		}
+		attack(attacker, defender)
 		updateStat(defender, 'healthCurrent')
 		if (game.current.combat[defender].healthCurrent > 0) {
-			let defenderDamage = getDamage(defender)
-			if (game.current.combat[attacker].healthCurrent - defenderDamage < 0) {
-				game.current.combat[attacker].healthCurrent = 0
-			} else {
-				game.current.combat[attacker].healthCurrent -= defenderDamage
-			}
+			attack(defender, attacker)
 			updateStat(attacker, 'healthCurrent')
 			if (game.current.combat[attacker].healthCurrent > 0) {
-				attack(attacker, defender)
+				fight(attacker, defender)
 			} else {
 				if (attacker == 'player') {
 					fightLose()
@@ -834,7 +833,6 @@ const attack = (attacker, defender) => {
 					fightWin()
 				}
 			}
-			
 		} else {
 			if (defender == 'player') {
 				fightLose()
@@ -847,12 +845,11 @@ const attack = (attacker, defender) => {
 }
 
 
-const fight = () => {
+const startFight = () => {
 	if (game.current.combat.enemy.speed > game.current.combat.player.speed) {
-		
-		attack('enemy', 'player')
+		fight('enemy', 'player')
 	} else {
-		attack('player', 'enemy')
+		fight('player', 'enemy')
 	}
 }
 
@@ -860,7 +857,7 @@ const fight = () => {
 const newFight = () => {
 	setTimeout(() => {
 		createEnemy()
-		fight()
+		startFight()
 	}, 500)
 }
 

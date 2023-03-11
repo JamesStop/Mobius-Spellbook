@@ -36,7 +36,7 @@ const load = () => {
 	unlockAll();
 	allCombatButtons()
 	if (game.current.combat.fighting) {
-		fight()
+		startFight()
 	} else if (!game.current.combat.fighting && game.current.combat.location == 'tower') {
 		setTimeout(() => {
 			regenHealth()
