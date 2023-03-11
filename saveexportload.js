@@ -5,6 +5,7 @@ const save = () => {
 	var saveGame = JSON.parse(saveString);
 	saveString = LZString.compressToBase64(JSON.stringify(saveGame));
 	localStorage.setItem('savestring', saveString);
+	$(`<div class="single-text game-save-text">Game Saved</div>`).insertBefore(".anchor")
 };
 
 const autoSave = () => {

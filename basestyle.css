@@ -744,8 +744,7 @@ body {
     background-color: white;
 }
 
-
-.text-display {
+.scroll-area {
     width: 100%;
     height: 80%;
     max-height: calc(100% - 20px);
@@ -753,17 +752,24 @@ body {
     overflow-y: scroll;
 }
 
-.text-display::-webkit-scrollbar {
+.text-display {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(5, 5, 5, 0.8);
+    padding-top: 2px;
+}
+
+.scroll-area::-webkit-scrollbar {
     width: 10px;
     background: rgb(194, 189, 189);
 }
 
-.text-display::-webkit-scrollbar-track {
+.scroll-area::-webkit-scrollbar-track {
     background: rgb(158, 157, 157);
     border-radius: 10px;
 }
 
-.text-display::-webkit-scrollbar-thumb {
+.scroll-area::-webkit-scrollbar-thumb {
     background: rgb(102, 99, 99);
     border-radius: 10px;
 }
@@ -786,11 +792,15 @@ body {
     height: 1px;
 }
 
+/*Special Text Styles start*/
+
+.game-save-text {
+    color: rgb(22, 114, 22);
+    font-weight: 600;
+}
 
 
-
-
-
+/*Special Text Styles end*/
 
 
 

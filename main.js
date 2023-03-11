@@ -952,3 +952,5 @@ autoSave();
 const addtext = () => {
 	$(`<div class="single-text">hello</div>`).insertBefore(".anchor")
 }
+
+$(`.scroll-area`).scrollTop(1);
