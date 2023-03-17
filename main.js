@@ -1,7 +1,5 @@
 //General Purpose Start//
 
-
-
 //General Purpose End//
 
 //Upgrades nav bar click functions start//
@@ -171,7 +169,9 @@ const updateResourceAmountLoss = (resource, value) => {
 
 const collectResources = () => {
 	resources.map((resource) => {
-		const updateValue = (game.current.resources[resource].totalPerSec / ( normalSecond / gameTick ));
+		const updateValue =
+			game.current.resources[resource].totalPerSec /
+			(normalSecond / gameTick);
 		if (updateValue > 0) {
 			updateResourceAmountGain(resource, updateValue);
 		}
@@ -603,7 +603,6 @@ const allStatUpdate = () => {
 //Health Regen functions start//
 
 const regenHealth = () => {
-	setTimeout(() => {
 		let player = game.current.combat.player;
 		if (
 			player.healthCurrent < player.healthMax &&
@@ -619,10 +618,10 @@ const regenHealth = () => {
 			}
 			gainSpellExp("heal", healAmount / 4);
 			updateStat("player", "healthCurrent");
-			regenHealth();
 		}
-	}, 5 * gameTick);
 };
+
+
 
 const regenMana = () => {
 	if (
@@ -644,11 +643,7 @@ const regenMana = () => {
 	}
 };
 
-window.setInterval(() => {
-	if (game.current.unlocks.spellbook) {
-		regenMana();
-	}
-}, 500);
+
 
 //Health Regen functions end//
 
@@ -885,29 +880,31 @@ const attack = (attacker, defender) => {
 };
 
 const fight = (attacker, defender) => {
-	setTimeout(() => {
-		attack(attacker, defender);
-		updateStat(defender, "healthCurrent");
-		if (game.current.combat[defender].healthCurrent > 0) {
-			attack(defender, attacker);
-			updateStat(attacker, "healthCurrent");
-			if (game.current.combat[attacker].healthCurrent > 0) {
-				fight(attacker, defender);
+	if (!game.settings.pause) {
+		setTimeout(() => {
+			attack(attacker, defender);
+			updateStat(defender, "healthCurrent");
+			if (game.current.combat[defender].healthCurrent > 0) {
+				attack(defender, attacker);
+				updateStat(attacker, "healthCurrent");
+				if (game.current.combat[attacker].healthCurrent > 0) {
+					fight(attacker, defender);
+				} else {
+					if (attacker == "player") {
+						fightLose();
+					} else {
+						fightWin();
+					}
+				}
 			} else {
-				if (attacker == "player") {
+				if (defender == "player") {
 					fightLose();
 				} else {
 					fightWin();
 				}
 			}
-		} else {
-			if (defender == "player") {
-				fightLose();
-			} else {
-				fightWin();
-			}
-		}
-	}, 5 * gameTick);
+		}, 5 * gameTick);
+	}
 };
 
 const startFight = () => {
@@ -943,7 +940,6 @@ const autoFighting = () => {
 const fightLose = () => {
 	//Post into text that you lost fight
 	game.current.combat.fighting = false;
-	regenHealth();
 };
 
 const fightWin = () => {
@@ -1054,16 +1050,32 @@ const updateAllDisplays = () => {
 //Timing things
 
 const pauseGame = () => {
-	
+	if (game.settings.pause) {
+		game.settings.pause = false;
+	} else {
+		game.settings.pause = true;
+	}
+
+	if (!game.settings.pause && game.current.combat.fighting) {
+		startFight()
+	}
+
 };
 
 window.setInterval(() => {
-	collectResources();
+	updateAllDisplays();
+	if (!game.settings.pause) {
+		collectResources();
+	}
 }, gameTick);
 
 window.setInterval(() => {
-	updateAllDisplays();
-}, 100);
+	if (game.current.unlocks.spellbook && !game.settings.pause) {
+		regenMana();
+		regenHealth()
+	}
+}, 5 * gameTick);
+
 
 //Saving and loading related functions start//
 //KEEP THESE AT THE END AT ALL TIMES!!!!!//
