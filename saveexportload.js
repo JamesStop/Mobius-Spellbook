@@ -23,7 +23,7 @@ const load = () => {
     } else {
         game = currentGameVersion;
     }
-    updateAllDisplays();
+    updateDisplaysAllSuper();
     if (game.current.combat.fighting) {
         startFight();
     } else if (!game.current.combat.fighting && game.current.combat.location == "tower") {

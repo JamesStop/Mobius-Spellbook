@@ -533,22 +533,22 @@ const createEnemy = () => {
 	game.current.combat.enemy.name = typeOfEnemy;
 	game.current.combat.enemy.healthMax = Math.ceil(
 		10 *
-			1.15 ** (currentFloor - 1) *
-			1.01 ** (currentRoom - 1) *
+			1.3 ** (currentFloor - 1) *
+			1.05 ** (currentRoom - 1) *
 			enemyMultis.healthMulti
 	);
 	game.current.combat.enemy.healthCurrent =
 		game.current.combat.enemy.healthMax;
 	game.current.combat.enemy.attack = Math.ceil(
 		1 *
-			1.15 ** (currentFloor - 1) *
-			1.01 ** (currentRoom - 1) *
+			1.3 ** (currentFloor - 1) *
+			1.05 ** (currentRoom - 1) *
 			enemyMultis.attackMulti
 	);
 	game.current.combat.enemy.defense = Math.ceil(
-		(currentFloor - 1) *
-			1.15 ** (currentFloor - 1) *
-			1.01 ** (currentRoom - 1) *
+		((currentFloor - 1) / 5) *
+			1.3 ** (currentFloor - 1) *
+			1.05 ** (currentRoom - 1) *
 			enemyMultis.attackMulti
 	);
 	game.current.combat.enemy.speed = 1 * enemyMultis.speedMulti;
@@ -826,6 +826,7 @@ const startAscending = () => {
 const startDescending = () => {
 	if (game.current.combat.location == "tower") {
 		game.current.combat.direction = "down";
+		$("#descend-button").addClass("hidden");
 	}
 };
 
@@ -1041,11 +1042,16 @@ const updateAllDisplays = () => {
 	allStatUpdate();
 	floorDisplay();
 	roomDisplay();
-	updateWholeFloor();
 	unlockAll();
 	allCombatButtons();
 	allSpellDisplay();
 };
+
+const updateDisplaysAllSuper = () => {
+	updateAllDisplays()
+	updateWholeFloor();
+	
+}
 
 //Timing things
 
