@@ -1,4 +1,4 @@
-const normalSecond = 100;
+const normalSecond = 1000;
 const gameTick = 100;
 const resources = ["herb", "mythril", "yew", "crystal", "arcana"];
 const upgradeTypes = ["storage", "activeProduction"];

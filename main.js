@@ -600,52 +600,51 @@ const allStatUpdate = () => {
 
 //Stats Display updating Functions end//
 
-//Health Regen functions start//
+//Regen functions start//
 
 const regenHealth = () => {
-		let player = game.current.combat.player;
-		if (
-			player.healthCurrent < player.healthMax &&
-			!game.current.combat.fighting
-		) {
-			let healAmount =
-				(game.current.combat.spells.heal.powerBase * player.spellPower ) / (normalSecond / gameTick);
-			if (player.healthCurrent + healAmount > player.healthMax) {
-				healAmount = player.healthMax - player.healthCurrent;
-				player.healthCurrent = player.healthMax;
-			} else {
-				player.healthCurrent += healAmount;
-			}
-			gainSpellExp("heal", healAmount / 4);
-			updateStat("player", "healthCurrent");
+	let player = game.current.combat.player;
+	if (
+		player.healthCurrent < player.healthMax &&
+		!game.current.combat.fighting
+	) {
+		let healAmount =
+			(game.current.combat.spells.heal.powerBase * player.spellPower) /
+			(normalSecond / gameTick);
+		if (player.healthCurrent + healAmount > player.healthMax) {
+			healAmount = player.healthMax - player.healthCurrent;
+			player.healthCurrent = player.healthMax;
+		} else {
+			player.healthCurrent += healAmount;
 		}
+		gainSpellExp("heal", healAmount / 4);
+		updateStat("player", "healthCurrent");
+	}
 };
-
-
 
 const regenMana = () => {
 	if (
 		game.current.combat.player.manaCurrent <
 		game.current.combat.player.manaMax
 	) {
+		let manaAmount =
+			game.current.combat.player.manaRegenBase /
+			(normalSecond / gameTick);
 		if (
-			game.current.combat.player.manaCurrent +
-				(game.current.combat.player.manaRegenBase / (normalSecond / gameTick) ) >=
+			game.current.combat.player.manaCurrent + manaAmount >=
 			game.current.combat.player.manaMax
 		) {
 			game.current.combat.player.manaCurrent =
 				game.current.combat.player.manaMax;
 		} else {
-			game.current.combat.player.manaCurrent +=
-				game.current.combat.player.manaRegenBase;
+			game.current.combat.player.manaCurrent += manaAmount;
 		}
+		game.current.combat.player.manaMax += manaAmount / 100
 		updateStat("player", "manaCurrent");
 	}
 };
 
-
-
-//Health Regen functions end//
+//Regen functions end//
 
 //floor and room changing functions start//
 
@@ -1048,10 +1047,9 @@ const updateAllDisplays = () => {
 };
 
 const updateDisplaysAllSuper = () => {
-	updateAllDisplays()
+	updateAllDisplays();
 	updateWholeFloor();
-	
-}
+};
 
 //Timing things
 
@@ -1063,23 +1061,20 @@ const pauseGame = () => {
 	}
 
 	if (!game.settings.pause && game.current.combat.fighting) {
-		startFight()
+		startFight();
 	}
-
 };
 
 window.setInterval(() => {
-	updateAllDisplays();
 	if (!game.settings.pause) {
 		collectResources();
 		if (game.current.unlocks.spellbook) {
 			regenMana();
-		regenHealth()
+			regenHealth();
 		}
 	}
+	updateAllDisplays();
 }, gameTick);
-
-
 
 //Saving and loading related functions start//
 //KEEP THESE AT THE END AT ALL TIMES!!!!!//
