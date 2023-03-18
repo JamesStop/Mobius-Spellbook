@@ -634,12 +634,14 @@ const regenMana = () => {
 			game.current.combat.player.manaCurrent + manaAmount >=
 			game.current.combat.player.manaMax
 		) {
+			manaAmount = game.current.combat.player.manaMax - game.current.combat.player.manaCurrent;
 			game.current.combat.player.manaCurrent =
 				game.current.combat.player.manaMax;
 		} else {
 			game.current.combat.player.manaCurrent += manaAmount;
 		}
-		game.current.combat.player.manaMax += manaAmount / 100
+		game.current.combat.player.manaRegenTotal += manaAmount;
+		game.current.combat.player.manaMax = (game.current.combat.player.manaBase  * (1 + (Math.floor(game.current.combat.player.manaRegenTotal / 100) / 10)))
 		updateStat("player", "manaCurrent");
 	}
 };

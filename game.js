@@ -2,7 +2,7 @@
 
 let currentGameVersion = {
 	general: {
-		version: 0.1,
+		version: 0.2,
 	},
 	current: {
 		collecting: null,
@@ -123,7 +123,9 @@ let currentGameVersion = {
 				healthCurrent: 10,
 				manaMax: 10,
 				manaCurrent: 10,
+				manaBase: 10,
 				manaRegenBase: 0.1,
+				manaRegenTotal: 0,
 				attack: 1,
 				speed: 1,
 				defense: 0,
