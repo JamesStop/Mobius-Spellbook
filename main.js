@@ -609,7 +609,7 @@ const regenHealth = () => {
 			!game.current.combat.fighting
 		) {
 			let healAmount =
-				game.current.combat.spells.heal.powerBase * player.spellPower;
+				(game.current.combat.spells.heal.powerBase * player.spellPower ) / (normalSecond / gameTick);
 			if (player.healthCurrent + healAmount > player.healthMax) {
 				healAmount = player.healthMax - player.healthCurrent;
 				player.healthCurrent = player.healthMax;
@@ -630,7 +630,7 @@ const regenMana = () => {
 	) {
 		if (
 			game.current.combat.player.manaCurrent +
-				game.current.combat.player.manaRegenBase >=
+				(game.current.combat.player.manaRegenBase / (normalSecond / gameTick) ) >=
 			game.current.combat.player.manaMax
 		) {
 			game.current.combat.player.manaCurrent =
@@ -1072,15 +1072,13 @@ window.setInterval(() => {
 	updateAllDisplays();
 	if (!game.settings.pause) {
 		collectResources();
+		if (game.current.unlocks.spellbook) {
+			regenMana();
+		regenHealth()
+		}
 	}
 }, gameTick);
 
-window.setInterval(() => {
-	if (game.current.unlocks.spellbook && !game.settings.pause) {
-		regenMana();
-		regenHealth()
-	}
-}, 5 * gameTick);
 
 
 //Saving and loading related functions start//
