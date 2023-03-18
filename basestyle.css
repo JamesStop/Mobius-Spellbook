@@ -353,6 +353,7 @@ body {
 
 .exp-bar {
   background-color: rgb(209, 145, 61);
+  transition: 0.1s;
 }
 
 .heal-color {
@@ -446,6 +447,7 @@ body {
 .player-health-bar,
 .enemy-health-bar {
   background-color: rgb(212, 60, 60);
+  transition: 0.1s;
 }
 
 .player-mana,
@@ -478,6 +480,7 @@ body {
 .player-mana-bar,
 .enemy-mana-bar {
   background-color: rgb(86, 86, 212);
+  transition: 0.1s;
 }
 
 /* player and enemy info display end*/
