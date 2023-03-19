@@ -1032,6 +1032,9 @@ const mouseout = (event) => {
 
 const addtext = (text) => {
 	$(`<div class="single-text">${text}</div>`).insertBefore(".anchor");
+	if ($(`#text-display`).children().length > 25) {
+		$(`#text-display`).find(`:first-child`).remove()
+	}
 };
 
 $(`.scroll-area`).scrollTop(1);
