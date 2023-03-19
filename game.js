@@ -2,7 +2,7 @@
 
 let currentGameVersion = {
 	general: {
-		version: 0.2,
+		version: 0.001,
 	},
 	current: {
 		collecting: null,

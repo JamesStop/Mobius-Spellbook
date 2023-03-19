@@ -634,14 +634,20 @@ const regenMana = () => {
 			game.current.combat.player.manaCurrent + manaAmount >=
 			game.current.combat.player.manaMax
 		) {
-			manaAmount = game.current.combat.player.manaMax - game.current.combat.player.manaCurrent;
+			manaAmount =
+				game.current.combat.player.manaMax -
+				game.current.combat.player.manaCurrent;
 			game.current.combat.player.manaCurrent =
 				game.current.combat.player.manaMax;
 		} else {
 			game.current.combat.player.manaCurrent += manaAmount;
 		}
 		game.current.combat.player.manaRegenTotal += manaAmount;
-		game.current.combat.player.manaMax = (game.current.combat.player.manaBase  * (1 + (Math.floor(game.current.combat.player.manaRegenTotal / 100) / 10)))
+		game.current.combat.player.manaMax =
+			game.current.combat.player.manaBase *
+			(1 +
+				Math.floor(game.current.combat.player.manaRegenTotal / 100) /
+					10);
 		updateStat("player", "manaCurrent");
 	}
 };
@@ -966,11 +972,11 @@ const enemyDrops = () => {
 		game.current.stats.best.room == 1
 	) {
 		game.current.resources.souls.current += 1;
+		addtext(`That ${game.current.combat.enemy.name} dropped a soul. You quickly cram it into a random jar you have on hand.`)
 	}
 	let resourceDrop = Math.random();
 	if (resourceDrop > 0.6) {
 		let basicResource = resources[Math.floor(Math.random() * 5)];
-		console.log(basicResource);
 		let dropValue = Math.floor(
 			(Math.random() * (26 - game.current.combat.room) +
 				game.current.combat.room) *
@@ -979,14 +985,16 @@ const enemyDrops = () => {
 					.activeProductionTotal **
 					0.5
 		);
+		addtext(specialTexts[basicResource](dropValue))
 		updateResourceAmountGain(basicResource, dropValue);
 	} else if (resourceDrop < 0.125) {
-		console.log("souls");
-		game.current.resources.souls.current += Math.floor(
+		let soulsAmount = Math.floor(
 			(Math.random() * (26 - game.current.combat.room) +
 				game.current.combat.room) *
 				1.2 ** (game.current.combat.floor - 1)
 		);
+		game.current.resources.souls.current += soulsAmount
+		addtext(specialTexts.souls(soulsAmount))
 	}
 };
 
@@ -1022,8 +1030,11 @@ const mouseout = (event) => {
 
 //Text testing
 
-const addtext = () => {
-	$(`<div class="single-text">hello</div>`).insertBefore(".anchor");
+const addtext = (text) => {
+	$(`<div class="single-text">${text}</div>`).insertBefore(".anchor");
+	if ($(`#text-display`).children().length > 25) {
+		$(`#text-display`).find(`:first-child`).remove()
+	}
 };
 
 $(`.scroll-area`).scrollTop(1);
