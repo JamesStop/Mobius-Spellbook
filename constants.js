@@ -246,9 +246,9 @@ const tooltips = {
                 },
             },
             crystal: {
-                title: "Apothecary Satchel",
+                title: "Geode Tesseract",
                 infoBase:
-                    "An expansion to your apothecary satchel. Increases your crystal storage by ",
+                    "An expansion to your geode tesseract. Increases your crystal storage by ",
                 info: "",
                 cost: "",
                 updateText() {
@@ -487,6 +487,42 @@ const unlocks = {
         }
     },
 };
+
+
+
+const specialTexts = {
+    herb: (amount) => {
+        return `That ${game.current.combat.enemy.name} dropped ${amount} herbs. They get transported back to your apothecary satchel at home.`
+    },
+    mythril: (amount) => {
+        return `That ${game.current.combat.enemy.name} dropped ${amount} mythril. They get transported to your forge back home.`
+    },
+    yew: (amount) => {
+        return `That ${game.current.combat.enemy.name} dropped ${amount} yew. They get transported to your lumber hut back at home.`
+    },
+    crystal: (amount) => {
+        return `That ${game.current.combat.enemy.name} dropped ${amount} crystals. They get transported to yout geode tesseract back home.`
+    },
+    arcana: (amount) => {
+        return `That ${game.current.combat.enemy.name} dropped ${amount} arcana. They get transported to your library back home.`
+    },
+    souls: (amount) => {
+        return `That ${game.current.combat.enemy.name} dropped ${amount} souls. You quickly cram them into your soul jar.`
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const formatNumbers = (number) => {
     if (Math.floor(number).toString().length >= 6) {
