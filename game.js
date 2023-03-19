@@ -2,7 +2,7 @@
 
 let currentGameVersion = {
 	general: {
-		version: 0.0,
+		version: 0.2,
 	},
 	current: {
 		collecting: null,
@@ -77,7 +77,7 @@ let currentGameVersion = {
 				totalPerSec: 0,
 			},
 			golems: {
-				assignmentType: 'assign',
+				assignmentType: "assign",
 				inactive: 0,
 				active: 0,
 				total: 0,
@@ -106,7 +106,7 @@ let currentGameVersion = {
 				storage: {
 					storageTotal: Infinity,
 				},
-			}
+			},
 		},
 		combat: {
 			world: 0,
@@ -114,23 +114,25 @@ let currentGameVersion = {
 			room: 0,
 			fighting: false,
 			autoFighting: false,
-			location: 'town',
-			direction: 'up',
-			spellCurrent: 'manaBolt',
+			location: "town",
+			direction: "up",
+			spellCurrent: "manaBolt",
 			player: {
-				name: '',
+				name: "",
 				healthMax: 10,
 				healthCurrent: 10,
 				manaMax: 10,
-				manaCurrent: 0,
-				manaRegen: 0,
+				manaCurrent: 10,
+				manaBase: 10,
+				manaRegenBase: 0.1,
+				manaRegenTotal: 0,
 				attack: 1,
 				speed: 1,
 				defense: 0,
 				spellPower: 1,
 			},
 			enemy: {
-				name: '',
+				name: "",
 				healthMax: 100,
 				healthCurrent: 0,
 				manaMax: 0,
@@ -148,6 +150,7 @@ let currentGameVersion = {
 					manaCost: 0,
 					spellGrowth: 1,
 					costGrowth: 1.25,
+					levelManaRegen: 0.02,
 				},
 				manaBolt: {
 					level: 1,
@@ -157,8 +160,9 @@ let currentGameVersion = {
 					manaCost: 1,
 					spellGrowth: 1,
 					costGrowth: 1.6,
-				}
-			}
+					levelManaRegen: 0.05,
+				},
+			},
 		},
 		upgrades: {
 			repeatable: {
@@ -195,23 +199,24 @@ let currentGameVersion = {
 			golems: false,
 			spellbook: false,
 			fight: false,
-		}, 
+		},
 		stats: {
 			best: {
 				floor: 0,
-				room: 0
-			}
-		}
+				room: 0,
+			},
+		},
 	},
 	overallStats: {
-		total: {
-
-		},
+		total: {},
 		best: {
 			floor: 0,
 			room: 0,
 		},
 	},
+	settings: {
+		pause: false,
+	}
 };
 
 let game = {};
