@@ -165,6 +165,42 @@ const updateResourceAmountLoss = (resource, value) => {
 
 //Resource update value functions end//
 
+//Special resource update value functions start//
+
+const updateSpecialResourceAmount = () => {
+	specialResources.map((resource) => {
+		const updating = game.current.resources[resource];
+		$(`#${resource}-current`).text(() => {
+			return formatNumbers(updating.current);
+		});
+	});
+};
+
+const updateSpecialResourceAmountSingle = (resource) => {
+	const updating = game.current.resources[resource];
+	$(`#${resource}-current`).text(() => {
+		return formatNumbers(updating.current);
+	});
+};
+
+const updateSpecialResourceAmountGain = (resource, value) => {
+	const updating = game.current.resources[resource];
+	updating.current += value;
+	updateSpecialResourceAmountSingle(resource);
+};
+
+const updateSpecialResourceAmountLoss = (resource, value) => {
+	const updating = game.current.resources[resource];
+	if (updating.current - value < 0) {
+		updating.current = 0;
+	} else {
+		updating.current -= value;
+	}
+	updateSpecialResourceAmountSingle(resource);
+};
+
+//Special resource update value functions end//
+
 //Idle resource collection functions start//
 
 const collectResources = () => {
@@ -972,7 +1008,9 @@ const enemyDrops = () => {
 		game.current.stats.best.room == 1
 	) {
 		game.current.resources.souls.current += 1;
-		addtext(`That ${game.current.combat.enemy.name} dropped a soul. You quickly cram it into a random jar you have on hand.`)
+		addtext(
+			`That ${game.current.combat.enemy.name} dropped a soul. You quickly cram it into a random jar you have on hand.`
+		);
 	}
 	let resourceDrop = Math.random();
 	if (resourceDrop > 0.6) {
@@ -985,7 +1023,7 @@ const enemyDrops = () => {
 					.activeProductionTotal **
 					0.5
 		);
-		addtext(specialTexts[basicResource](dropValue))
+		addtext(specialTexts[basicResource](dropValue));
 		updateResourceAmountGain(basicResource, dropValue);
 	} else if (resourceDrop < 0.125) {
 		let soulsAmount = Math.floor(
@@ -993,8 +1031,8 @@ const enemyDrops = () => {
 				game.current.combat.room) *
 				1.2 ** (game.current.combat.floor - 1)
 		);
-		game.current.resources.souls.current += soulsAmount
-		addtext(specialTexts.souls(soulsAmount))
+		game.current.resources.souls.current += soulsAmount;
+		addtext(specialTexts.souls(soulsAmount));
 	}
 };
 
@@ -1033,7 +1071,7 @@ const mouseout = (event) => {
 const addtext = (text) => {
 	$(`<div class="single-text">${text}</div>`).insertBefore(".anchor");
 	if ($(`#text-display`).children().length > 25) {
-		$(`#text-display`).find(`:first-child`).remove()
+		$(`#text-display`).find(`:first-child`).remove();
 	}
 };
 
@@ -1045,6 +1083,7 @@ const updateAllDisplays = () => {
 	resourceColorReset();
 	setResourcesActiveColor(game.current.collecting);
 	updateResourceAmount();
+	updateSpecialResourceAmount();
 	updateTotalProductionAll();
 	updateStorages();
 	updateUpgradesDisplayAll();
