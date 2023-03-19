@@ -1,6 +1,7 @@
 const normalSecond = 1000;
 const gameTick = 100;
 const resources = ["herb", "mythril", "yew", "crystal", "arcana"];
+const specialResources = ["souls"]
 const upgradeTypes = ["storage", "activeProduction"];
 const assignmentButtons = ["golem-assign", "golem-remove"];
 const stats = [
@@ -486,6 +487,12 @@ const unlocks = {
             $(`#golems-unlock`).addClass("hidden");
         }
     },
+    soulsUnlock() {
+        if (game.current.stats.best.floor > 1 ||
+            game.current.stats.best.room > 1) {
+                $(`#souls-wrapper`).removeClass('hidden')
+            }
+    }
 };
 
 

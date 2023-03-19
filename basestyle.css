@@ -109,7 +109,26 @@ body {
   height: 100%;
   width: 30%;
   min-width: 300px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
 }
+
+.souls-wrapper {
+  height: 90%;
+  width: 90%;
+  margin: auto;
+  background-color: white;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+
+
+
+
+
+
 
 /*special wrapper end*/
 

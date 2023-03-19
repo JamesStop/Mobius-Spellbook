@@ -103,9 +103,6 @@ let currentGameVersion = {
 			},
 			souls: {
 				current: 0,
-				storage: {
-					storageTotal: Infinity,
-				},
 			},
 		},
 		combat: {
