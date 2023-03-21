@@ -202,6 +202,9 @@ let currentGameVersion = {
 				floor: 0,
 				room: 0,
 			},
+			total: {
+				timeShifts: 0,
+			}
 		},
 	},
 	overallStats: {
