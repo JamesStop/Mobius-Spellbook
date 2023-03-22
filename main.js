@@ -256,7 +256,7 @@ const updateUpgradesDisplayAll = () => {
 				game.current.upgrades.repeatable.combat.tierOne[resource]
 			);
 		});
-	})
+	});
 };
 
 const updateUpgradesDisplaySingle = (upgradeType, type, tier, resource) => {
@@ -285,8 +285,6 @@ const purchaseUpgrade = (upgradeType, type, tier, resource) => {
 				let resourceType = Object.keys(thing);
 				let baseValue = thing[Object.keys(thing)];
 				let cost = Math.ceil(baseValue * baseIncrement ** upgrading);
-				console.log(cost)
-				console.log(upgrading)
 				if (game.current.resources[resourceType].current < cost) {
 					canUpgrade = false;
 				}
@@ -658,7 +656,7 @@ const regenHealth = () => {
 		!game.current.combat.fighting
 	) {
 		let healAmount =
-			(game.current.combat.spells.heal.powerBase * player.spellPower) /
+			(game.current.combat.spells.heal.powerBase * (1 + ((player.spellPower - 1) / 5))) /
 			(normalSecond / gameTick);
 		if (player.healthCurrent + healAmount > player.healthMax) {
 			healAmount = player.healthMax - player.healthCurrent;
