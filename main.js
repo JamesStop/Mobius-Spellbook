@@ -1029,6 +1029,9 @@ const enemyDrops = () => {
 			`That ${game.current.combat.enemy.name} dropped a soul. You quickly cram it into a random jar you have on hand.`
 		);
 	}
+	if (game.current.combat.direction == 'down'){
+		return;
+	}
 	let resourceDrop = Math.random();
 	if (resourceDrop > 0.6) {
 		let basicResource = resources[Math.floor(Math.random() * 5)];
