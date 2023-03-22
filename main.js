@@ -250,6 +250,13 @@ const updateUpgradesDisplayAll = () => {
 			});
 		});
 	});
+	combatResources.map((resource) => {
+		$(`#${resource}-combat-level`).text(() => {
+			return formatNumbers(
+				game.current.upgrades.repeatable.combat.tierOne[resource]
+			);
+		});
+	})
 };
 
 const updateUpgradesDisplaySingle = (upgradeType, type, tier, resource) => {
