@@ -64,14 +64,14 @@ const enemies = {
 		healthMulti: 0.7,
 		attackMulti: 1.3,
 		defenseMulti: 1.2,
-		speedMulti: 2,
+		speedMulti: 1e100,
 		resourceMulti: 1.3,
 	},
 	zombie: {
 		healthMulti: 0.8,
 		attackMulti: 0.8,
 		defenseMulti: 1.1,
-		speedMulti: 0.5,
+		speedMulti: 0,
 		resourceMulti: 0.8,
 	},
 };
@@ -143,6 +143,35 @@ const upgradeInfo = {
 				yew: 0,
 				crystal: 0,
 				arcana: 0,
+			},
+		},
+		combat: {
+			tierOne: {
+				tincture: {
+					baseCost: [{ souls: 100 }, { herb: 500 }],
+					costIncrement: 2,
+					bonusIncrement: 10,
+				},
+				dagger: {
+					baseCost: [{ souls: 100 }, { mythril: 500 }],
+					costIncrement: 2,
+					bonusIncrement: 1,
+				},
+				staff: {
+					baseCost: [{ souls: 100 }, { yew: 500 }],
+					costIncrement: 2,
+					bonusIncrement: .5,
+				},
+				robes: {
+					baseCost: [{ souls: 100 }, { crystal: 500 }],
+					costIncrement: 2,
+					bonusIncrement: 1,
+				},
+				boots: {
+					baseCost: [{ souls: 100 }, { arcana: 500 }],
+					costIncrement: 2,
+					bonusIncrement: 0.5,
+				},
 			},
 		},
 	},
@@ -410,6 +439,158 @@ const tooltips = {
 				},
 			},
 		},
+		combat: {
+			tincture: {
+				title: "Bitter Mixture",
+				infoBase:
+					"This sour tasting potion increases your maximum health and heals you for that change. Wow! Increases maximum health by ",
+				info: "",
+				cost: "",
+				updateText() {
+					this.info =
+						this.infoBase +
+						upgradeInfo.repeatable.combat.tierOne.staff.bonusIncrement.toString() +
+						".";
+					let costValue = [];
+					upgradeInfo.repeatable.combat.tierOne.staff.baseCost.map(
+						(cost) => {
+							costValue.push(
+								`${formatNumbers(
+									Math.ceil(
+										cost[Object.keys(cost)] *
+											upgradeInfo.repeatable.combat
+												.tierOne.staff.costIncrement **
+												game.current.upgrades.repeatable
+													.combat.tierOne.staff
+									)
+								)} ${Object.keys(cost)}`
+							);
+						}
+					);
+					this.cost = costValue.join(", ");
+				},
+			},
+			dagger: {
+				title: "Sharper Blade",
+				infoBase:
+					"A sharper blade cuts deeper and hurts your enemies more! Increases attack by ",
+				info: "",
+				cost: "",
+				updateText() {
+					this.info =
+						this.infoBase +
+						upgradeInfo.repeatable.combat.tierOne.staff.bonusIncrement.toString() +
+						".";
+					let costValue = [];
+					upgradeInfo.repeatable.combat.tierOne.staff.baseCost.map(
+						(cost) => {
+							costValue.push(
+								`${formatNumbers(
+									Math.ceil(
+										cost[Object.keys(cost)] *
+											upgradeInfo.repeatable.combat
+												.tierOne.staff.costIncrement **
+												game.current.upgrades.repeatable
+													.combat.tierOne.staff
+									)
+								)} ${Object.keys(cost)}`
+							);
+						}
+					);
+					this.cost = costValue.join(", ");
+				},
+			},
+			staff: {
+				title: "Yew Staff",
+				infoBase:
+					"Using the magical wood infused with souls as a means to channel your magic causes it to grow stronger. Increases spell power by ",
+				info: "",
+				cost: "",
+				updateText() {
+					this.info =
+						this.infoBase +
+						upgradeInfo.repeatable.combat.tierOne.staff.bonusIncrement.toString() +
+						".";
+					let costValue = [];
+					upgradeInfo.repeatable.combat.tierOne.staff.baseCost.map(
+						(cost) => {
+							costValue.push(
+								`${formatNumbers(
+									Math.ceil(
+										cost[Object.keys(cost)] *
+											upgradeInfo.repeatable.combat
+												.tierOne.staff.costIncrement **
+												game.current.upgrades.repeatable
+													.combat.tierOne.staff
+									)
+								)} ${Object.keys(cost)}`
+							);
+						}
+					);
+					this.cost = costValue.join(", ");
+				},
+			},
+			robes: {
+				title: "Crystal Decals",
+				infoBase:
+					"These decals somehow make you take less damage. Must be magic! Your defense is increased by ",
+				info: "",
+				cost: "",
+				updateText() {
+					this.info =
+						this.infoBase +
+						upgradeInfo.repeatable.combat.tierOne.robes.bonusIncrement.toString() +
+						".";
+					let costValue = [];
+					upgradeInfo.repeatable.combat.tierOne.robes.baseCost.map(
+						(cost) => {
+							costValue.push(
+								`${formatNumbers(
+									Math.ceil(
+										cost[Object.keys(cost)] *
+											upgradeInfo.repeatable.combat
+												.tierOne.robes.costIncrement **
+												game.current.upgrades.repeatable
+													.combat.tierOne.robes
+									)
+								)} ${Object.keys(cost)}`
+							);
+						}
+					);
+					this.cost = costValue.join(", ");
+				},
+			},
+			boots: {
+				title: "Speed Enchantment",
+				infoBase:
+					"Allows you to move faster than your enemies. Increases your speed by ",
+				info: "",
+				cost: "",
+				updateText() {
+					this.info =
+						this.infoBase +
+						upgradeInfo.repeatable.combat.tierOne.boots.bonusIncrement.toString() +
+						".";
+					let costValue = [];
+					upgradeInfo.repeatable.combat.tierOne.boots.baseCost.map(
+						(cost) => {
+							costValue.push(
+								`${formatNumbers(
+									Math.ceil(
+										cost[Object.keys(cost)] *
+											upgradeInfo.repeatable.combat
+												.tierOne.boots.costIncrement **
+												game.current.upgrades.repeatable
+													.combat.tierOne.boots
+									)
+								)} ${Object.keys(cost)}`
+							);
+						}
+					);
+					this.cost = costValue.join(", ");
+				},
+			},
+		},
 		individual: {
 			spellbook: {
 				title: "Purchase a tower key",
@@ -463,6 +644,37 @@ const purchasedUpgrade = {
 		);
 		updateTotalProductionIndividual(resource);
 	},
+	combatUpgrade(resource) {
+		console.log(resource);
+		switch (resource) {
+			case "tincture":
+				game.current.combat.player.healthMax +=
+					upgradeInfo.repeatable.combat.tierOne.tincture.bonusIncrement;
+				game.current.combat.player.healthCurrent +=
+					upgradeInfo.repeatable.combat.tierOne.tincture.bonusIncrement;
+				break;
+
+			case "dagger":
+				game.current.combat.player.attack +=
+					upgradeInfo.repeatable.combat.tierOne.dagger.bonusIncrement;
+				break;
+
+			case "staff":
+				game.current.combat.player.spellPower +=
+					upgradeInfo.repeatable.combat.tierOne.staff.bonusIncrement;
+				break;
+
+			case "robes":
+				game.current.combat.player.defense +=
+					upgradeInfo.repeatable.combat.tierOne.robes.bonusIncrement;
+				break;
+
+			case "boots":
+				game.current.combat.player.speed +=
+					upgradeInfo.repeatable.combat.tierOne.boots.bonusIncrement;
+				break;
+		}
+	},
 };
 
 const unlocks = {
@@ -493,6 +705,11 @@ const unlocks = {
 			game.current.stats.best.room > 1
 		) {
 			$(`#souls-wrapper`).removeClass("hidden");
+		}
+	},
+	combatShopUnlock() {
+		if (game.current.unlocks.combatShop) {
+			$(`#combatShop`).removeClass("hidden");
 		}
 	},
 };

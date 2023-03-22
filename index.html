@@ -256,7 +256,7 @@
 				<button class="upgrades-nav-selector temp-hidden" id="something-selector" onclick="upgradesNavBarClick(id)"><span>????</span></div>
 			</nav>
 			<div class="upgrades-display-wrapper" id="upgrades-display">
-				<section class="type-upgrades-wrapper">
+				<section class="type-upgrades-wrapper" id="one-time">
 					<h3 class="upgrades-titles">One Time</h3>
 					<div class="upgrades-purchase-wrapper">
 						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'individual', 'spellbook')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'spellbook', null, null)" id="spellbook-unlock"><span>Spell book</span></button>
@@ -264,7 +264,7 @@
 						<button class="upgrades-purchase-button hidden" onmouseover="mousein(event, 'purchase', 'individual', 'golems')" onmouseout="mouseout()" onclick="purchaseUpgrade('oneTime', 'golems', null, null)" id="golems-unlock"><span>Golem Core</span></button>
 					</div>
 				</section>
-				<section class="type-upgrades-wrapper">
+				<section class="type-upgrades-wrapper" id="resource-storage">
 					<h3 class="upgrades-titles">Storage</h3>
 					<div class="upgrades-purchase-wrapper">
 						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'herb')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'storage', 'tierOne', 'herb')"><span>Herbs</span><span id="herb-storage-level">0</span></button>
@@ -274,7 +274,7 @@
 						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'storage', 'arcana')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'storage', 'tierOne', 'arcana')"><span>Arcana</span><span id="arcana-storage-level">0</span></button>
 					</div>
 				</section>
-				<section class="type-production-upgrades-wrapper">
+				<section class="type-production-upgrades-wrapper" id="resource-activeProduction">
 					<h3 class="upgrades-titles">Active</h3>
 					<div class="upgrades-purchase-wrapper">
 						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'activeProduction', 'herb')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'activeProduction', 'tierOne', 'herb')"><span>Herbs</span><span id="herb-activeProduction-level">0</span></button>
@@ -282,6 +282,16 @@
 						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'activeProduction', 'yew')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'activeProduction', 'tierOne', 'yew')"><span>Yew</span><span id="yew-activeProduction-level">0</span></button>
 						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'activeProduction', 'crystal')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'activeProduction', 'tierOne', 'crystal')"><span>Crystal</span><span id="crystal-activeProduction-level">0</span></button>
 						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'activeProduction', 'arcana')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'activeProduction', 'tierOne', 'arcana')"><span>Arcana</span><span id="arcana-activeProduction-level">0</span></button>
+					</div>
+				</section>
+				<section class="type-production-upgrades-wrapper hidden" id="combatShop">
+					<h3 class="upgrades-titles">Combat Supplements</h3>
+					<div class="upgrades-purchase-wrapper">
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'combat', 'tincture')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'combat', 'tierOne', 'tincture')"><span>Tincture</span><span id="tincture-combat-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'combat', 'dagger')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'combat', 'tierOne', 'dagger')"><span>Dagger</span><span id="dagger-combat-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'combat', 'staff')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'combat', 'tierOne', 'staff')"><span>Staff</span><span id="staff-combat-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'combat', 'robes')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'combat', 'tierOne', 'robes')"><span>Robes</span><span id="robes-combat-level">0</span></button>
+						<button class="upgrades-purchase-button" onmouseover="mousein(event, 'purchase', 'combat', 'boots')" onmouseout="mouseout()" onclick="purchaseUpgrade('repeatable', 'combat', 'tierOne', 'boots')"><span>Boots</span><span id="boots-combat-level">0</span></button>
 					</div>
 				</section>
 			</div>

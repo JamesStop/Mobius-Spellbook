@@ -819,8 +819,8 @@ body {
 /*tooltips box stylings start*/
 
 .purchaseTooltips {
-  height: 150px;
-  width: 250px;
+  height: 175px;
+  width: 300px;
   position: absolute;
   background-color: rgb(223, 198, 198);
   display: flex;
@@ -842,7 +842,7 @@ body {
 
 .purchaseTooltipCost {
   font-weight: 800;
-  font-size: 20px;
+  font-size: 15px;
 }
 
 /*tooltips box stylings end*/

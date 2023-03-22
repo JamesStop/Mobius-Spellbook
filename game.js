@@ -2,7 +2,7 @@
 
 let currentGameVersion = {
 	general: {
-		version: 0.001,
+		version: 0.003,
 	},
 	current: {
 		collecting: null,
@@ -190,12 +190,22 @@ let currentGameVersion = {
 						arcana: 0,
 					},
 				},
+				combat: {
+					tierOne: {
+						tincture: 0,
+						dagger: 0,
+						staff: 0,
+						robes: 0,
+						boots: 0,
+					}
+				}
 			},
 		},
 		unlocks: {
 			golems: false,
 			spellbook: false,
 			fight: false,
+			combatShop: false,
 		},
 		stats: {
 			best: {

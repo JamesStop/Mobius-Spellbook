@@ -278,6 +278,8 @@ const purchaseUpgrade = (upgradeType, type, tier, resource) => {
 				let resourceType = Object.keys(thing);
 				let baseValue = thing[Object.keys(thing)];
 				let cost = Math.ceil(baseValue * baseIncrement ** upgrading);
+				console.log(cost)
+				console.log(upgrading)
 				if (game.current.resources[resourceType].current < cost) {
 					canUpgrade = false;
 				}
@@ -587,7 +589,11 @@ const createEnemy = () => {
 			1.05 ** (currentRoom - 1) *
 			enemyMultis.attackMulti
 	);
-	game.current.combat.enemy.speed = 1 * enemyMultis.speedMulti;
+	game.current.combat.enemy.speed =
+		1 *
+		1.3 ** (currentFloor - 1) *
+		1.05 ** (currentRoom - 1) *
+		enemyMultis.speedMulti;
 	stats.map((stat) => {
 		updateStat("enemy", stat);
 		$("#enemy-name").text(game.current.combat.enemy.type);
@@ -744,6 +750,12 @@ const roomChange = () => {
 				game.current.combat.location = "town";
 				game.current.combat.fighting = false;
 				game.current.combat.autoFighting = false;
+				if (
+					game.current.resources.souls.current > 0 &&
+					!game.current.unlocks.combatShop
+				) {
+					game.current.unlocks.combatShop = true;
+				}
 				updateWholeFloor();
 				floorDisplay();
 				allCombatButtons();
@@ -901,7 +913,7 @@ const attack = (attacker, defender) => {
 		if (attacking.manaCurrent >= spell.manaCost) {
 			spellCastCheck = true;
 			attacking.manaCurrent -= spell.manaCost;
-			damage = spell.powerBase * attacking.spellPower;
+			damage = Math.floor(spell.powerBase * attacking.spellPower);
 			updateStat(attacker, "manaCurrent");
 		} else {
 			damage = attacking.attack;
@@ -1054,7 +1066,7 @@ const updateToolTip = (niche, type, resource) => {
 const mousein = (event, niche, type, resource) => {
 	updateToolTip(niche, type, resource);
 	$(`#${niche}Tooltips`)
-		.css({ top: `${event.y - 200}px`, left: `${event.x - 200}px` })
+		.css({ top: `${event.y - 200}px`, left: `${event.x - 250}px` })
 		.removeClass("hidden");
 };
 
