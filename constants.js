@@ -650,13 +650,16 @@ const purchasedUpgrade = {
 			case "tincture":
 				game.current.combat.player.healthMax +=
 					upgradeInfo.repeatable.combat.tierOne.tincture.bonusIncrement;
+					updateStat('player', 'healthMax')
 				game.current.combat.player.healthCurrent +=
 					upgradeInfo.repeatable.combat.tierOne.tincture.bonusIncrement;
+					updateStat('player', 'healthCurrent')
 				break;
 
 			case "dagger":
 				game.current.combat.player.attack +=
 					upgradeInfo.repeatable.combat.tierOne.dagger.bonusIncrement;
+					updateStat('player', 'attack')
 				break;
 
 			case "staff":
@@ -667,6 +670,7 @@ const purchasedUpgrade = {
 			case "robes":
 				game.current.combat.player.defense +=
 					upgradeInfo.repeatable.combat.tierOne.robes.bonusIncrement;
+					updateStat('player', 'defense')
 				break;
 
 			case "boots":
