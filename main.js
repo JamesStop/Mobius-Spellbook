@@ -887,6 +887,8 @@ const startDescending = () => {
 	if (game.current.combat.location == "tower") {
 		game.current.combat.direction = "down";
 		$("#descend-button").addClass("hidden");
+		roomChange()
+		newFight()
 	}
 };
 
