@@ -695,7 +695,7 @@ const unlocks = {
 		if (game.current.unlocks.fight) {
 			$(`#fight-unlock`).addClass("hidden");
 			$(
-				`#golems-unlock, #enemy-wrapper, #player-wrapper, #tower-wrapper`
+				`#golems-unlock, #player-wrapper, #tower-wrapper`
 			).removeClass("hidden");
 		}
 	},

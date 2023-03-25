@@ -564,6 +564,15 @@ const golemAssign = (resource) => {
 
 //Enemy Creation Functions start//
 
+const enemyDisplay = () => {
+	if (game.current.combat.location == "tower") {
+		$('#enemy-wrapper').removeClass('hidden')
+	} else {
+		$('#enemy-wrapper').addClass('hidden')
+	}
+}
+
+
 const chooseEnemyType = () => {
 	return enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
 };
@@ -604,6 +613,8 @@ const createEnemy = () => {
 		$("#enemy-name").text(game.current.combat.enemy.type);
 	});
 };
+
+
 
 //Enemy Creation Functions end//
 
@@ -764,6 +775,7 @@ const roomChange = () => {
 				updateWholeFloor();
 				floorDisplay();
 				allCombatButtons();
+				enemyDisplay()
 			}
 		}
 		if (game.current.combat.room > 0) {
@@ -880,6 +892,7 @@ const startAscending = () => {
 		game.current.collecting = null;
 		updateTotalProductionAll();
 		resourceColorReset();
+		enemyDisplay();
 	}
 };
 
@@ -888,7 +901,11 @@ const startDescending = () => {
 		game.current.combat.direction = "down";
 		$("#descend-button").addClass("hidden");
 		roomChange()
-		newFight()
+		if (game.current.combat.location == "tower") {
+			newFight()
+		} else {
+			game.current.combat.enemy = currentGameVersion.current.combat.enemy
+		}
 	}
 };
 
@@ -943,7 +960,7 @@ const attack = (attacker, defender) => {
 };
 
 const fight = (attacker, defender) => {
-	if (!game.settings.pause) {
+	if (!game.settings.pause && game.current.combat.fighting) {
 		setTimeout(() => {
 			attack(attacker, defender);
 			updateStat(defender, "healthCurrent");
@@ -1123,6 +1140,7 @@ const updateAllDisplays = () => {
 const updateDisplaysAllSuper = () => {
 	updateAllDisplays();
 	updateWholeFloor();
+	enemyDisplay();
 };
 
 //Timing things

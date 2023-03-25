@@ -412,9 +412,16 @@ body {
   width: 50%;
   display: flex;
   flex-direction: column;
-  border: 1px solid black;
   position: relative;
   font-size: 1rem;
+}
+
+.player-wrapper {
+  border-right: 2px solid rgb(77, 77, 77)
+}
+
+.enemy-wrapper {
+  border-left: 2px solid rgb(77, 77, 77)
 }
 
 .player-name,
@@ -516,6 +523,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-top: 2px solid rgb(77, 77, 77);
 }
 
 .floor-room-display {

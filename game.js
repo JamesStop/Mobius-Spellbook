@@ -130,12 +130,12 @@ let currentGameVersion = {
 			},
 			enemy: {
 				name: "",
-				healthMax: 100,
+				healthMax: 0,
 				healthCurrent: 0,
 				manaMax: 0,
 				manaCurrent: 0,
-				attack: 1,
-				speed: 1,
+				attack: 0,
+				speed: 0,
 				defense: 0,
 			},
 			spells: {
